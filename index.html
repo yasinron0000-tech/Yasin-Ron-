@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d47a1">
+<meta name="description" content="Yasin Ron - Excel Formula Master with practical data examples">
+<link rel="manifest" href="manifest.json">
+<title>Yasin Ron – Excel Formula Master</title>
+<style>
+*{box-sizing:border-box}html,body{width:100%;max-width:100%;margin:0;padding:0;overflow-x:hidden}body{font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{width:100%;max-width:100%;background:#0d47a1;color:white;padding:28px 20px 22px;border-radius:0 0 24px 24px;overflow:hidden}
+.brand{font-size:30px;font-weight:800}.tag{opacity:.9;margin-top:5px}
+main{width:100%;max-width:820px;padding:16px;margin:0 auto;overflow:hidden}.search{display:block;width:100%;max-width:100%;padding:15px;border:1px solid #d7dce5;border-radius:14px;font-size:16px}
+.chips{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:12px 0;max-width:100%;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{flex:0 0 auto;border:0;border-radius:20px;padding:9px 13px;background:white;white-space:nowrap}
+.chip.active{background:#0d47a1;color:white}.count{margin:5px 0 10px;color:#697386}
+.card{width:100%;max-width:100%;background:white;border-radius:16px;padding:16px;margin:10px 0;box-shadow:0 2px 10px #00000010}
+.name{font-size:20px;font-weight:700;color:#1565c0}.cat{font-size:12px;color:#77808f;margin:5px 0}
+.formula{font-family:monospace;background:#f1f4f8;padding:11px;border-radius:9px;overflow:auto;font-size:14px}
+.example{margin-top:14px;border-top:1px solid #e7eaf0;padding-top:12px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;width:100%;max-width:100%}.box{min-width:0;max-width:100%;background:#f8f9fc;padding:11px;border-radius:10px}
+.box b{display:block;margin-bottom:5px;font-size:12px;color:#667085}.box code{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-family:monospace}
+.result{margin-top:10px;padding:11px;border-radius:10px;background:#eef6ff}
+.tip{margin-top:10px;color:#4b5565;font-size:14px;line-height:1.45}
+button.install{display:block;max-width:100%;width:100%;padding:14px;border:0;border-radius:13px;background:#1565c0;color:white;font-size:16px;font-weight:700;margin:8px 0}
+.toolbar{display:flex;gap:8px;align-items:center;width:100%;margin-bottom:8px}
+.lang{flex:0 0 auto;padding:12px 10px;border:1px solid #d7dce5;border-radius:12px;background:white;font-size:14px}
+.card{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}.card:active{transform:scale(.995)}
+.hint{font-size:12px;color:#667085;margin:0 2px 8px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;padding:0;z-index:50}
+.modal.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:820px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:20px}
+.close{float:right;border:0;background:#eef2f7;border-radius:50%;width:38px;height:38px;font-size:22px}
+.modal-title{font-size:26px;font-weight:800;color:#1565c0;margin:4px 48px 4px 0}
+.modal-cat{font-size:13px;color:#77808f;margin-bottom:12px}
+.detail-box{background:#f8f9fc;padding:12px;border-radius:12px;margin:10px 0;overflow-wrap:anywhere}
+.detail-box code{white-space:pre-wrap;word-break:break-word;font-family:monospace}
+.detail-result{background:#eef6ff;padding:12px;border-radius:12px;margin:10px 0}
+.detail-explain{line-height:1.55;color:#374151;margin-top:12px}
+@media(max-width:480px){
+  main{padding:14px}
+  .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .box{padding:10px;overflow-wrap:anywhere}
+  .brand{font-size:28px}
+}
+
+.brand{position:relative;display:inline-block;animation:brandFloat 2.8s ease-in-out infinite,brandGlow 2.2s ease-in-out infinite}
+.brand::after{content:"";position:absolute;inset:-6px -14px;border-radius:14px;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.35) 45%,transparent 65%);transform:translateX(-120%);animation:brandShine 3.2s linear infinite;pointer-events:none}
+@keyframes brandFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes brandGlow{0%,100%{text-shadow:0 0 0 rgba(255,255,255,0)}50%{text-shadow:0 0 18px rgba(255,255,255,.45)}}
+@keyframes brandShine{0%{transform:translateX(-120%)}45%,100%{transform:translateX(120%)}}
+.card.opening{animation:cardPop .45s cubic-bezier(.2,.8,.2,1)}
+.sheet{animation:sheetIn .38s cubic-bezier(.2,.8,.2,1)}
+@keyframes cardPop{0%{opacity:.2;transform:scale(.96) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes sheetIn{0%{opacity:0;transform:translateY(35px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+</style>
+</head>
+<body>
+<header><div class="brand">Yasin Ron</div><div class="tag">Excel Formula Master • A–Z with Data Examples</div></header>
+<main>
+<button class="install" id="installBtn" hidden>📲 Install App</button>
+<div class="toolbar">
+  <input class="search" id="search" placeholder="🔎 Search formula, category or keyword">
+  <select class="lang" id="lang" aria-label="Language">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी</option>
+    <option value="mr">मराठी</option>
+  </select>
+</div>
+<div class="hint" id="hint"></div>
+<div class="chips" id="chips"></div>
+<div class="count" id="count"></div>
+<section id="list"></section>
+</main>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="sheet">
+    <button class="close" onclick="closeModal()" aria-label="Close">×</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-cat" id="modalCat"></div>
+    <div class="formula" id="modalFormula"></div>
+    <div class="detail-box"><b id="sampleLabel"></b><br><code id="modalSample"></code></div>
+    <div class="detail-box"><b id="usedLabel"></b><br><code id="modalUsed"></code></div>
+    <div class="detail-result"><b id="resultLabel"></b><br><code id="modalResult"></code></div>
+    <div class="detail-explain"><b id="explainLabel"></b><span id="modalExplain"></span></div>
+  </div>
+</div>
+<script>
+const formulas=[
+["AVERAGE","Statistical","=AVERAGE(B2:B6)","Finds the average of numbers.",
+"Scores: 80, 90, 70, 60, 100","=AVERAGE(B2:B6)","80","Average score = 80"],
+["AND","Logical",'=AND(B2>=80,C2="Yes")',"Returns TRUE only when all conditions are TRUE.",
+"Score B2 = 85\\nAttendance C2 = Yes",'=AND(85>=80,"Yes"="Yes")',"TRUE","Both conditions are satisfied."],
+["COUNTIF","Statistical",'=COUNTIF(A2:A6,"Present")',"Counts cells that match one condition.",
+"Attendance: Present, Absent, Present, Present, Absent",'=COUNTIF(A2:A6,"Present")',"3","There are 3 Present entries."],
+["COUNTIFS","Statistical",'=COUNTIFS(A2:A6,"Pune",B2:B6,">90")',"Counts rows that meet multiple conditions.",
+"City: Pune, Pune, Mumbai, Pune, Pune\\nScore: 95, 85, 92, 96, 91",'=COUNTIFS(A2:A6,"Pune",B2:B6,">90")',"3","3 Pune records have scores above 90."],
+["DATEDIF","Date & Time",'=DATEDIF(A2,B2,"Y")',"Calculates the difference between two dates.",
+"Start: 01-Jan-2020\\nEnd: 01-Jan-2026",'=DATEDIF(DATE(2020,1,1),DATE(2026,1,1),"Y")',"6 years","The dates are 6 complete years apart."],
+["FILTER","Dynamic Array",'=FILTER(A2:C6,C2:C6="Open","No results")',"Returns only rows matching a condition.",
+"Ticket | Agent | Status\\n101 | Ali | Open\\n102 | Sara | Closed\\n103 | Ravi | Open",'=FILTER(A2:C4,C2:C4="Open")',"101 Ali Open\\n103 Ravi Open","Only Open tickets are returned."],
+["IF","Logical",'=IF(B2>=80,"Pass","Fail")',"Tests a condition and returns one result for TRUE and another for FALSE.",
+"Score B2 = 85",'=IF(85>=80,"Pass","Fail")',"Pass","Because 85 is at least 80."],
+["IFERROR","Logical","=IFERROR(A2/B2,0)","Replaces an Excel error with a value you choose.",
+"A2 = 100\\nB2 = 0","=IFERROR(100/0,0)","0","Instead of #DIV/0!, the result is 0."],
+["INDEX","Lookup & Reference","=INDEX(E2:E6,MATCH(A2,D2:D6,0))","Returns a value from a range using a position.",
+"Employee: Yasin, Sara, Ravi\\nID: 101, 102, 103\\nSalary: 25000, 30000, 28000","=INDEX(C2:C4,MATCH(102,B2:B4,0))","30000","Finds ID 102 and returns its salary."],
+["INDEX + XMATCH","Lookup & Reference","=INDEX(C2:C6,XMATCH(E2,A2:A6))","Modern lookup combination.",
+"Name: Ali, Sara, Ravi, Yasin\\nScore: 80, 92, 75, 88\\nSearch name: Yasin","=INDEX(B2:B5,XMATCH(\"Yasin\",A2:A5))","88","XMATCH finds Yasin's row; INDEX returns the score."],
+["LEFT","Text","=LEFT(A2,5)","Extracts characters from the left side of text.",
+"A2 = Yasin Ron","=LEFT(\"Yasin Ron\",5)","Yasin","Returns the first 5 characters."],
+["LEN","Text","=LEN(A2)","Counts the number of characters, including spaces.",
+"A2 = Yasin Ron","=LEN(\"Yasin Ron\")","9","There are 9 characters including the space."],
+["LOWER","Text","=LOWER(A2)","Converts text to lowercase.",
+"A2 = YASIN RON","=LOWER(\"YASIN RON\")","yasin ron","Useful for standardizing text."],
+["MATCH","Lookup & Reference","=MATCH(A2,D2:D6,0)","Returns the position of a matching item.",
+"List: Ali, Sara, Ravi, Yasin\\nSearch: Ravi","=MATCH(\"Ravi\",A2:A5,0)","3","Ravi is the 3rd item in the list."],
+["MAX","Statistical","=MAX(B2:B6)","Returns the largest number.",
+"Sales: 120, 450, 275, 610, 390","=MAX(B2:B6)","610","Highest sales value = 610."],
+["MIN","Statistical","=MIN(B2:B6)","Returns the smallest number.",
+"Sales: 120, 450, 275, 610, 390","=MIN(B2:B6)","120","Lowest sales value = 120."],
+["NETWORKDAYS","Date & Time","=NETWORKDAYS(A2,B2)","Counts working days between two dates, excluding weekends.",
+"Start: 01-Aug-2026\\nEnd: 07-Aug-2026","=NETWORKDAYS(DATE(2026,8,1),DATE(2026,8,7))","5","Five weekdays are counted."],
+["NOW","Date & Time","=NOW()","Returns the current date and time from the device/workbook.",
+"Example when formula is calculated","=NOW()","Current date & time","The displayed value changes with the current time."],
+["OR","Logical",'=OR(B2="Yes",C2="Yes")',"Returns TRUE when at least one condition is TRUE.",
+"Quality B2 = No\\nAttendance C2 = Yes",'=OR("No"="Yes","Yes"="Yes")',"TRUE","At least one condition is TRUE."],
+["PROPER","Text","=PROPER(A2)","Capitalizes the first letter of each word.",
+"A2 = yasin ron","=PROPER(\"yasin ron\")","Yasin Ron","Useful for names and clean reports."],
+["RIGHT","Text","=RIGHT(A2,4)","Extracts characters from the right side of text.",
+"A2 = Yasin Ron","=RIGHT(\"Yasin Ron\",3)","Ron","Returns the last 3 characters."],
+["ROUND","Math & Trigonometry","=ROUND(A2,2)","Rounds a number to a specified number of decimal places.",
+"A2 = 125.6789","=ROUND(125.6789,2)","125.68","Rounds to 2 decimal places."],
+["SORT","Dynamic Array","=SORT(A2:B6,2,-1)","Sorts a range dynamically.",
+"Agent | Score\\nAli | 75\\nSara | 95\\nRavi | 82","=SORT(A2:B4,2,-1)","Sara 95\\nRavi 82\\nAli 75","Sorts scores from highest to lowest."],
+["SUM","Math & Trigonometry","=SUM(B2:B6)","Adds numbers together.",
+"Hours: 8, 7.5, 9, 8, 7.5","=SUM(B2:B6)","40","Total hours = 40."],
+["SUMIF","Math & Trigonometry",'=SUMIF(A2:A6,"Sales",B2:B6)',"Adds values that meet one condition.",
+"Type: Sales, Support, Sales, Sales\\nAmount: 100, 50, 200, 150","=SUMIF(A2:A5,\"Sales\",B2:B5)","450","Sales total = 450."],
+["SUMIFS","Math & Trigonometry",'=SUMIFS(C2:C6,A2:A6,"Pune",B2:B6,"Closed")',"Adds values using multiple conditions.",
+"City: Pune, Pune, Mumbai, Pune\\nStatus: Closed, Open, Closed, Closed\\nAmount: 100, 200, 150, 300","=SUMIFS(C2:C5,A2:A5,\"Pune\",B2:B5,\"Closed\")","400","Adds only Pune + Closed amounts."],
+["TEXTJOIN","Text",'=TEXTJOIN(", ",TRUE,A2:A5)',"Combines multiple text values with a delimiter.",
+"Names: Ali, Sara, Ravi, Yasin","=TEXTJOIN(\", \",TRUE,A2:A5)","Ali, Sara, Ravi, Yasin","Useful for combining names, IDs or labels."],
+["TODAY","Date & Time","=TODAY()","Returns today's date.",
+"Example when formula is calculated","=TODAY()","Today's date","Useful for daily reports and ageing calculations."],
+["TRIM","Text","=TRIM(A2)","Removes extra spaces from text.",
+"A2 =   Yasin   Ron  ","=TRIM(\"   Yasin   Ron  \")","Yasin Ron","Useful for cleaning copied data."],
+["UNIQUE","Dynamic Array","=UNIQUE(A2:A6)","Returns each distinct value once.",
+"Team: Sales, Support, Sales, HR, Support","=UNIQUE(A2:A6)","Sales\\nSupport\\nHR","Creates a unique list automatically."],
+["UPPER","Text","=UPPER(A2)","Converts text to uppercase.",
+"A2 = Yasin Ron","=UPPER(\"Yasin Ron\")","YASIN RON","Useful for standardizing codes and names."],
+["VLOOKUP","Lookup & Reference","=VLOOKUP(A2,D2:E6,2,FALSE)","Looks up a value in the first column and returns a related value.",
+"ID: 101,102,103\\nName: Ali,Sara,Ravi\\nSearch ID: 102","=VLOOKUP(102,A2:B4,2,FALSE)","Sara","Finds ID 102 and returns Sara."],
+["XLOOKUP","Lookup & Reference",'=XLOOKUP(A2,D2:D6,E2:E6,"Not Found")',"Modern lookup that can search one range and return another.",
+"ID: 101,102,103\\nName: Ali,Sara,Ravi\\nSearch ID: 103",'=XLOOKUP(103,A2:A4,B2:B4,"Not Found")',"Ravi","Finds ID 103 and returns Ravi."]
+];
+
+
+formulas.push(...advancedFormulas);
+const ui={
+ en:{tag:"Excel Formula Master • A–Z with Data Examples",search:"🔎 Search formula, category or keyword",hint:"Tap any formula to open full sample data, formula, result and explanation.",count:"formulas • Every formula includes data, formula and expected result",sample:"📊 SAMPLE DATA",used:"🧮 FORMULA USED",result:"✅ EXPECTED RESULT:",explain:"💡 Explanation:",close:"Close"},
+ hi:{tag:"Excel Formula Master • डेटा उदाहरणों के साथ A–Z",search:"🔎 Formula, category या keyword खोजें",hint:"किसी भी formula पर tap करें — sample data, formula, result और explanation देखें।",count:"formulas • हर formula में data, formula और expected result है",sample:"📊 SAMPLE DATA",used:"🧮 FORMULA USED",result:"✅ EXPECTED RESULT:",explain:"💡 Explanation:",close:"बंद करें"},
+ mr:{tag:"Excel Formula Master • डेटा उदाहरणांसह A–Z",search:"🔎 Formula, category किंवा keyword शोधा",hint:"कोणत्याही formula वर tap करा — sample data, formula, result आणि explanation पाहा.",count:"formulas • प्रत्येक formula मध्ये data, formula आणि expected result आहे",sample:"📊 SAMPLE DATA",used:"🧮 FORMULA USED",result:"✅ EXPECTED RESULT:",explain:"💡 Explanation:",close:"बंद करा"}
+};
+const catNames={
+ en:{Statistical:"Statistical","Logical":"Logical","Date & Time":"Date & Time","Dynamic Array":"Dynamic Array","Lookup & Reference":"Lookup & Reference","Text":"Text","Math & Trigonometry":"Math & Trigonometry"},
+ hi:{Statistical:"सांख्यिकीय",Logical:"लॉजिकल","Date & Time":"दिनांक और समय","Dynamic Array":"डायनेमिक ऐरे","Lookup & Reference":"लुकअप और रेफरेंस",Text:"टेक्स्ट","Math & Trigonometry":"गणित और त्रिकोणमिति"},
+ mr:{Statistical:"सांख्यिकीय",Logical:"लॉजिकल","Date & Time":"दिनांक आणि वेळ","Dynamic Array":"डायनॅमिक अॅरे","Lookup & Reference":"लुकअप आणि रेफरन्स",Text:"टेक्स्ट","Math & Trigonometry":"गणित आणि त्रिकोणमिती"}
+};
+const desc={
+hi:{
+"AND":"सभी दी गई conditions TRUE होने पर TRUE देता है।","AVERAGE":"दिए गए numbers का average निकालता है।","COUNTIF":"एक condition को match करने वाले cells की गिनती करता है।","COUNTIFS":"एक से अधिक conditions पूरी करने वाली rows की गिनती करता है।","DATEDIF":"दो dates के बीच का अंतर निकालता है।","FILTER":"दी गई condition के अनुसार केवल matching rows दिखाता है।","IF":"Condition check करके TRUE और FALSE के लिए अलग result देता है।","IFERROR":"Excel error आने पर उसकी जगह आपकी चुनी हुई value देता है।","INDEX":"Range की position के आधार पर value वापस देता है।","INDEX + XMATCH":"XMATCH से position खोजकर INDEX से related value लौटाता है।","LEFT":"Text के left side से characters निकालता है।","LEN":"Text में कुल characters गिनता है, spaces भी शामिल होते हैं।","LOWER":"Text को lowercase में बदलता है।","MATCH":"List में matching item की position देता है।","MAX":"सबसे बड़ी number value देता है।","MIN":"सबसे छोटी number value देता है।","NETWORKDAYS":"दो dates के बीच weekends छोड़कर working days गिनता है।","NOW":"Current date और time लौटाता है।","OR":"कम से कम एक condition TRUE होने पर TRUE देता है।","PROPER":"हर word का पहला letter capital करता है।","RIGHT":"Text के right side से characters निकालता है।","ROUND":"Number को तय decimal places तक round करता है।","SORT":"Range को dynamically sort करता है।","SUM":"Numbers को जोड़कर total देता है।","SUMIF":"एक condition पूरी करने वाली values का total करता है।","SUMIFS":"एक से अधिक conditions के अनुसार values का total करता है।","TEXTJOIN":"कई text values को delimiter के साथ जोड़ता है।","TODAY":"आज की date लौटाता है।","TRIM":"Extra spaces हटाकर text साफ करता है।","UNIQUE":"हर अलग value को केवल एक बार लौटाता है।","UPPER":"Text को uppercase में बदलता है।","VLOOKUP":"पहले column में value खोजकर संबंधित value लौटाता है।","XLOOKUP":"एक range में search करके दूसरी range से matching value लौटाता है।"},
+mr:{
+"AND":"सर्व दिलेल्या conditions TRUE असतील तर TRUE देते.","AVERAGE":"दिलेल्या numbers ची average काढते.","COUNTIF":"एका condition शी match होणाऱ्या cells ची संख्या मोजते.","COUNTIFS":"एकापेक्षा जास्त conditions पूर्ण करणाऱ्या rows ची संख्या मोजते.","DATEDIF":"दोन dates मधील फरक काढते.","FILTER":"दिलेल्या condition नुसार फक्त matching rows दाखवते.","IF":"Condition तपासून TRUE आणि FALSE साठी वेगवेगळा result देते.","IFERROR":"Excel error आल्यास त्याऐवजी तुमची निवडलेली value देते.","INDEX":"Range मधील position नुसार value परत देते.","INDEX + XMATCH":"XMATCH ने position शोधून INDEX ने संबंधित value परत देते.","LEFT":"Text च्या left side कडून characters काढते.","LEN":"Text मधील एकूण characters मोजते, spaces सुद्धा धरते.","LOWER":"Text lowercase मध्ये बदलते.","MATCH":"List मध्ये matching item ची position देते.","MAX":"सर्वात मोठी number value देते.","MIN":"सर्वात छोटी number value देते.","NETWORKDAYS":"दोन dates मधील weekends वगळून working days मोजते.","NOW":"Current date आणि time परत देते.","OR":"किमान एक condition TRUE असेल तर TRUE देते.","PROPER":"प्रत्येक word चे पहिले letter capital करते.","RIGHT":"Text च्या right side कडून characters काढते.","ROUND":"Number ला ठराविक decimal places पर्यंत round करते.","SORT":"Range dynamically sort करते.","SUM":"Numbers जोडून total देते.","SUMIF":"एका condition पूर्ण करणाऱ्या values चा total करते.","SUMIFS":"एकापेक्षा जास्त conditions नुसार values चा total करते.","TEXTJOIN":"अनेक text values delimiter वापरून जोडते.","TODAY":"आजची date परत देते.","TRIM":"Extra spaces काढून text साफ करते.","UNIQUE":"प्रत्येक वेगळी value फक्त एकदाच परत देते.","UPPER":"Text uppercase मध्ये बदलते.","VLOOKUP":"पहिल्या column मध्ये value शोधून संबंधित value परत देते.","XLOOKUP":"एका range मध्ये search करून दुसऱ्या range मधून matching value परत देते."}
+};
+const langNames={en:"English",hi:"Hindi",mr:"Marathi"};
+let lang=localStorage.getItem("yr_lang")||"en";
+
+const advancedFormulas=[["SUMPRODUCT", "Advanced", "=SUMPRODUCT(B2:B6,C2:C6)", "Multiplies corresponding values and adds the products.", "Product: A,B,C,D,E\nQty: 2,3,4,5,6\nPrice: 100,200,50,80,120", "=SUMPRODUCT(B2:B6,C2:C6)", "1650", "Useful for weighted totals, revenue, productivity and target calculations without helper columns."], ["SUBTOTAL", "Advanced", "=SUBTOTAL(9,B2:B100)", "Calculates a subtotal that can ignore filtered-out rows.", "Sales column B contains 100, 200, 300, 400; some rows are filtered", "=SUBTOTAL(9,B2:B100)", "Visible-row total", "Ideal for reports where users filter data and want totals to update automatically."], ["AGGREGATE", "Advanced", "=AGGREGATE(9,6,B2:B100)", "Performs calculations while optionally ignoring errors, hidden rows and nested subtotals.", "Scores in B2:B6: 80, 90, #N/A, 70, 100", "=AGGREGATE(9,6,B2:B6)", "340", "Option 6 ignores error values, making it useful in messy operational reports."], ["SUMPRODUCT (Weighted Average)", "Advanced", "=SUMPRODUCT(B2:B6,C2:C6)/SUM(C2:C6)", "Calculates a weighted average.", "Score: 80,90,70\nWeight: 20%,50%,30%", "=SUMPRODUCT(B2:B4,C2:C4)/SUM(C2:C4)", "83", "Useful when each score, SLA or KPI has a different weight."], ["COUNTBLANK", "Advanced", "=COUNTBLANK(A2:A100)", "Counts empty cells.", "Agent status: Present, Present, blank, Absent, blank", "=COUNTBLANK(A2:A6)", "2", "Useful for finding missing attendance, status or report entries."], ["COUNTA", "Advanced", "=COUNTA(A2:A100)", "Counts non-empty cells.", "Agent names: Yasin, Sara, Ravi, blank, Ali", "=COUNTA(A2:A6)", "4", "Useful for counting populated records."], ["AVERAGEIF", "Advanced", "=AVERAGEIF(B2:B100,\">=80\",C2:C100)", "Averages values that meet one condition.", "Score: 90,70,85,60\nProductivity: 95,70,88,65", "=AVERAGEIF(B2:B5,\">=80\",C2:C5)", "91.5", "Calculates an average only for records meeting a KPI threshold."], ["AVERAGEIFS", "Advanced", "=AVERAGEIFS(C2:C100,A2:A100,\"Pune\",B2:B100,\"Present\")", "Averages values using multiple conditions.", "City: Pune,Pune,Mumbai,Pune\nStatus: Present,Absent,Present,Present\nScore: 90,80,85,95", "=AVERAGEIFS(C2:C5,A2:A5,\"Pune\",B2:B5,\"Present\")", "92.5", "Useful for team-wise, city-wise or shift-wise KPI analysis."], ["MAXIFS", "Advanced", "=MAXIFS(C2:C100,A2:A100,\"Pune\")", "Returns the largest value meeting a condition.", "City: Pune,Mumbai,Pune\nAchievement: 90%,95%,98%", "=MAXIFS(B2:B4,A2:A4,\"Pune\")", "98%", "Finds the highest performance for a selected team, city or process."], ["MINIFS", "Advanced", "=MINIFS(C2:C100,A2:A100,\"Pune\")", "Returns the smallest value meeting a condition.", "City: Pune,Mumbai,Pune\nAchievement: 90%,95%,98%", "=MINIFS(B2:B4,A2:A4,\"Pune\")", "90%", "Finds the lowest performance for a selected group."], ["IFS", "Logical", "=IFS(B2>=90,\"Excellent\",B2>=75,\"Good\",B2>=60,\"Average\",TRUE,\"Needs Improvement\")", "Tests multiple conditions in order.", "Score B2 = 82", "=IFS(82>=90,\"Excellent\",82>=75,\"Good\",82>=60,\"Average\",TRUE,\"Needs Improvement\")", "Good", "Cleaner than many nested IF statements when several bands are required."], ["SWITCH", "Logical", "=SWITCH(A2,\"P\",\"Present\",\"A\",\"Absent\",\"L\",\"Leave\",\"Unknown\")", "Maps one value to multiple possible outputs.", "A2 = P", "=SWITCH(\"P\",\"P\",\"Present\",\"A\",\"Absent\",\"L\",\"Leave\",\"Unknown\")", "Present", "Useful for converting short codes into readable report labels."], ["LET", "Advanced", "=LET(total,SUM(B2:B6),bonus,total*10%,total+bonus)", "Creates named variables inside a formula.", "Sales: 100,200,150,300,250", "=LET(total,SUM(B2:B6),bonus,total*10%,total+bonus)", "1100", "Makes complex formulas easier to read, maintain and calculate efficiently."], ["LAMBDA", "Advanced", "=LAMBDA(x,x*10%)(500)", "Creates a reusable custom calculation inside Excel.", "Sales = 500", "=LAMBDA(x,x*10%)(500)", "50", "Useful for building reusable business logic without VBA."], ["MAP", "Advanced", "=MAP(B2:B6,LAMBDA(x,x*10%))", "Applies a LAMBDA calculation to each value in an array.", "Sales: 100,200,300", "=MAP(B2:B4,LAMBDA(x,x*10%))", "10; 20; 30", "Useful for applying the same KPI or transformation to every row dynamically."], ["BYROW", "Advanced", "=BYROW(B2:D6,LAMBDA(r,SUM(r)))", "Calculates one result for each row of an array.", "Jan Feb Mar\n10 20 30\n20 30 40", "=BYROW(B2:C3,LAMBDA(r,SUM(r)))", "30; 50", "Useful for row-wise totals without helper columns."], ["BYCOL", "Advanced", "=BYCOL(B2:D6,LAMBDA(c,AVERAGE(c)))", "Calculates one result for each column of an array.", "Jan Feb Mar\n80 90 70\n90 85 95", "=BYCOL(B2:D3,LAMBDA(c,AVERAGE(c)))", "85; 87.5; 82.5", "Useful for month-wise or column-wise KPI summaries."], ["REDUCE", "Advanced", "=REDUCE(0,B2:B6,LAMBDA(a,v,a+v))", "Accumulates array values into one result.", "Values: 10,20,30,40", "=REDUCE(0,B2:B5,LAMBDA(a,v,a+v))", "100", "Useful for custom iterative calculations."], ["SCAN", "Advanced", "=SCAN(0,B2:B5,LAMBDA(a,v,a+v))", "Returns running accumulated results.", "Sales: 100,200,150,250", "=SCAN(0,B2:B5,LAMBDA(a,v,a+v))", "100; 300; 450; 700", "Useful for cumulative sales, running targets and YTD calculations."], ["TAKE", "Dynamic Array", "=TAKE(A2:C100,10)", "Returns the first or last rows/columns of an array.", "Table contains 100 employee rows", "=TAKE(A2:C100,10)", "First 10 rows", "Useful for top/latest record views."], ["DROP", "Dynamic Array", "=DROP(A2:C100,1)", "Removes rows or columns from the beginning or end of an array.", "First row is a header, remaining rows are data", "=DROP(A2:C100,1)", "Data without first row", "Useful when dynamic arrays contain headers or unwanted leading rows."], ["CHOOSECOLS", "Dynamic Array", "=CHOOSECOLS(A2:F100,1,3,6)", "Returns selected columns from an array.", "Employee table has Name, Team, City, Shift, Score, SLA", "=CHOOSECOLS(A2:F100,1,3,6)", "Name, City, SLA", "Useful for building custom report views without copying columns."], ["CHOOSEROWS", "Dynamic Array", "=CHOOSEROWS(A2:F100,1,5,10)", "Returns selected rows from an array.", "Employee table has many rows", "=CHOOSEROWS(A2:F100,1,5,10)", "Rows 1,5,10", "Useful for selecting specific records dynamically."], ["VSTACK", "Dynamic Array", "=VSTACK(A2:C6,E2:G6)", "Stacks arrays vertically.", "Team A table + Team B table", "=VSTACK(A2:C6,E2:G6)", "Combined table", "Useful for combining multiple team or monthly datasets."], ["HSTACK", "Dynamic Array", "=HSTACK(A2:C6,E2:G6)", "Stacks arrays horizontally.", "Employee details + KPI details", "=HSTACK(A2:C6,E2:G6)", "Combined columns", "Useful for combining related report sections side by side."], ["TOCOL", "Dynamic Array", "=TOCOL(A2:C6,1)", "Converts a 2D range into one column.", "Scores in a 3x3 block", "=TOCOL(A2:C4,1)", "One vertical list", "Useful for reshaping report data for analysis."], ["TOROW", "Dynamic Array", "=TOROW(A2:C6,1)", "Converts a range into one row.", "Scores in a table", "=TOROW(A2:C4,1)", "One horizontal list", "Useful for dashboard and summary layouts."], ["WRAPROWS", "Dynamic Array", "=WRAPROWS(A2:A10,3)", "Wraps a list into rows of a chosen width.", "Values: A,B,C,D,E,F,G,H,I", "=WRAPROWS(A2:A10,3)", "A B C / D E F / G H I", "Useful for compact dashboard layouts."], ["WRAPCOLS", "Dynamic Array", "=WRAPCOLS(A2:A10,3)", "Wraps a list into columns of a chosen height.", "Values: A,B,C,D,E,F,G,H,I", "=WRAPCOLS(A2:A10,3)", "A D G / B E H / C F I", "Useful for reorganizing lists into compact blocks."], ["UNIQUE + SORT", "Dynamic Array", "=SORT(UNIQUE(A2:A100))", "Returns unique values and sorts them.", "Team: Pune,Mumbai,Pune,Delhi,Mumbai", "=SORT(UNIQUE(A2:A6))", "Delhi; Mumbai; Pune", "Excellent for dynamic dropdown lists and clean summaries."], ["FILTER + SORT", "Dynamic Array", "=SORT(FILTER(A2:C100,C2:C100=\"Open\"),2,1)", "Filters rows and then sorts the result.", "Ticket,Agent,Status\n101,Yasin,Open\n102,Sara,Closed\n103,Ravi,Open", "=SORT(FILTER(A2:C4,C2:C4=\"Open\"),2,1)", "Open tickets sorted by Agent", "Useful for live operational queues."], ["XLOOKUP with multiple criteria", "Advanced", "=XLOOKUP(1,(A2:A100=E2)*(B2:B100=F2),C2:C100,\"Not Found\")", "Looks up using two conditions.", "Agent: Yasin,Yasin,Sara\nShift: A,B,A\nSLA: 95%,98%,91%\nSearch: Yasin + B", "=XLOOKUP(1,(A2:A4=\"Yasin\")*(B2:B4=\"B\"),C2:C4,\"Not Found\")", "98%", "Powerful for two-condition lookups without helper columns."], ["XMATCH with wildcard", "Advanced", "=XMATCH(\"Yasin*\",A2:A100,2)", "Finds a text match using wildcard behavior.", "Names: Yusuf, Yasin Ron, Sara", "=XMATCH(\"Yasin*\",A2:A4,2)", "2", "Useful when only part of a name or code is known."], ["TEXTBEFORE", "Text", "=TEXTBEFORE(A2,\"-\")", "Returns text before a delimiter.", "A2 = EMP-1025", "=TEXTBEFORE(\"EMP-1025\",\"-\")", "EMP", "Useful for splitting employee IDs and codes."], ["TEXTAFTER", "Text", "=TEXTAFTER(A2,\"-\")", "Returns text after a delimiter.", "A2 = EMP-1025", "=TEXTAFTER(\"EMP-1025\",\"-\")", "1025", "Useful for extracting numeric/code portions."], ["TEXTSPLIT", "Text", "=TEXTSPLIT(A2,\",\")", "Splits text into separate cells using a delimiter.", "A2 = Pune,Mumbai,Delhi", "=TEXTSPLIT(\"Pune,Mumbai,Delhi\",\",\")", "Pune | Mumbai | Delhi", "Useful for separating comma-delimited data."], ["CONCAT", "Text", "=CONCAT(A2,\" - \",B2)", "Joins text values.", "Name = Yasin\nTeam = B-Map", "=CONCAT(\"Yasin\",\" - \",\"B-Map\")", "Yasin - B-Map", "Useful for creating report labels and IDs."], ["EXACT", "Text", "=EXACT(A2,B2)", "Checks whether two text values are exactly identical, including case.", "A2 = Yasin\nB2 = yasin", "=EXACT(\"Yasin\",\"yasin\")", "FALSE", "Useful for validating codes and case-sensitive text."], ["CLEAN", "Text", "=CLEAN(A2)", "Removes non-printable characters from text.", "A2 contains copied report text with hidden characters", "=CLEAN(A2)", "Clean text", "Useful when data is copied from websites or external systems."], ["VALUE", "Text", "=VALUE(A2)", "Converts number-like text into a real number.", "A2 = \"1250\"", "=VALUE(\"1250\")", "1250", "Useful before calculations when imported data is stored as text."], ["NUMBERVALUE", "Text", "=NUMBERVALUE(A2,\".\",\",\")", "Converts text to number while specifying decimal and thousands separators.", "A2 = 1.234,56", "=NUMBERVALUE(\"1.234,56\",\",\",\".\")", "1234.56", "Useful for international number formats."], ["EOMONTH", "Date & Time", "=EOMONTH(A2,0)", "Returns the last day of a month.", "Date A2 = 15-Aug-2026", "=EOMONTH(DATE(2026,8,15),0)", "31-Aug-2026", "Useful for month-end reporting and payroll periods."], ["EDATE", "Date & Time", "=EDATE(A2,3)", "Moves a date by a number of months.", "Start date = 15-Aug-2026", "=EDATE(DATE(2026,8,15),3)", "15-Nov-2026", "Useful for due dates, review dates and monthly cycles."], ["WORKDAY", "Date & Time", "=WORKDAY(A2,10)", "Returns a date after a specified number of working days.", "Start = 03-Aug-2026\nWorking days = 10", "=WORKDAY(DATE(2026,8,3),10)", "17-Aug-2026", "Useful for SLA due dates and business-day deadlines."], ["WEEKNUM", "Date & Time", "=WEEKNUM(A2,2)", "Returns the week number for a date.", "Date = 13-Aug-2026", "=WEEKNUM(DATE(2026,8,13),2)", "33", "Useful for weekly performance reports."], ["YEARFRAC", "Date & Time", "=YEARFRAC(A2,B2)", "Returns the fraction of a year between two dates.", "Start = 01-Jan-2026\nEnd = 01-Jul-2026", "=YEARFRAC(DATE(2026,1,1),DATE(2026,7,1))", "0.5", "Useful for tenure, prorated calculations and financial analysis."], ["RANK.EQ", "Statistical", "=RANK.EQ(B2,$B$2:$B$10,0)", "Ranks a number within a list.", "Scores: 95,90,88,80\nYasin score = 90", "=RANK.EQ(90,{95,90,88,80},0)", "2", "Useful for agent rankings, sales rankings and leaderboards."], ["PERCENTILE.INC", "Statistical", "=PERCENTILE.INC(B2:B100,0.9)", "Returns the value at a chosen percentile.", "Scores: 60,70,80,90,100", "=PERCENTILE.INC(B2:B6,0.9)", "96", "Useful for SLA thresholds, performance bands and outlier analysis."], ["QUARTILE.INC", "Statistical", "=QUARTILE.INC(B2:B100,3)", "Returns a quartile value.", "Scores: 50,60,70,80,90,100", "=QUARTILE.INC(B2:B7,3)", "87.5", "Useful for segmenting performance into four bands."], ["STDEV.S", "Statistical", "=STDEV.S(B2:B100)", "Calculates sample standard deviation.", "Scores: 80,85,90,95,100", "=STDEV.S(B2:B6)", "7.91", "Measures how spread out sample performance values are."], ["CORREL", "Statistical", "=CORREL(B2:B100,C2:C100)", "Measures correlation between two datasets.", "Login hours: 7,8,9,10\nProductivity: 70,80,88,92", "=CORREL(B2:B5,C2:C5)", "High positive correlation", "Useful for analyzing relationships between operational metrics."], ["FORECAST.LINEAR", "Statistical", "=FORECAST.LINEAR(E2,B2:B10,A2:A10)", "Predicts a future value using linear regression.", "Month: 1,2,3,4\nSales: 100,120,140,160\nForecast month: 5", "=FORECAST.LINEAR(5,B2:B5,A2:A5)", "180", "Useful for simple trend-based forecasting."], ["RAND", "Advanced", "=RAND()", "Generates a random decimal between 0 and 1.", "Recalculation changes the value", "=RAND()", "0 to <1", "Useful for simulations and randomized test data."], ["RANDBETWEEN", "Advanced", "=RANDBETWEEN(1000,9999)", "Generates a random whole number in a range.", "Minimum = 1000\nMaximum = 9999", "=RANDBETWEEN(1000,9999)", "Example: 4821", "Useful for creating test IDs and sample datasets."], ["ISBLANK", "Logical", "=ISBLANK(A2)", "Checks whether a cell is empty.", "A2 is blank", "=ISBLANK(A2)", "TRUE", "Useful for data-quality checks and conditional formulas."], ["ISNUMBER", "Logical", "=ISNUMBER(A2)", "Checks whether a value is a number.", "A2 = 1250", "=ISNUMBER(1250)", "TRUE", "Useful for validating imported data."], ["ISTEXT", "Logical", "=ISTEXT(A2)", "Checks whether a value is text.", "A2 = Yasin", "=ISTEXT(\"Yasin\")", "TRUE", "Useful for data validation."], ["CELL", "Information", "=CELL(\"address\",A2)", "Returns information about a referenced cell.", "Reference = A2", "=CELL(\"address\",A2)", "$A$2", "Useful for dynamic audit and reporting formulas."], ["ROW", "Lookup & Reference", "=ROW(A2)", "Returns the row number of a reference.", "Reference = A2", "=ROW(A2)", "2", "Useful for generating sequence numbers and dynamic references."], ["COLUMN", "Lookup & Reference", "=COLUMN(C2)", "Returns the column number of a reference.", "Reference = C2", "=COLUMN(C2)", "3", "Useful for dynamic formulas and column-aware logic."], ["OFFSET", "Advanced", "=SUM(OFFSET(B2,0,0,5,1))", "Returns a range offset from a starting cell.", "Values B2:B6 = 10,20,30,40,50", "=SUM(OFFSET(B2,0,0,5,1))", "150", "Useful for dynamic ranges, though INDEX is often preferred for performance."], ["INDIRECT", "Advanced", "=SUM(INDIRECT(\"B2:B6\"))", "Converts text into a cell/range reference.", "Text reference = B2:B6\nValues = 10,20,30,40,50", "=SUM(INDIRECT(\"B2:B6\"))", "150", "Useful for dynamic references, but volatile formulas can affect workbook performance."], ["ADDRESS", "Lookup & Reference", "=ADDRESS(5,3)", "Creates a cell address from row and column numbers.", "Row = 5\nColumn = 3", "=ADDRESS(5,3)", "$C$5", "Useful when building dynamic references."], ["FORMULATEXT", "Information", "=FORMULATEXT(B2)", "Returns the formula stored in a cell as text.", "B2 contains =SUM(C2:C6)", "=FORMULATEXT(B2)", "=SUM(C2:C6)", "Useful for auditing and documenting formula-driven workbooks."]];
+const chips=["All","A–Z","Lookup","Logical","Text","Date","Math","Statistics","Dynamic","Pro","Advanced"];
+let active="All";
+function matches(f){
+ const cat=active==="All"||active==="A–Z"||
+ (active==="Lookup"&&f[1].includes("Lookup"))||
+ (active==="Date"&&f[1].includes("Date"))||
+ (active==="Math"&&f[1].includes("Math"))||
+ (active==="Statistics"&&f[1].includes("Statistical"))||
+ f[1].startsWith(active);
+ const q=document.getElementById("search").value.toLowerCase();
+ return cat && f.join(" ").toLowerCase().includes(q);
+}
+function textFor(f){
+  return (lang==="en" ? f[3] : (desc[lang][f[0]] || f[3]));
+}
+function render(){
+ const a=formulas.filter(matches).sort((x,y)=>x[0].localeCompare(y[0]));
+ const t=ui[lang];
+ document.getElementById("count").textContent=a.length+" "+t.count;
+ document.getElementById("hint").textContent=t.hint;
+ document.getElementById("search").placeholder=t.search;
+ document.querySelector(".tag").textContent=t.tag;
+ document.getElementById("list").innerHTML=a.map((f,i)=>`
+ <article class="card" onclick="openModal(${formulas.indexOf(f)})">
+  <div class="name">${f[0]}</div><div class="cat">${catNames[lang][f[1]]||f[1]}</div>
+  <div class="formula">${f[2]}</div>
+  <div class="example">
+   <div class="grid">
+    <div class="box"><b>${t.sample}</b><code>${f[4]}</code></div>
+    <div class="box"><b>${t.used}</b><code>${f[5]}</code></div>
+   </div>
+   <div class="result"><b>${t.result}</b><br><code>${f[6]}</code></div>
+   <div class="tip"><b>${t.explain}</b> ${textFor(f)} ${f[7]}</div>
+  </div>
+ </article>`).join("");
+}
+function openModal(i){
+ const f=formulas[i], t=ui[lang];
+ document.querySelectorAll(".card").forEach(c=>c.classList.remove("opening"));
+ const cards=[...document.querySelectorAll(".card")];
+ if(cards.length) cards[formulas.slice().filter(matches).sort((x,y)=>x[0].localeCompare(y[0])).indexOf(f)]?.classList.add("opening");
+ document.getElementById("modalTitle").textContent=f[0];
+ document.getElementById("modalCat").textContent=catNames[lang][f[1]]||f[1];
+ document.getElementById("modalFormula").textContent=f[2];
+ document.getElementById("modalSample").textContent=f[4];
+ document.getElementById("modalUsed").textContent=f[5];
+ document.getElementById("modalResult").textContent=f[6];
+ document.getElementById("modalExplain").textContent=" "+textFor(f)+" "+f[7];
+ document.getElementById("sampleLabel").textContent=t.sample;
+ document.getElementById("usedLabel").textContent=t.used;
+ document.getElementById("resultLabel").textContent=t.result;
+ document.getElementById("explainLabel").textContent=t.explain;
+ document.getElementById("modal").classList.add("show");
+ document.body.style.overflow="hidden";
+}
+function closeModal(){document.getElementById("modal").classList.remove("show");document.body.style.overflow="";}
+
+const chipLabels={
+en:{All:"All","A–Z":"A–Z",Lookup:"Lookup",Logical:"Logical",Text:"Text",Date:"Date",Math:"Math",Statistics:"Statistics",Dynamic:"Dynamic",Pro:"Pro",Advanced:"Advanced"},
+hi:{All:"सभी","A–Z":"A–Z",Lookup:"लुकअप",Logical:"लॉजिकल",Text:"टेक्स्ट",Date:"दिनांक",Math:"गणित",Statistics:"सांख्यिकी",Dynamic:"डायनेमिक",Pro:"प्रो",Advanced:"एडवांस्ड"},
+mr:{All:"सर्व","A–Z":"A–Z",Lookup:"लुकअप",Logical:"लॉजिकल",Text:"टेक्स्ट",Date:"दिनांक",Math:"गणित",Statistics:"सांख्यिकी",Dynamic:"डायनॅमिक",Pro:"प्रो",Advanced:"अॅडव्हान्स्ड"}
+};
+function renderChips(){
+ document.getElementById("chips").innerHTML=chips.map(c=>`<button class="chip ${c==="All"?"active":""}" onclick="active='${c}';document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));this.classList.add('active');render()">${chipLabels[lang][c]}</button>`).join("");
+}
+document.getElementById("lang").value=lang;
+document.getElementById("lang").onchange=e=>{lang=e.target.value;localStorage.setItem("yr_lang",lang);active="All";renderChips();render();};
+document.getElementById("search").oninput=render;
+renderChips();
+render();
+
+let deferred;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;document.getElementById("installBtn").hidden=false});
+document.getElementById("installBtn").onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;document.getElementById("installBtn").hidden=true}};
+if("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js");
+</script>
+</body>
+</html>
