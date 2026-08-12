@@ -1,4 +1,0 @@
-YASIN RON - EXCEL FORMULA APP
-
-GitHub upload: upload ONLY Yasin_Ron_Excel_Formula_App.html, then rename it to index.html in GitHub.
-For GitHub Pages, the final file must be named index.html and be in the repository root.
