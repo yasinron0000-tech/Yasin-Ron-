@@ -1,1 +1,1 @@
-Yasin Ron Excel Formula Master - 100 formulas, Basic/Intermediate/Advanced, sample data, formula, result and explanation, English/Hindi/Marathi, PWA install.
+Updated version: every formula now shows sample data, formula used, expected result, and explanation. Upload these files to the repository root.
