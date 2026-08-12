@@ -1,1 +1,0 @@
-Yasin Ron Excel Formula Master v4 FIXED. Upload all 5 files to repository root. GitHub Pages: main / (root). v4 uses a new service-worker cache and explicit DOM selectors to prevent intermittent blank screens.
