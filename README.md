@@ -1,15 +1,4 @@
-# Excel Master — Agent Training
-
-Included exactly:
-- Agent Login / Signup
-- Pre-filled sample training data
-- Formula example
-- Common mistakes
-- Practice training
-- Agent submits training
-- Admin Review
-- ONLY Admin can Approve / Reject
-- Approved training appears with the formula
-
-The web app uses Supabase for shared online training data.
-Do not put a Supabase service_role/secret key in the website.
+# Excel Master — Final Practice Edition
+Replace `index.html` in the GitHub repository with this file.
+It fixes mobile layout, adds working Full Screen, and gives every formula a Formula Training section with sample data, expected result, common mistakes, and an interactive practice/check answer area.
+Also replace `service-worker.js` to prevent old cached versions from reappearing.
