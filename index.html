@@ -70,37 +70,68 @@ function emCfg(){return window.EXCEL_MASTER_SUPABASE||{}}
 function emReady(){let c=emCfg(); return c.url && !c.url.startsWith('YOUR_') && c.key && !c.key.startsWith('YOUR_')}
 function setMsg(t){const e=document.getElementById('authMsg');if(e)e.textContent=t}
 async function loadProfile(){
- if(!EM_SUPA||!EM_USER)return;
- const {data,error}=await EM_SUPA.from('profiles').select('id,full_name,role').eq('id',EM_USER.id).single();
- if(error){setMsg("Profile not ready. Run supabase-schema.sql once.");return}
- EM_PROFILE=data;
- document.getElementById('userPill').textContent=(data.full_name||EM_USER.email)+" • "+data.role;
- const admin=data.role==='admin';
- document.getElementById('adminPanel').style.display=admin?'block':'none';
- document.getElementById('logoutTop').style.display='inline-block';
+ if(!EM_SUPA||!EM_USER)return false;
+ try{
+  const {data,error}=await EM_SUPA.from('profiles').select('id,full_name,role').eq('id',EM_USER.id).maybeSingle();
+  if(error){setMsg('Login succeeded, but profile setup is missing. Run supabase-schema.sql in Supabase SQL Editor.');console.error('Profile error:',error);return false}
+  if(!data){setMsg('Login succeeded, but no profile was created for this account. Run the Supabase schema/trigger, then sign up again.');return false}
+  EM_PROFILE=data;
+  document.getElementById('userPill').textContent=(data.full_name||EM_USER.email)+' • '+data.role;
+  const admin=data.role==='admin';
+  document.getElementById('adminPanel').style.display=admin?'block':'none';
+  document.getElementById('logoutBtn').style.display='inline-block';
+  return true;
+ }catch(e){console.error(e);setMsg('Unable to load your profile. Check Supabase setup and internet connection.');return false}
 }
 async function bootAuth(){
- if(!emReady()){setMsg("Supabase is not connected yet. Add your Project URL and Publishable/Anon key to supabase-config.js.");return}
- if(!window.supabase){setMsg("Supabase library did not load. Check internet connection.");return}
- EM_SUPA=window.supabase.createClient(emCfg().url,emCfg().key);
- const {data}=await EM_SUPA.auth.getSession(); EM_USER=data.session?.user||null;
- if(EM_USER){document.getElementById('authGate').style.display='none';await loadProfile()}else document.getElementById('authGate').style.display='flex';
- EM_SUPA.auth.onAuthStateChange(async(_event,session)=>{EM_USER=session?.user||null;if(EM_USER){document.getElementById('authGate').style.display='none';await loadProfile()}else{document.getElementById('authGate').style.display='flex';document.getElementById('userPill').textContent='Not logged in';}});
+ try{
+  if(!emReady()){setMsg('Supabase is not connected yet. Check supabase-config.js.');return}
+  if(!window.supabase){setMsg('Supabase library did not load. Check internet connection.');return}
+  EM_SUPA=window.supabase.createClient(emCfg().url,emCfg().key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const {data,error}=await EM_SUPA.auth.getSession();
+  if(error){setMsg('Unable to check login session: '+error.message);return}
+  EM_USER=data.session?.user||null;
+  if(EM_USER){
+   document.getElementById('authGate').style.display='none';
+   await loadProfile();
+  }else document.getElementById('authGate').style.display='flex';
+  EM_SUPA.auth.onAuthStateChange((_event,session)=>{
+   EM_USER=session?.user||null;
+   if(EM_USER){
+    document.getElementById('authGate').style.display='none';
+    setTimeout(()=>loadProfile(),0);
+   }else{
+    EM_PROFILE=null;
+    document.getElementById('authGate').style.display='flex';
+    document.getElementById('userPill').textContent='Not logged in';
+    document.getElementById('logoutBtn').style.display='none';
+   }
+  });
+ }catch(e){console.error('Auth boot error:',e);setMsg('Login system failed to start. Refresh the page and check Supabase configuration.');}
 }
+
 document.getElementById('loginTab').onclick=()=>{authMode='login';document.getElementById('signupNameWrap').style.display='none';document.getElementById('authSubmit').textContent='Login';document.getElementById('loginTab').className='btn primary';document.getElementById('signupTab').className='btn'};
 document.getElementById('signupTab').onclick=()=>{authMode='signup';document.getElementById('signupNameWrap').style.display='block';document.getElementById('authSubmit').textContent='Create Agent Account';document.getElementById('signupTab').className='btn primary';document.getElementById('loginTab').className='btn'};
 document.getElementById('authSubmit').onclick=async()=>{
- if(!EM_SUPA){setMsg("First configure Supabase.");return}
+ if(!EM_SUPA){setMsg('Supabase is not configured.');return}
  const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value,name=document.getElementById('authName').value.trim();
- if(!email||password.length<6||(authMode==='signup'&&!name)){setMsg("Enter all required fields. Password must be at least 6 characters.");return}
- document.getElementById('authSubmit').disabled=true;
- let r=authMode==='login'?await EM_SUPA.auth.signInWithPassword({email,password}):await EM_SUPA.auth.signUp({email,password,options:{data:{full_name:name}}});
- document.getElementById('authSubmit').disabled=false;
- if(r.error){setMsg(r.error.message);return}
- setMsg(authMode==='signup'?(r.data.session?"Account created.":"Check your email to confirm signup."):"Login successful.");
+ if(!email||password.length<6||(authMode==='signup'&&!name)){setMsg('Enter all required fields. Password must be at least 6 characters.');return}
+ const btn=document.getElementById('authSubmit');btn.disabled=true;setMsg(authMode==='login'?'Signing in…':'Creating account…');
+ try{
+  const r=authMode==='login'
+   ?await EM_SUPA.auth.signInWithPassword({email,password})
+   :await EM_SUPA.auth.signUp({email,password,options:{data:{full_name:name}}});
+  if(r.error){setMsg(r.error.message);return}
+  if(authMode==='signup'&&!r.data.session){setMsg('Account created. Check your email to confirm signup, then log in.');return}
+  setMsg('Login successful. Loading your profile…');
+  EM_USER=r.data.user||r.data.session?.user||EM_USER;
+  document.getElementById('authGate').style.display='none';
+  await loadProfile();
+ }catch(e){console.error('Auth error:',e);setMsg('Login failed: '+(e?.message||'Unknown error'));}
+ finally{btn.disabled=false}
 };
 async function emLogout(){if(EM_SUPA)await EM_SUPA.auth.signOut()}
-document.getElementById('logoutTop').onclick=emLogout;
+document.getElementById('logoutBtn').onclick=emLogout;
 document.getElementById('refreshReviews').onclick=loadReviews;
 async function loadReviews(){
  if(!EM_SUPA||!EM_PROFILE||EM_PROFILE.role!=='admin')return;
