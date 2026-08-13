@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<rect width="512" height="512" rx="110" fill="#0b1220"/>
-<rect x="82" y="72" width="348" height="368" rx="38" fill="#101b2d" stroke="#4da3ff" stroke-width="16"/>
-<path d="M130 155h252M130 235h252M130 315h252M205 115v270M305 115v270" stroke="#4da3ff" stroke-width="16" opacity=".9"/>
-<text x="256" y="405" text-anchor="middle" font-family="Arial,sans-serif" font-size="72" font-weight="700" fill="#eef5ff">FX</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="#0b1220"/><rect x="75" y="70" width="362" height="372" rx="40" fill="#10213a" stroke="#4da3ff" stroke-width="16"/><text x="256" y="315" text-anchor="middle" font-family="Arial" font-size="150" font-weight="700" fill="#fff">FX</text></svg>
