@@ -1,1 +1,6 @@
-Upload index.html, manifest.json, service-worker.js and icon.svg to the GitHub repository root. The formula detail now includes step-by-step training, common mistakes, practice and a quick quiz for every formula.
+EXCEL MASTER — FINAL TRAINING VERSION
+
+Every formula has Formula Training: what it does, how to use it, syntax, real-world use, common mistakes, practice, sample data, expected result and a quick quiz.
+
+Upload index.html + manifest.json + service-worker.js + icon.svg to the repository root.
+Replace the old index.html. Then open the GitHub Pages URL and refresh the page.

@@ -44,7 +44,7 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:fl
 <section class="hero"><div class="heroBox">
   <h2>Welcome, Yasin Ron 👋</h2>
   <p>Learn Excel formulas from Basic to Advanced with syntax, simple explanations, sample data and expected results. Search any formula and open its complete example.</p>
-  <div class="chips"><span class="chip" id="totalChip"></span><span class="chip">Excel 2016 focused</span><span class="chip">Advanced formulas</span><span class="chip">Sample data</span><span class="chip">Mobile + Desktop</span></div>
+  <div class="chips"><span class="chip" id="totalChip"></span><span class="chip">Excel 2016 focused</span><span class="chip">Advanced formulas</span><span class="chip">Sample data</span><span class="chip">Mobile + Desktop</span><span class="chip">🎓 Formula Training + Quiz</span></div>
 </div></section>
 
 <main class="workspace">
@@ -53,7 +53,7 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:fl
   <div class="sideTitle">Categories</div><div id="cats"></div>
 </aside>
 <section class="content">
-  <div class="toolbar"><div class="stats" id="stats"></div><div class="filters" id="levels"></div></div>
+  <div class="toolbar"><div class="stats" id="stats"></div><div class="stats">🎓 Tap any formula → full training</div><div class="filters" id="levels"></div></div>
   <div id="grid" class="grid"></div>
 </section>
 </main>
@@ -67,7 +67,7 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:fl
     <div class="section"><h4>Explanation</h4><div class="desc" id="mDesc"></div></div>
     <div class="section"><h4>Example</h4><div class="formula" id="mExample"></div></div>
     <div class="section"><h4>Sample Data</h4><table class="sampleTable"><thead><tr><th>Input / Data</th><th>Value</th></tr></thead><tbody id="mSample"></tbody></table></div>
-    <div class="section"><h4>Expected Result</h4><div class="result" id="mResult"></div></div><div class="section"><h4>🎓 Formula Training</h4><div id="mTraining"></div></div>
+    <div class="section"><h4>Expected Result</h4><div class="result" id="mResult"></div></div><div class="section" style="border:1px solid #31527b;border-radius:14px;padding:12px;background:rgba(77,163,255,.05)"><h4 style="font-size:18px">🎓 Formula Training — Step by Step</h4><div class="desc" style="margin-bottom:10px">Learn what the formula does, how to write it, real-world usage, common mistakes, practice and a quick quiz.</div><div id="mTraining"></div></div>
   </div>
 </div></div>
 
@@ -110,8 +110,8 @@ function render(){
       <div class="cardHead"><div class="name">${escapeHtml(f.name)}</div><span class="level">${escapeHtml(f.level)}</span></div>
       <div class="syntax">${escapeHtml(f.syntax)}</div>
       <div class="desc">${escapeHtml(f.explanation)}</div>
-      <div class="meta"><span>${escapeHtml(f.category)}</span><span>${escapeHtml(f.version)}</span></div>
-      <button class="openBtn" data-index="${formulas.indexOf(f)}">📘 View Example & Training →</button>
+      <div class="meta"><span>${escapeHtml(f.category)}</span><span>${escapeHtml(f.version)}</span></div><div style="margin-top:8px"><span class="level" style="display:inline-block">🎓 Training Included</span></div>
+      <button class="openBtn" data-index="${formulas.indexOf(f)}">🎓 Learn Formula + Training →</button>
     </article>`).join(""):`<div class="empty">No formula found.<br>Try another search or category.</div>`;
   grid.querySelectorAll(".openBtn").forEach(b=>b.onclick=()=>openFormula(formulas[Number(b.dataset.index)]));
 }
