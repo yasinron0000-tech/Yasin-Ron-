@@ -185,7 +185,6 @@ renderCategories();renderLevels();render();
 </script>
 
 
-
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./supabase-config.js";
@@ -198,190 +197,72 @@ const $ = id => document.getElementById(id);
 const agentModal = $("agentModal");
 const formulaSelect = $("trainFormula");
 
-const samples = {
-  "SUM": {
-    title:"SUM — Basic Training",
-    explanation:"SUM selected cells ya range ke numbers ko add karta hai.",
-    sample:"A1:A5 = 10, 20, 30, 40, 50",
-    formula:"=SUM(A1:A5)",
-    result:"150",
-    mistakes:"Range galat select karna; text values ko numbers samajhna; SUM ke brackets miss karna.",
-    question:"A1:A5 ka total nikalo.",
-    answer:"=SUM(A1:A5)"
-  },
-  "AVERAGE": {
-    title:"AVERAGE — Basic Training",
-    explanation:"AVERAGE selected numbers ka arithmetic average return karta hai.",
-    sample:"A1:A5 = 10, 20, 30, 40, 50",
-    formula:"=AVERAGE(A1:A5)",
-    result:"30",
-    mistakes:"Blank cells ko unnecessary zero samajhna; wrong range select karna.",
-    question:"A1:A5 ka average nikalo.",
-    answer:"=AVERAGE(A1:A5)"
-  },
-  "COUNTIF": {
-    title:"COUNTIF — Conditional Count",
-    explanation:"COUNTIF ek condition ke basis par matching cells count karta hai.",
-    sample:"A2:A6 = Present, Absent, Present, Present, Absent",
-    formula:'=COUNTIF(A2:A6,"Present")',
-    result:"3",
-    mistakes:"Text criteria ko quotes me na rakhna; wrong range use karna.",
-    question:"Present employees count karo.",
-    answer:'=COUNTIF(A2:A6,"Present")'
-  },
-  "SUMIF": {
-    title:"SUMIF — Conditional Total",
-    explanation:"SUMIF condition match hone wali rows ke numbers ka total karta hai.",
-    sample:"A2:A5 = Sales, HR, Sales, IT | B2:B5 = 100, 50, 200, 80",
-    formula:'=SUMIF(A2:A5,"Sales",B2:B5)',
-    result:"300",
-    mistakes:"Criteria range aur sum range ka size mismatch; text criteria me quotes bhoolna.",
-    question:"Sales department ka total nikalo.",
-    answer:'=SUMIF(A2:A5,"Sales",B2:B5)'
-  },
-  "VLOOKUP": {
-    title:"VLOOKUP — Employee Lookup",
-    explanation:"VLOOKUP first column me value find karke same row se required column ka result return karta hai.",
-    sample:"A2:C4 = 101 | Amit | 25000; 102 | Rahul | 28000; 103 | Neha | 30000",
-    formula:"=VLOOKUP(102,A2:C4,2,FALSE)",
-    result:"Rahul",
-    mistakes:"Lookup value wrong hona; lookup column first column na hona; column number galat dena; FALSE/TRUE ka wrong use.",
-    question:"Employee ID 103 ka salary find karo.",
-    answer:"=VLOOKUP(103,A2:C4,3,FALSE)"
-  },
-  "XLOOKUP": {
-    title:"XLOOKUP — Modern Lookup",
-    explanation:"XLOOKUP lookup value ko ek range me find karke doosre range se matching result return karta hai.",
-    sample:"A2:A4 = 101, 102, 103 | B2:B4 = Amit, Rahul, Neha",
-    formula:"=XLOOKUP(102,A2:A4,B2:B4)",
-    result:"Rahul",
-    mistakes:"Lookup aur return ranges ka size mismatch; wrong lookup value.",
-    question:"ID 103 ka name find karo.",
-    answer:"=XLOOKUP(103,A2:A4,B2:B4)"
-  },
-  "IF": {
-    title:"IF — Logical Training",
-    explanation:"IF condition TRUE ya FALSE hone ke basis par alag result deta hai.",
-    sample:"A2 = 85",
-    formula:'=IF(A2>=60,"Pass","Fail")',
-    result:"Pass",
-    mistakes:"Comparison operator galat use karna; text results me quotes miss karna.",
-    question:"60 ya usse zyada marks par Pass dikhao.",
-    answer:'=IF(A2>=60,"Pass","Fail")'
-  }
-};
-
-function getSample(name){
-  if(samples[name]) return samples[name];
-  const f = formulas.find(x => x.name === name);
-  return {
-    title:(f?.name || name) + " — Training",
-    explanation:f?.description || "Formula ka use aur practical application explain karein.",
-    sample:"Example: A2:A6 me sample values enter karein.",
-    formula:f?.syntax || "=" + name + "(...)",
-    result:"Formula ke hisaab se result",
-    mistakes:"Wrong range, wrong argument/order, missing brackets, aur incorrect cell references check karein.",
-    question:"Is formula ka practical example solve karein.",
-    answer:f?.syntax || "=" + name + "(...)"
-  };
-}
+function showMsg(id, msg, good=false){ $(id).textContent = msg; $(id).style.color = good ? "var(--good)" : "var(--muted)"; }
 
 function fillFormulaSelect(){
-  formulaSelect.innerHTML = formulas.map(f =>
-    `<option value="${escapeAttr(f.name)}">${escapeHtml(f.name)} — ${escapeHtml(f.category)}</option>`
-  ).join("");
-  loadSampleTraining();
-}
-
-function loadSampleTraining(){
-  const s = getSample(formulaSelect.value);
-  $("trainTitle").value=s.title;
-  $("trainExplanation").value=s.explanation;
-  $("trainSample").value=s.sample;
-  $("trainFormulaExample").value=s.formula;
-  $("trainResult").value=s.result;
-  $("trainMistakes").value=s.mistakes;
-  $("trainQuestion").value=s.question;
-  $("trainAnswer").value=s.answer;
+  formulaSelect.innerHTML = formulas.map(f => `<option value="${escapeAttr(f.name)}">${escapeHtml(f.name)} — ${escapeHtml(f.category)}</option>`).join("");
 }
 fillFormulaSelect();
-formulaSelect.onchange = loadSampleTraining;
 
 $("agentBtn").onclick = () => {
   agentModal.classList.add("show");
+  if(!configured){
+    $("agentStatus").textContent = "Database is not connected yet. Add your Supabase keys in supabase-config.js.";
+  }
   refreshAuth();
 };
 $("agentClose").onclick = () => agentModal.classList.remove("show");
 agentModal.addEventListener("click", e => { if(e.target === agentModal) agentModal.classList.remove("show"); });
 
-function showMsg(id,msg,good=false){
-  $(id).textContent=msg;
-  $(id).style.color=good ? "var(--good)" : "var(--muted)";
+function switchPanel(which){
+  $("submitPanel").style.display = which==="submit" ? "" : "none";
+  $("myPanel").style.display = which==="my" ? "" : "none";
+  $("adminPanel").style.display = which==="admin" ? "" : "none";
+  ["submitTab","myTab","adminTab"].forEach(id => $(id).classList.remove("active"));
+  $(which==="submit" ? "submitTab" : which==="my" ? "myTab" : "adminTab").classList.add("active");
 }
+$("submitTab").onclick=()=>switchPanel("submit");
+$("myTab").onclick=()=>{switchPanel("my");loadMySubmissions();};
+$("adminTab").onclick=()=>{switchPanel("admin");loadAdminSubmissions();};
 
 async function refreshAuth(){
-  if(!sb){
-    $("authView").style.display="";
-    $("agentView").style.display="none";
-    $("agentStatus").textContent="Database not connected. Supabase setup required.";
-    return;
-  }
-  const {data:{session}}=await sb.auth.getSession();
+  if(!sb){ $("authView").style.display=""; $("agentView").style.display="none"; return; }
+  const {data:{session}} = await sb.auth.getSession();
   if(!session){
-    $("authView").style.display="";
-    $("agentView").style.display="none";
-    $("agentStatus").textContent="Agent Login / Signup";
-    return;
+    $("authView").style.display=""; $("agentView").style.display="none"; return;
   }
-
-  $("authView").style.display="none";
-  $("agentView").style.display="";
-  const {data:profile}=await sb.from("profiles").select("full_name,role").eq("id",session.user.id).maybeSingle();
-  const role=profile?.role || "agent";
-  $("agentUser").textContent=`${profile?.full_name || session.user.email} • ${role}`;
-  $("adminPanel").style.display=role==="admin" ? "" : "none";
-  $("submitPanel").style.display="";
-  if(role==="admin") loadAdminSubmissions();
+  $("authView").style.display="none"; $("agentView").style.display="";
+  const {data:profile} = await sb.from("profiles").select("full_name,role").eq("id",session.user.id).maybeSingle();
+  const role = profile?.role || "agent";
+  $("agentUser").textContent = `Signed in as ${profile?.full_name || session.user.email} • ${role}`;
+  $("adminTab").style.display = role==="admin" ? "" : "none";
+  switchPanel("submit");
 }
 
-$("loginBtn").onclick=async()=>{
-  if(!sb) return showMsg("loginMsg","Supabase configure karein.");
-  const {error}=await sb.auth.signInWithPassword({
-    email:$("loginEmail").value.trim(),
-    password:$("loginPassword").value
-  });
+$("loginBtn").onclick = async()=>{
+  if(!sb) return showMsg("loginMsg","First configure Supabase in supabase-config.js.");
+  const email=$("loginEmail").value.trim(), password=$("loginPassword").value;
+  const {error}=await sb.auth.signInWithPassword({email,password});
   if(error) return showMsg("loginMsg",error.message);
-  showMsg("loginMsg","Login successful.",true);
-  await refreshAuth();
+  showMsg("loginMsg","Login successful.",true); await refreshAuth();
 };
 
-$("signupBtn").onclick=async()=>{
-  if(!sb) return showMsg("signupMsg","Supabase configure karein.");
-  const name=$("signupName").value.trim();
-  const email=$("signupEmail").value.trim();
-  const password=$("signupPassword").value;
-  if(!name || !email || password.length<6)
-    return showMsg("signupMsg","Name, valid email aur 6+ character password enter karein.");
-  const {error}=await sb.auth.signUp({
-    email,password,options:{data:{full_name:name}}
-  });
+$("signupBtn").onclick = async()=>{
+  if(!sb) return showMsg("signupMsg","First configure Supabase in supabase-config.js.");
+  const full_name=$("signupName").value.trim(), email=$("signupEmail").value.trim(), password=$("signupPassword").value;
+  if(!full_name || !email || password.length<6) return showMsg("signupMsg","Enter name, valid email and a 6+ character password.");
+  const {error}=await sb.auth.signUp({email,password,options:{data:{full_name}}});
   if(error) return showMsg("signupMsg",error.message);
-  showMsg("signupMsg","Account created. Email confirmation ho to email verify karein.",true);
+  showMsg("signupMsg","Account created. If email confirmation is enabled, confirm your email first.",true);
 };
 
-$("logoutBtn").onclick=async()=>{
-  if(sb) await sb.auth.signOut();
-  await refreshAuth();
-};
+$("logoutBtn").onclick = async()=>{ if(sb){await sb.auth.signOut();} await refreshAuth(); };
 
-$("submitTraining").onclick=async()=>{
-  if(!sb) return showMsg("submitMsg","Supabase configure karein.");
+$("submitTraining").onclick = async()=>{
+  if(!sb) return showMsg("submitMsg","First configure Supabase.");
   const {data:{session}}=await sb.auth.getSession();
-  if(!session) return showMsg("submitMsg","Pehle login karein.");
-
-  const {data:profile}=await sb.from("profiles")
-    .select("full_name").eq("id",session.user.id).maybeSingle();
-
+  if(!session) return showMsg("submitMsg","Please login first.");
+  const {data:profile}=await sb.from("profiles").select("full_name").eq("id",session.user.id).maybeSingle();
   const payload={
     formula_name:$("trainFormula").value,
     title:$("trainTitle").value.trim(),
@@ -396,89 +277,65 @@ $("submitTraining").onclick=async()=>{
     author_name:profile?.full_name || session.user.email,
     status:"pending"
   };
-
+  if(!payload.title || !payload.explanation || !payload.formula_example) return showMsg("submitMsg","Title, explanation and example formula are required.");
   const {error}=await sb.from("training_submissions").insert(payload);
   if(error) return showMsg("submitMsg",error.message);
-  showMsg("submitMsg","✅ Training submitted. Sirf Admin approve/reject karega.",true);
+  showMsg("submitMsg","✅ Training submitted for admin approval.",true);
+  ["trainTitle","trainExplanation","trainSample","trainFormulaExample","trainResult","trainMistakes","trainQuestion","trainAnswer"].forEach(id=>$(id).value="");
 };
+
+async function loadMySubmissions(){
+  if(!sb) return;
+  const {data,error}=await sb.from("training_submissions").select("*").order("created_at",{ascending:false});
+  if(error) return $("myList").innerHTML=`<div class="empty">${escapeHtml(error.message)}</div>`;
+  $("myList").innerHTML=data.length ? data.map(x=>submissionCard(x,false)).join("") : `<div class="empty">No submissions yet.</div>`;
+}
 
 async function loadAdminSubmissions(){
   if(!sb) return;
-  const {data,error}=await sb.from("training_submissions")
-    .select("*").eq("status","pending").order("created_at",{ascending:true});
-  if(error){
-    $("adminList").innerHTML=`<div class="empty">${escapeHtml(error.message)}</div>`;
-    return;
-  }
-  $("adminList").innerHTML=data?.length
-    ? data.map(submissionCard).join("")
-    : `<div class="empty">No pending training.</div>`;
-
-  document.querySelectorAll("[data-approve]").forEach(b =>
-    b.onclick=()=>reviewSubmission(b.dataset.approve,"approved"));
-  document.querySelectorAll("[data-reject]").forEach(b =>
-    b.onclick=()=>reviewSubmission(b.dataset.reject,"rejected"));
+  const {data,error}=await sb.from("training_submissions").select("*").eq("status","pending").order("created_at",{ascending:true});
+  if(error) return $("adminList").innerHTML=`<div class="empty">${escapeHtml(error.message)}</div>`;
+  $("adminList").innerHTML=data.length ? data.map(x=>submissionCard(x,true)).join("") : `<div class="empty">No pending training.</div>`;
+  document.querySelectorAll("[data-approve]").forEach(b=>b.onclick=()=>reviewSubmission(b.dataset.approve,"approved"));
+  document.querySelectorAll("[data-reject]").forEach(b=>b.onclick=()=>reviewSubmission(b.dataset.reject,"rejected"));
 }
 
-function submissionCard(x){
+function submissionCard(x, admin){
   return `<div class="communityCard">
-    <div class="toolbar">
-      <div>
-        <b>${escapeHtml(x.title||x.formula_name)}</b>
-        <div class="desc">${escapeHtml(x.formula_name)} • ${escapeHtml(x.author_name||"Agent")}</div>
-      </div>
-      <span class="status pending">Pending</span>
-    </div>
+    <div class="toolbar"><div><b>${escapeHtml(x.title||x.formula_name)}</b><div class="desc">${escapeHtml(x.formula_name)} • by ${escapeHtml(x.author_name||"Agent")}</div></div><span class="status ${x.status}">${escapeHtml(x.status)}</span></div>
     <div class="desc"><b>Explanation:</b> ${escapeHtml(x.explanation||"")}</div>
     <div class="syntax" style="margin-top:8px">${escapeHtml(x.formula_example||"")}</div>
-    <div class="desc" style="margin-top:8px"><b>Sample Data:</b> ${escapeHtml(x.sample_data||"")}</div>
-    <div class="desc"><b>Common Mistakes:</b> ${escapeHtml(x.common_mistakes||"")}</div>
-    <div class="actions" style="margin-top:10px">
-      <button class="btn" data-approve="${x.id}">✅ Approve</button>
-      <button class="btn" data-reject="${x.id}">❌ Reject</button>
-    </div>
+    ${x.sample_data?`<div class="desc" style="margin-top:8px"><b>Sample:</b> ${escapeHtml(x.sample_data)}</div>`:""}
+    ${admin?`<div class="actions" style="margin-top:10px"><button class="btn" data-approve="${x.id}">✅ Approve</button><button class="btn" data-reject="${x.id}">❌ Reject</button></div>`:""}
   </div>`;
 }
 
 async function reviewSubmission(id,status){
   const {data:{session}}=await sb.auth.getSession();
   if(!session) return;
-  const {error}=await sb.from("training_submissions")
-    .update({
-      status,
-      reviewed_by:session.user.id,
-      reviewed_at:new Date().toISOString()
-    }).eq("id",id);
-  if(error) return alert(error.message);
-  loadAdminSubmissions();
+  const {error}=await sb.from("training_submissions").update({status,reviewed_by:session.user.id,reviewed_at:new Date().toISOString()}).eq("id",id);
+  if(error) alert(error.message); else loadAdminSubmissions();
 }
 
-window.loadCommunityTraining=async function(formulaName){
+window.loadCommunityTraining = async function(formulaName){
   const box=$("communityTraining");
-  if(!box || !sb) return;
-  const {data}=await sb.from("training_submissions")
-    .select("title,explanation,sample_data,formula_example,expected_result,common_mistakes,practice_question,practice_answer,author_name")
-    .eq("formula_name",formulaName).eq("status","approved")
-    .order("created_at",{ascending:false});
-
-  if(!data?.length){ box.innerHTML=""; return; }
-
-  box.innerHTML=`<div class="trainingBox"><h4>👥 Approved Agent Training</h4>${
-    data.map(x=>`<div class="communityCard">
-      <b>${escapeHtml(x.title||"Agent Training")}</b>
-      <div class="desc">By ${escapeHtml(x.author_name||"Agent")}</div>
-      <div class="desc" style="margin-top:7px">${escapeHtml(x.explanation||"")}</div>
-      <div class="syntax" style="margin-top:8px">${escapeHtml(x.formula_example||"")}</div>
-      <div class="desc" style="margin-top:7px"><b>Sample Data:</b> ${escapeHtml(x.sample_data||"")}</div>
-      <div class="desc"><b>Result:</b> ${escapeHtml(x.expected_result||"")}</div>
-      <div class="desc"><b>Common Mistakes:</b> ${escapeHtml(x.common_mistakes||"")}</div>
-    </div>`).join("")
-  }</div>`;
+  if(!box) return;
+  if(!sb){ box.innerHTML=""; return; }
+  const {data,error}=await sb.from("training_submissions").select("title,explanation,sample_data,formula_example,expected_result,common_mistakes,practice_question,practice_answer,author_name").eq("formula_name",formulaName).eq("status","approved").order("created_at",{ascending:false});
+  if(error || !data?.length){ box.innerHTML=""; return; }
+  box.innerHTML=`<div class="trainingBox"><h4>👥 Agent Community Training</h4>${data.map(x=>`
+    <div class="communityCard"><b>${escapeHtml(x.title||"Agent training")}</b><div class="desc">By ${escapeHtml(x.author_name||"Agent")}</div>
+    <div class="desc" style="margin-top:7px">${escapeHtml(x.explanation||"")}</div>
+    <div class="syntax" style="margin-top:8px">${escapeHtml(x.formula_example||"")}</div>
+    ${x.sample_data?`<div class="desc" style="margin-top:7px"><b>Sample:</b> ${escapeHtml(x.sample_data)}</div>`:""}
+    ${x.expected_result?`<div class="desc"><b>Result:</b> ${escapeHtml(x.expected_result)}</div>`:""}
+    ${x.common_mistakes?`<div class="desc"><b>Mistakes:</b> ${escapeHtml(x.common_mistakes)}</div>`:""}
+    ${x.practice_question?`<div class="desc"><b>Practice:</b> ${escapeHtml(x.practice_question)}</div>`:""}
+    </div>`).join("")}</div>`;
 };
 
 if(sb) sb.auth.onAuthStateChange(()=>refreshAuth());
 </script>
-
 
 <script>
 if ("serviceWorker" in navigator) {
@@ -488,14 +345,10 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
-
 <div class="modal" id="agentModal">
   <div class="modalBox" style="max-width:1000px">
     <div class="modalHead">
-      <div>
-        <h3 style="margin:0">👥 Agent Training Center</h3>
-        <div class="desc" id="agentStatus">Agent Login / Signup</div>
-      </div>
+      <div><h3 style="margin:0">👥 Agent Training Center</h3><div class="desc" id="agentStatus">Sign in to add training for the team.</div></div>
       <button class="btn" id="agentClose">✕</button>
     </div>
 
@@ -508,25 +361,14 @@ if ("serviceWorker" in navigator) {
           <button class="openBtn" id="loginBtn" style="margin-top:10px">Login</button>
           <div class="desc" id="loginMsg" style="margin-top:8px"></div>
         </div>
-
         <div class="lesson">
-          <b>📝 Agent Signup</b>
+          <b>📝 Create Agent Account</b>
           <input class="search" id="signupName" placeholder="Full name">
           <input class="search" id="signupEmail" type="email" placeholder="Email" style="margin-top:8px">
           <input class="search" id="signupPassword" type="password" placeholder="Password (6+ characters)" style="margin-top:8px">
           <button class="openBtn" id="signupBtn" style="margin-top:10px">Create Account</button>
           <div class="desc" id="signupMsg" style="margin-top:8px"></div>
         </div>
-      </div>
-
-      <div class="lesson" style="margin-top:12px">
-        <b>⚠️ Common Agent Login / Signup Mistakes</b>
-        <ul class="desc">
-          <li>Correct email address use karein.</li>
-          <li>Password minimum 6 characters rakhein.</li>
-          <li>Email confirmation enabled ho to signup ke baad email verify karein.</li>
-          <li>Login ke liye wahi email/password use karein jo signup me diya tha.</li>
-        </ul>
       </div>
     </div>
 
@@ -535,69 +377,34 @@ if ("serviceWorker" in navigator) {
         <div class="stats" id="agentUser"></div>
         <button class="btn" id="logoutBtn">Logout</button>
       </div>
+      <div class="filters" style="margin-bottom:12px">
+        <button class="filter active" id="submitTab">➕ Add Training</button>
+        <button class="filter" id="myTab">📚 My Submissions</button>
+        <button class="filter" id="adminTab" style="display:none">🛡️ Admin Review</button>
+      </div>
 
       <div id="submitPanel">
         <div class="lesson">
-          <b>📚 Formula Training</b>
+          <b>1. Select Formula</b>
           <select class="search" id="trainFormula" style="margin-top:8px"></select>
-          <div class="desc" style="margin-top:8px">
-            Sample data, formula example and common mistakes automatically loaded hain. Agent zarurat ke hisaab se training details update karke submit kar sakta hai.
-          </div>
+          <div class="desc" style="margin-top:8px">Your training will be submitted as <b>Pending</b> until an admin approves it.</div>
         </div>
-
         <div class="trainingGrid" style="margin-top:12px">
-          <div class="lesson">
-            <b>Training Title</b>
-            <input class="search" id="trainTitle" placeholder="Formula training title">
-          </div>
-
-          <div class="lesson">
-            <b>Explanation</b>
-            <textarea class="search" id="trainExplanation" rows="4"></textarea>
-          </div>
-
-          <div class="lesson">
-            <b>📊 Sample Data</b>
-            <textarea class="search" id="trainSample" rows="5"></textarea>
-          </div>
-
-          <div class="lesson">
-            <b>🧮 Formula Example</b>
-            <textarea class="search" id="trainFormulaExample" rows="3"></textarea>
-          </div>
-
-          <div class="lesson">
-            <b>✅ Expected Result</b>
-            <input class="search" id="trainResult">
-          </div>
-
-          <div class="lesson">
-            <b>⚠️ Common Mistakes</b>
-            <textarea class="search" id="trainMistakes" rows="5"></textarea>
-          </div>
-
-          <div class="lesson">
-            <b>🧠 Practice Question</b>
-            <textarea class="search" id="trainQuestion" rows="3"></textarea>
-          </div>
-
-          <div class="lesson">
-            <b>✔ Practice Answer</b>
-            <textarea class="search" id="trainAnswer" rows="3"></textarea>
-          </div>
+          <div class="lesson"><b>Training title</b><input class="search" id="trainTitle" placeholder="Example: VLOOKUP for MIS employee lookup"></div>
+          <div class="lesson"><b>Explanation</b><textarea class="search" id="trainExplanation" rows="4" placeholder="Explain the formula in simple words..."></textarea></div>
+          <div class="lesson"><b>Sample data</b><textarea class="search" id="trainSample" rows="4" placeholder="ID | Name | Salary&#10;101 | Amit | 25000"></textarea></div>
+          <div class="lesson"><b>Example formula</b><textarea class="search" id="trainFormulaExample" rows="3" placeholder="=VLOOKUP(E2,A2:C10,2,FALSE)"></textarea></div>
+          <div class="lesson"><b>Expected result</b><input class="search" id="trainResult" placeholder="Amit"></div>
+          <div class="lesson"><b>Common mistakes</b><textarea class="search" id="trainMistakes" rows="3" placeholder="Wrong column number, missing FALSE, lookup column not first..."></textarea></div>
+          <div class="lesson"><b>Practice question</b><textarea class="search" id="trainQuestion" rows="3" placeholder="Find the salary for employee ID 102."></textarea></div>
+          <div class="lesson"><b>Practice answer</b><textarea class="search" id="trainAnswer" rows="3" placeholder="=VLOOKUP(102,A2:C10,3,FALSE)"></textarea></div>
         </div>
-
-        <button class="openBtn" id="submitTraining" style="margin-top:12px">📤 Submit Training</button>
+        <button class="openBtn" id="submitTraining" style="margin-top:12px">📤 Submit Training for Approval</button>
         <div class="desc" id="submitMsg" style="margin-top:8px"></div>
       </div>
 
-      <div id="adminPanel" style="display:none">
-        <div class="lesson">
-          <b>🛡️ Admin Review</b>
-          <div class="desc">Sirf Yasin Ron/Admin yahan training ko Approve ya Reject kar sakta hai.</div>
-        </div>
-        <div id="adminList" style="margin-top:10px"></div>
-      </div>
+      <div id="myPanel" style="display:none"><div id="myList"></div></div>
+      <div id="adminPanel" style="display:none"><div id="adminList"></div></div>
     </div>
   </div>
 </div>
