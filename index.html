@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07101d"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.54.0"></script><title>Excel Master — Yasin Ron</title>
+<meta name="theme-color" content="#07101d"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><title>Excel Master — Yasin Ron</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#07101d;color:#edf5ff;font-family:system-ui,Arial}button,input,textarea{font:inherit}
 header{position:sticky;top:0;z-index:5;padding:10px 12px;background:#081321ee;backdrop-filter:blur(10px);border-bottom:1px solid #263a54;display:flex;justify-content:space-between;gap:8px}
@@ -28,7 +28,6 @@ main{max-width:1400px;margin:auto;padding:10px}.hero{background:linear-gradient(
   <input id="authEmail" class="authInput" type="email" placeholder="Email">
   <input id="authPassword" class="authInput" type="password" placeholder="Password (minimum 6 characters)">
   <button class="btn primary" id="authSubmit" style="width:100%">Login</button>
-  <button class="btn" id="logoutBtn" style="display:none;width:100%;margin-top:7px">Logout</button>
   <div id="authMsg" class="authMsg">Login with your Agent account.</div>
  </div>
 </div>
@@ -51,7 +50,7 @@ main{max-width:1400px;margin:auto;padding:10px}.hero{background:linear-gradient(
 <div class="box"><b>⚠️ Common Mistakes</b><ul class="muted"><li>Check brackets and commas.</li><li>Use correct cell/range references.</li><li>Put text criteria inside quotes.</li><li>Use $ for references that must stay fixed when copied.</li><li>Check the function spelling and Excel version.</li></ul></div>
 <div class="box"><b>🧠 Practice the Formula</b><p class="muted">Write the formula yourself using the sample data, then check it.</p><p id="pdata" class="muted"></p><textarea id="ans" placeholder="Type your Excel formula here..."></textarea><br><button class="btn primary" onclick="check()">Check Answer</button> <button class="btn" onclick="reveal()">Show Correct Formula</button> <button class="btn primary" id="submitTraining">📤 Submit Training</button><div id="feedback" style="margin-top:8px"></div></div>
 </div></div>
-<script src="./supabase-config.js?v=4"></script>
+<script src="./supabase-config.js"></script>
 <script>
 // Fallback keeps the app working if GitHub Pages fails to load the separate config file.
 window.EXCEL_MASTER_SUPABASE = window.EXCEL_MASTER_SUPABASE || {
@@ -84,10 +83,10 @@ async function loadProfile(){
   if(error){setMsg('Login succeeded, but profile setup is missing. Run supabase-schema.sql in Supabase SQL Editor.');console.error('Profile error:',error);return false}
   if(!data){setMsg('Login succeeded, but no profile was created for this account. Run the Supabase schema/trigger, then sign up again.');return false}
   EM_PROFILE=data;
-  document.getElementById('userPill').textContent=(data.full_name||EM_USER.email)+' • '+data.role;
+  document.getElementById('userPill').textContent=(data.full_name||EM_USER.email)+(data.role ? ' • '+data.role : '');
   const admin=data.role==='admin';
   document.getElementById('adminPanel').style.display=admin?'block':'none';
-  document.getElementById('logoutBtn').style.display='inline-block';
+  document.getElementById('logoutTop').style.display='inline-block';
   return true;
  }catch(e){console.error(e);setMsg('Unable to load your profile. Check Supabase setup and internet connection.');return false}
 }
@@ -101,18 +100,22 @@ async function bootAuth(){
   EM_USER=data.session?.user||null;
   if(EM_USER){
    document.getElementById('authGate').style.display='none';
+   document.getElementById('userPill').textContent=EM_USER.email||'Logged in';
+   document.getElementById('logoutTop').style.display='inline-block';
    await loadProfile();
   }else document.getElementById('authGate').style.display='flex';
   EM_SUPA.auth.onAuthStateChange((_event,session)=>{
    EM_USER=session?.user||null;
    if(EM_USER){
     document.getElementById('authGate').style.display='none';
+    document.getElementById('userPill').textContent=EM_USER.email||'Logged in';
+    document.getElementById('logoutTop').style.display='inline-block';
     setTimeout(()=>loadProfile(),0);
    }else{
     EM_PROFILE=null;
     document.getElementById('authGate').style.display='flex';
     document.getElementById('userPill').textContent='Not logged in';
-    document.getElementById('logoutBtn').style.display='none';
+    document.getElementById('logoutTop').style.display='none';
    }
   });
  }catch(e){console.error('Auth boot error:',e);setMsg('Login system failed to start. Refresh the page and check Supabase configuration.');}
@@ -124,7 +127,7 @@ document.getElementById('authSubmit').onclick=async()=>{
  if(!EM_SUPA){setMsg('Supabase is not configured.');return}
  const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value,name=document.getElementById('authName').value.trim();
  if(!email||password.length<6||(authMode==='signup'&&!name)){setMsg('Enter all required fields. Password must be at least 6 characters.');return}
- if(!EM_SUPA){await bootAuth();} if(!EM_SUPA){setMsg('Supabase connection failed. Please refresh once and try again.');return} const btn=document.getElementById('authSubmit');btn.disabled=true;setMsg(authMode==='login'?'Signing in…':'Creating account…');
+ const btn=document.getElementById('authSubmit');btn.disabled=true;setMsg(authMode==='login'?'Signing in…':'Creating account…');
  try{
   const r=authMode==='login'
    ?await EM_SUPA.auth.signInWithPassword({email,password})
@@ -134,12 +137,13 @@ document.getElementById('authSubmit').onclick=async()=>{
   setMsg('Login successful. Loading your profile…');
   EM_USER=r.data.user||r.data.session?.user||EM_USER;
   document.getElementById('authGate').style.display='none';
+  document.getElementById('userPill').textContent=EM_USER?.email||'Logged in';
+  document.getElementById('logoutTop').style.display='inline-block';
   await loadProfile();
  }catch(e){console.error('Auth error:',e);setMsg('Login failed: '+(e?.message||'Unknown error'));}
  finally{btn.disabled=false}
 };
 async function emLogout(){if(EM_SUPA)await EM_SUPA.auth.signOut()}
-document.getElementById('logoutBtn').onclick=emLogout;
 document.getElementById('logoutTop').onclick=emLogout;
 document.getElementById('refreshReviews').onclick=loadReviews;
 async function loadReviews(){
