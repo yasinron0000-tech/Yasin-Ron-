@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1220">
-<title>Excel Formula Master — Yasin Ron</title>
+<title>Excel Master — Yasin Ron</title>
 <style>
 :root{--bg:#08111f;--panel:#101b2d;--panel2:#15243a;--text:#eef5ff;--muted:#9db0c9;--accent:#4da3ff;--accent2:#7c5cff;--border:#243653;--good:#35d49a;--warn:#ffca5c;--shadow:0 20px 60px rgba(0,0,0,.28)}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -21,30 +21,41 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:fl
 .search{width:100%;background:#0a1424;border:1px solid var(--border);color:var(--text);padding:13px;border-radius:12px;outline:none}.search:focus{border-color:var(--accent)}
 .sideTitle{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:18px 5px 8px}.cat{width:100%;text-align:left;border:0;background:transparent;color:#cfe0f7;padding:10px 11px;border-radius:9px;margin:2px 0}.cat:hover,.cat.active{background:rgba(77,163,255,.13);color:white}.count{float:right;color:var(--muted);font-size:12px}
 .content{min-width:0}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}.stats{color:var(--muted);font-size:14px}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--border);background:var(--panel);color:var(--muted);padding:8px 10px;border-radius:9px}.filter.active{color:#fff;border-color:var(--accent);background:rgba(77,163,255,.12)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:180px;display:flex;flex-direction:column;gap:10px;transition:.18s}.card:hover{transform:translateY(-2px);border-color:#3b5d87}.cardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.name{font-size:18px;font-weight:800}.level{font-size:11px;padding:4px 7px;border-radius:999px;background:rgba(53,212,154,.1);color:var(--good);white-space:nowrap}.syntax{background:#091423;border:1px solid #1e3049;padding:9px;border-radius:9px;color:#b9d8ff;font:12px ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto}.desc{font-size:13px;line-height:1.5;color:#c5d1e1}.meta{margin-top:auto;display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}.openBtn{border:1px solid var(--border);background:#14243b;color:#fff;padding:8px;border-radius:9px;width:100%}.empty{text-align:center;padding:70px 20px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:180px;display:flex;flex-direction:column;gap:10px;transition:.18s}.card:hover{transform:translateY(-2px);border-color:#3b5d87}.cardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.name{font-size:18px;font-weight:800}.level{font-size:11px;padding:4px 7px;border-radius:999px;background:rgba(53,212,154,.1);color:var(--good);white-space:nowrap}.syntax{background:#091423;border:1px solid #1e3049;padding:9px;border-radius:9px;color:#b9d8ff;font:12px ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto}.desc{font-size:13px;line-height:1.5;color:#c5d1e1}.meta{margin-top:auto;display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}.trainingPreview{margin:10px 0;padding:10px 11px;border:1px solid #31527b;border-radius:10px;background:rgba(77,163,255,.06);font-size:12px;line-height:1.55;color:var(--muted)}
+.trainingPreview .trainingTitle{font-weight:800;color:var(--text);font-size:13px;margin-bottom:5px}
+.trainingPreview code{color:var(--text);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.openBtn{border:1px solid var(--border);background:#14243b;color:#fff;padding:8px;border-radius:9px;width:100%}.empty{text-align:center;padding:70px 20px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:18px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.68);display:none;z-index:50;padding:18px;overflow:auto}.modal.show{display:grid;place-items:center}.modalBox{width:min(950px,100%);max-height:92vh;overflow:auto;background:#0d1829;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)}.modalTop{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px}.modalTop h3{margin:0;font-size:26px}.close{border:1px solid var(--border);background:transparent;color:white;width:38px;height:38px;border-radius:9px}.modalBody{padding:20px}.section{margin-bottom:20px}.section h4{margin:0 0 8px;color:#cfe0f7;font-size:13px;text-transform:uppercase;letter-spacing:.08em}.formula{background:#07101d;border:1px solid #203550;padding:13px;border-radius:11px;font:14px ui-monospace,SFMono-Regular,Menlo,monospace;color:#d8eaff;white-space:pre-wrap;word-break:break-word}.sampleTable{border-collapse:collapse;width:100%;margin-top:8px}.sampleTable td,.sampleTable th{border:1px solid var(--border);padding:9px;text-align:left}.sampleTable th{background:#14243a}.result{color:var(--good);font-weight:800}.copy{margin-top:8px}.footer{padding:18px;text-align:center;color:var(--muted);font-size:12px;border-top:1px solid var(--border)} .trainingBox{background:linear-gradient(135deg,rgba(77,163,255,.10),rgba(124,92,255,.10));border:1px solid #31527b;border-radius:14px;padding:15px}.trainingGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.lesson{background:#0a1525;border:1px solid #203550;border-radius:11px;padding:12px}.lesson b{display:block;margin-bottom:6px;color:#d8eaff}.practice{background:#111f33;border:1px solid #355274;border-radius:12px;padding:14px}.quizQ{font-weight:700;margin-bottom:8px}.quizOpts{display:grid;gap:7px}.quizOpts button{text-align:left;border:1px solid var(--border);background:#0a1525;color:var(--text);padding:10px;border-radius:9px}.quizOpts button.correct{border-color:var(--good);background:rgba(53,212,154,.12)}.quizOpts button.wrong{border-color:#ff6b6b;background:rgba(255,107,107,.10)}
 @media(max-width:900px){.workspace{grid-template-columns:1fr}.sidebar{position:relative;top:auto;max-height:none}.grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.heroBox{padding:24px}}
 @media(max-width:520px){.nav{padding:11px 13px}.actions .btn:nth-child(2){display:none}.hero{padding:18px 12px}.workspace{padding:0 12px 28px}.heroBox{border-radius:16px}.grid{grid-template-columns:1fr}.brand h1{font-size:16px}}
+
+textarea.search{resize:vertical;min-height:80px}
+select.search{appearance:auto}
+.status{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid var(--border)}
+.status.pending{color:var(--warn)}.status.approved{color:var(--good)}.status.rejected{color:#ff7b8b}
+.communityCard{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:12px;padding:12px;margin-top:10px}
+.communityCard b{color:var(--text)}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Excel Formula Master">
+<meta name="apple-mobile-web-app-title" content="Excel Master">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="app">
 <header class="top"><div class="nav">
-  <div class="brand"><div class="logo">X</div><div><h1>Excel Formula Master</h1><small>Created for Yasin Ron</small></div></div>
-  <div class="actions"><button class="btn" id="fullBtn">⛶ Full Screen</button><button class="btn" id="aboutBtn">About</button></div>
+  <div class="brand"><div class="logo">X</div><div><h1>Excel Master</h1><small>Created for Yasin Ron</small></div></div>
+  <div class="actions"><button class="btn" id="fullBtn">⛶ Full Screen</button><button class="btn" id="agentBtn">👥 Agent Training</button><button class="btn" id="aboutBtn">About</button></div>
 </div></header>
 
 <section class="hero"><div class="heroBox">
   <h2>Welcome, Yasin Ron 👋</h2>
-  <p>Learn Excel formulas from Basic to Advanced with syntax, simple explanations, sample data and expected results. Search any formula and open its complete example.</p>
-  <div class="chips"><span class="chip" id="totalChip"></span><span class="chip">Excel 2016 focused</span><span class="chip">Advanced formulas</span><span class="chip">Sample data</span><span class="chip">Mobile + Desktop</span><span class="chip">🎓 Formula Training + Quiz</span></div>
+  <p>Learn Excel formulas from Basic to Advanced with syntax, simple explanations, sample data and expected results. Search any formula and open its complete training: explanation, steps, practice, mistakes and quiz.</p>
+  <div class="chips"><span class="chip" id="totalChip"></span><span class="chip">Excel 2016 focused</span><span class="chip">Advanced formulas</span><span class="chip">Sample data</span><span class="chip">Mobile + Desktop</span><span class="chip">🎓 Training + Quiz</span></div>
 </div></section>
 
 <main class="workspace">
@@ -53,11 +64,11 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:fl
   <div class="sideTitle">Categories</div><div id="cats"></div>
 </aside>
 <section class="content">
-  <div class="toolbar"><div class="stats" id="stats"></div><div class="stats">🎓 Tap any formula → full training</div><div class="filters" id="levels"></div></div>
+  <div class="toolbar"><div class="stats" id="stats"></div><div class="filters" id="levels"></div></div>
   <div id="grid" class="grid"></div>
 </section>
 </main>
-<footer class="footer">Excel Formula Master • Yasin Ron • 200+ formulas • GitHub-ready single-file app</footer>
+<footer class="footer">Excel Master • Yasin Ron • 200+ formulas • GitHub-ready single-file app</footer>
 </div>
 
 <div id="modal" class="modal"><div class="modalBox">
@@ -67,7 +78,7 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:fl
     <div class="section"><h4>Explanation</h4><div class="desc" id="mDesc"></div></div>
     <div class="section"><h4>Example</h4><div class="formula" id="mExample"></div></div>
     <div class="section"><h4>Sample Data</h4><table class="sampleTable"><thead><tr><th>Input / Data</th><th>Value</th></tr></thead><tbody id="mSample"></tbody></table></div>
-    <div class="section"><h4>Expected Result</h4><div class="result" id="mResult"></div></div><div class="section" style="border:1px solid #31527b;border-radius:14px;padding:12px;background:rgba(77,163,255,.05)"><h4 style="font-size:18px">🎓 Formula Training — Step by Step</h4><div class="desc" style="margin-bottom:10px">Learn what the formula does, how to write it, real-world usage, common mistakes, practice and a quick quiz.</div><div id="mTraining"></div></div>
+    <div class="section"><h4>Expected Result</h4><div class="result" id="mResult"></div></div><div class="section"><h4>🎓 Formula Training</h4><div id="mTraining"></div><div id="communityTraining" style="margin-top:14px"></div></div>
   </div>
 </div></div>
 
@@ -110,8 +121,14 @@ function render(){
       <div class="cardHead"><div class="name">${escapeHtml(f.name)}</div><span class="level">${escapeHtml(f.level)}</span></div>
       <div class="syntax">${escapeHtml(f.syntax)}</div>
       <div class="desc">${escapeHtml(f.explanation)}</div>
-      <div class="meta"><span>${escapeHtml(f.category)}</span><span>${escapeHtml(f.version)}</span></div><div style="margin-top:8px"><span class="level" style="display:inline-block">🎓 Training Included</span></div>
-      <button class="openBtn" data-index="${formulas.indexOf(f)}">🎓 Learn Formula + Training →</button>
+      <div class="trainingPreview">
+        <div class="trainingTitle">🎓 Formula Training</div>
+        <div><b>How:</b> Start with <code>${escapeHtml(f.syntax)}</code></div>
+        <div><b>Practice:</b> ${escapeHtml(f.example)}</div>
+        <div><b>Result:</b> ${escapeHtml(f.result)}</div>
+      </div>
+      <div class="meta"><span>${escapeHtml(f.category)}</span><span>${escapeHtml(f.version)}</span></div>
+      <button class="openBtn" data-index="${formulas.indexOf(f)}">🎓 Open Full Training →</button>
     </article>`).join(""):`<div class="empty">No formula found.<br>Try another search or category.</div>`;
   grid.querySelectorAll(".openBtn").forEach(b=>b.onclick=()=>openFormula(formulas[Number(b.dataset.index)]));
 }
@@ -146,7 +163,7 @@ function openFormula(f){
   const parts=String(f.sample).split(" | ");
   document.getElementById("mSample").innerHTML=parts.map((p,i)=>`<tr><td>Sample ${i+1}</td><td>${escapeHtml(p)}</td></tr>`).join("");
   document.getElementById("mResult").textContent=f.result;
-  document.getElementById("mTraining").innerHTML=trainingFor(f);
+  document.getElementById("mTraining").innerHTML=trainingFor(f); if(window.loadCommunityTraining) window.loadCommunityTraining(f.name);
   document.querySelectorAll("#quizOpts button").forEach(btn=>btn.onclick=()=>{
     const ok=btn.dataset.answer==="0";
     btn.classList.add(ok?"correct":"wrong");
@@ -163,9 +180,305 @@ document.getElementById("close").onclick=()=>document.getElementById("modal").cl
 document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")e.currentTarget.classList.remove("show")});
 document.getElementById("copySyntax").onclick=async()=>{if(!selected)return;try{await navigator.clipboard.writeText(selected.syntax);document.getElementById("copySyntax").textContent="✓ Copied";setTimeout(()=>document.getElementById("copySyntax").textContent="📋 Copy Formula",1200)}catch(e){}};
 document.getElementById("fullBtn").onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
-document.getElementById("aboutBtn").onclick=()=>alert("Excel Formula Master\\n\\nCreated for Yasin Ron\\n\\nSearch 200+ formulas, learn the syntax, read explanations and view sample data.");
+document.getElementById("aboutBtn").onclick=()=>alert("Excel Master\\n\\nCreated for Yasin Ron\\n\\nSearch 200+ formulas, learn the syntax, read explanations and view sample data.");
 renderCategories();renderLevels();render();
 </script>
+
+
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./supabase-config.js";
+
+const configured = SUPABASE_URL && SUPABASE_ANON_KEY &&
+  !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
+const sb = configured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+const $ = id => document.getElementById(id);
+const agentModal = $("agentModal");
+const formulaSelect = $("trainFormula");
+
+const samples = {
+  "SUM": {
+    title:"SUM — Basic Training",
+    explanation:"SUM selected cells ya range ke numbers ko add karta hai.",
+    sample:"A1:A5 = 10, 20, 30, 40, 50",
+    formula:"=SUM(A1:A5)",
+    result:"150",
+    mistakes:"Range galat select karna; text values ko numbers samajhna; SUM ke brackets miss karna.",
+    question:"A1:A5 ka total nikalo.",
+    answer:"=SUM(A1:A5)"
+  },
+  "AVERAGE": {
+    title:"AVERAGE — Basic Training",
+    explanation:"AVERAGE selected numbers ka arithmetic average return karta hai.",
+    sample:"A1:A5 = 10, 20, 30, 40, 50",
+    formula:"=AVERAGE(A1:A5)",
+    result:"30",
+    mistakes:"Blank cells ko unnecessary zero samajhna; wrong range select karna.",
+    question:"A1:A5 ka average nikalo.",
+    answer:"=AVERAGE(A1:A5)"
+  },
+  "COUNTIF": {
+    title:"COUNTIF — Conditional Count",
+    explanation:"COUNTIF ek condition ke basis par matching cells count karta hai.",
+    sample:"A2:A6 = Present, Absent, Present, Present, Absent",
+    formula:'=COUNTIF(A2:A6,"Present")',
+    result:"3",
+    mistakes:"Text criteria ko quotes me na rakhna; wrong range use karna.",
+    question:"Present employees count karo.",
+    answer:'=COUNTIF(A2:A6,"Present")'
+  },
+  "SUMIF": {
+    title:"SUMIF — Conditional Total",
+    explanation:"SUMIF condition match hone wali rows ke numbers ka total karta hai.",
+    sample:"A2:A5 = Sales, HR, Sales, IT | B2:B5 = 100, 50, 200, 80",
+    formula:'=SUMIF(A2:A5,"Sales",B2:B5)',
+    result:"300",
+    mistakes:"Criteria range aur sum range ka size mismatch; text criteria me quotes bhoolna.",
+    question:"Sales department ka total nikalo.",
+    answer:'=SUMIF(A2:A5,"Sales",B2:B5)'
+  },
+  "VLOOKUP": {
+    title:"VLOOKUP — Employee Lookup",
+    explanation:"VLOOKUP first column me value find karke same row se required column ka result return karta hai.",
+    sample:"A2:C4 = 101 | Amit | 25000; 102 | Rahul | 28000; 103 | Neha | 30000",
+    formula:"=VLOOKUP(102,A2:C4,2,FALSE)",
+    result:"Rahul",
+    mistakes:"Lookup value wrong hona; lookup column first column na hona; column number galat dena; FALSE/TRUE ka wrong use.",
+    question:"Employee ID 103 ka salary find karo.",
+    answer:"=VLOOKUP(103,A2:C4,3,FALSE)"
+  },
+  "XLOOKUP": {
+    title:"XLOOKUP — Modern Lookup",
+    explanation:"XLOOKUP lookup value ko ek range me find karke doosre range se matching result return karta hai.",
+    sample:"A2:A4 = 101, 102, 103 | B2:B4 = Amit, Rahul, Neha",
+    formula:"=XLOOKUP(102,A2:A4,B2:B4)",
+    result:"Rahul",
+    mistakes:"Lookup aur return ranges ka size mismatch; wrong lookup value.",
+    question:"ID 103 ka name find karo.",
+    answer:"=XLOOKUP(103,A2:A4,B2:B4)"
+  },
+  "IF": {
+    title:"IF — Logical Training",
+    explanation:"IF condition TRUE ya FALSE hone ke basis par alag result deta hai.",
+    sample:"A2 = 85",
+    formula:'=IF(A2>=60,"Pass","Fail")',
+    result:"Pass",
+    mistakes:"Comparison operator galat use karna; text results me quotes miss karna.",
+    question:"60 ya usse zyada marks par Pass dikhao.",
+    answer:'=IF(A2>=60,"Pass","Fail")'
+  }
+};
+
+function getSample(name){
+  if(samples[name]) return samples[name];
+  const f = formulas.find(x => x.name === name);
+  return {
+    title:(f?.name || name) + " — Training",
+    explanation:f?.description || "Formula ka use aur practical application explain karein.",
+    sample:"Example: A2:A6 me sample values enter karein.",
+    formula:f?.syntax || "=" + name + "(...)",
+    result:"Formula ke hisaab se result",
+    mistakes:"Wrong range, wrong argument/order, missing brackets, aur incorrect cell references check karein.",
+    question:"Is formula ka practical example solve karein.",
+    answer:f?.syntax || "=" + name + "(...)"
+  };
+}
+
+function fillFormulaSelect(){
+  formulaSelect.innerHTML = formulas.map(f =>
+    `<option value="${escapeAttr(f.name)}">${escapeHtml(f.name)} — ${escapeHtml(f.category)}</option>`
+  ).join("");
+  loadSampleTraining();
+}
+
+function loadSampleTraining(){
+  const s = getSample(formulaSelect.value);
+  $("trainTitle").value=s.title;
+  $("trainExplanation").value=s.explanation;
+  $("trainSample").value=s.sample;
+  $("trainFormulaExample").value=s.formula;
+  $("trainResult").value=s.result;
+  $("trainMistakes").value=s.mistakes;
+  $("trainQuestion").value=s.question;
+  $("trainAnswer").value=s.answer;
+}
+fillFormulaSelect();
+formulaSelect.onchange = loadSampleTraining;
+
+$("agentBtn").onclick = () => {
+  agentModal.classList.add("show");
+  refreshAuth();
+};
+$("agentClose").onclick = () => agentModal.classList.remove("show");
+agentModal.addEventListener("click", e => { if(e.target === agentModal) agentModal.classList.remove("show"); });
+
+function showMsg(id,msg,good=false){
+  $(id).textContent=msg;
+  $(id).style.color=good ? "var(--good)" : "var(--muted)";
+}
+
+async function refreshAuth(){
+  if(!sb){
+    $("authView").style.display="";
+    $("agentView").style.display="none";
+    $("agentStatus").textContent="Database not connected. Supabase setup required.";
+    return;
+  }
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){
+    $("authView").style.display="";
+    $("agentView").style.display="none";
+    $("agentStatus").textContent="Agent Login / Signup";
+    return;
+  }
+
+  $("authView").style.display="none";
+  $("agentView").style.display="";
+  const {data:profile}=await sb.from("profiles").select("full_name,role").eq("id",session.user.id).maybeSingle();
+  const role=profile?.role || "agent";
+  $("agentUser").textContent=`${profile?.full_name || session.user.email} • ${role}`;
+  $("adminPanel").style.display=role==="admin" ? "" : "none";
+  $("submitPanel").style.display="";
+  if(role==="admin") loadAdminSubmissions();
+}
+
+$("loginBtn").onclick=async()=>{
+  if(!sb) return showMsg("loginMsg","Supabase configure karein.");
+  const {error}=await sb.auth.signInWithPassword({
+    email:$("loginEmail").value.trim(),
+    password:$("loginPassword").value
+  });
+  if(error) return showMsg("loginMsg",error.message);
+  showMsg("loginMsg","Login successful.",true);
+  await refreshAuth();
+};
+
+$("signupBtn").onclick=async()=>{
+  if(!sb) return showMsg("signupMsg","Supabase configure karein.");
+  const name=$("signupName").value.trim();
+  const email=$("signupEmail").value.trim();
+  const password=$("signupPassword").value;
+  if(!name || !email || password.length<6)
+    return showMsg("signupMsg","Name, valid email aur 6+ character password enter karein.");
+  const {error}=await sb.auth.signUp({
+    email,password,options:{data:{full_name:name}}
+  });
+  if(error) return showMsg("signupMsg",error.message);
+  showMsg("signupMsg","Account created. Email confirmation ho to email verify karein.",true);
+};
+
+$("logoutBtn").onclick=async()=>{
+  if(sb) await sb.auth.signOut();
+  await refreshAuth();
+};
+
+$("submitTraining").onclick=async()=>{
+  if(!sb) return showMsg("submitMsg","Supabase configure karein.");
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session) return showMsg("submitMsg","Pehle login karein.");
+
+  const {data:profile}=await sb.from("profiles")
+    .select("full_name").eq("id",session.user.id).maybeSingle();
+
+  const payload={
+    formula_name:$("trainFormula").value,
+    title:$("trainTitle").value.trim(),
+    explanation:$("trainExplanation").value.trim(),
+    sample_data:$("trainSample").value.trim(),
+    formula_example:$("trainFormulaExample").value.trim(),
+    expected_result:$("trainResult").value.trim(),
+    common_mistakes:$("trainMistakes").value.trim(),
+    practice_question:$("trainQuestion").value.trim(),
+    practice_answer:$("trainAnswer").value.trim(),
+    author_id:session.user.id,
+    author_name:profile?.full_name || session.user.email,
+    status:"pending"
+  };
+
+  const {error}=await sb.from("training_submissions").insert(payload);
+  if(error) return showMsg("submitMsg",error.message);
+  showMsg("submitMsg","✅ Training submitted. Sirf Admin approve/reject karega.",true);
+};
+
+async function loadAdminSubmissions(){
+  if(!sb) return;
+  const {data,error}=await sb.from("training_submissions")
+    .select("*").eq("status","pending").order("created_at",{ascending:true});
+  if(error){
+    $("adminList").innerHTML=`<div class="empty">${escapeHtml(error.message)}</div>`;
+    return;
+  }
+  $("adminList").innerHTML=data?.length
+    ? data.map(submissionCard).join("")
+    : `<div class="empty">No pending training.</div>`;
+
+  document.querySelectorAll("[data-approve]").forEach(b =>
+    b.onclick=()=>reviewSubmission(b.dataset.approve,"approved"));
+  document.querySelectorAll("[data-reject]").forEach(b =>
+    b.onclick=()=>reviewSubmission(b.dataset.reject,"rejected"));
+}
+
+function submissionCard(x){
+  return `<div class="communityCard">
+    <div class="toolbar">
+      <div>
+        <b>${escapeHtml(x.title||x.formula_name)}</b>
+        <div class="desc">${escapeHtml(x.formula_name)} • ${escapeHtml(x.author_name||"Agent")}</div>
+      </div>
+      <span class="status pending">Pending</span>
+    </div>
+    <div class="desc"><b>Explanation:</b> ${escapeHtml(x.explanation||"")}</div>
+    <div class="syntax" style="margin-top:8px">${escapeHtml(x.formula_example||"")}</div>
+    <div class="desc" style="margin-top:8px"><b>Sample Data:</b> ${escapeHtml(x.sample_data||"")}</div>
+    <div class="desc"><b>Common Mistakes:</b> ${escapeHtml(x.common_mistakes||"")}</div>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn" data-approve="${x.id}">✅ Approve</button>
+      <button class="btn" data-reject="${x.id}">❌ Reject</button>
+    </div>
+  </div>`;
+}
+
+async function reviewSubmission(id,status){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session) return;
+  const {error}=await sb.from("training_submissions")
+    .update({
+      status,
+      reviewed_by:session.user.id,
+      reviewed_at:new Date().toISOString()
+    }).eq("id",id);
+  if(error) return alert(error.message);
+  loadAdminSubmissions();
+}
+
+window.loadCommunityTraining=async function(formulaName){
+  const box=$("communityTraining");
+  if(!box || !sb) return;
+  const {data}=await sb.from("training_submissions")
+    .select("title,explanation,sample_data,formula_example,expected_result,common_mistakes,practice_question,practice_answer,author_name")
+    .eq("formula_name",formulaName).eq("status","approved")
+    .order("created_at",{ascending:false});
+
+  if(!data?.length){ box.innerHTML=""; return; }
+
+  box.innerHTML=`<div class="trainingBox"><h4>👥 Approved Agent Training</h4>${
+    data.map(x=>`<div class="communityCard">
+      <b>${escapeHtml(x.title||"Agent Training")}</b>
+      <div class="desc">By ${escapeHtml(x.author_name||"Agent")}</div>
+      <div class="desc" style="margin-top:7px">${escapeHtml(x.explanation||"")}</div>
+      <div class="syntax" style="margin-top:8px">${escapeHtml(x.formula_example||"")}</div>
+      <div class="desc" style="margin-top:7px"><b>Sample Data:</b> ${escapeHtml(x.sample_data||"")}</div>
+      <div class="desc"><b>Result:</b> ${escapeHtml(x.expected_result||"")}</div>
+      <div class="desc"><b>Common Mistakes:</b> ${escapeHtml(x.common_mistakes||"")}</div>
+    </div>`).join("")
+  }</div>`;
+};
+
+if(sb) sb.auth.onAuthStateChange(()=>refreshAuth());
+</script>
+
 
 <script>
 if ("serviceWorker" in navigator) {
@@ -174,5 +487,120 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+
+<div class="modal" id="agentModal">
+  <div class="modalBox" style="max-width:1000px">
+    <div class="modalHead">
+      <div>
+        <h3 style="margin:0">👥 Agent Training Center</h3>
+        <div class="desc" id="agentStatus">Agent Login / Signup</div>
+      </div>
+      <button class="btn" id="agentClose">✕</button>
+    </div>
+
+    <div id="authView">
+      <div class="trainingGrid">
+        <div class="lesson">
+          <b>🔐 Agent Login</b>
+          <input class="search" id="loginEmail" type="email" placeholder="Email">
+          <input class="search" id="loginPassword" type="password" placeholder="Password" style="margin-top:8px">
+          <button class="openBtn" id="loginBtn" style="margin-top:10px">Login</button>
+          <div class="desc" id="loginMsg" style="margin-top:8px"></div>
+        </div>
+
+        <div class="lesson">
+          <b>📝 Agent Signup</b>
+          <input class="search" id="signupName" placeholder="Full name">
+          <input class="search" id="signupEmail" type="email" placeholder="Email" style="margin-top:8px">
+          <input class="search" id="signupPassword" type="password" placeholder="Password (6+ characters)" style="margin-top:8px">
+          <button class="openBtn" id="signupBtn" style="margin-top:10px">Create Account</button>
+          <div class="desc" id="signupMsg" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="lesson" style="margin-top:12px">
+        <b>⚠️ Common Agent Login / Signup Mistakes</b>
+        <ul class="desc">
+          <li>Correct email address use karein.</li>
+          <li>Password minimum 6 characters rakhein.</li>
+          <li>Email confirmation enabled ho to signup ke baad email verify karein.</li>
+          <li>Login ke liye wahi email/password use karein jo signup me diya tha.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="agentView" style="display:none">
+      <div class="toolbar">
+        <div class="stats" id="agentUser"></div>
+        <button class="btn" id="logoutBtn">Logout</button>
+      </div>
+
+      <div id="submitPanel">
+        <div class="lesson">
+          <b>📚 Formula Training</b>
+          <select class="search" id="trainFormula" style="margin-top:8px"></select>
+          <div class="desc" style="margin-top:8px">
+            Sample data, formula example and common mistakes automatically loaded hain. Agent zarurat ke hisaab se training details update karke submit kar sakta hai.
+          </div>
+        </div>
+
+        <div class="trainingGrid" style="margin-top:12px">
+          <div class="lesson">
+            <b>Training Title</b>
+            <input class="search" id="trainTitle" placeholder="Formula training title">
+          </div>
+
+          <div class="lesson">
+            <b>Explanation</b>
+            <textarea class="search" id="trainExplanation" rows="4"></textarea>
+          </div>
+
+          <div class="lesson">
+            <b>📊 Sample Data</b>
+            <textarea class="search" id="trainSample" rows="5"></textarea>
+          </div>
+
+          <div class="lesson">
+            <b>🧮 Formula Example</b>
+            <textarea class="search" id="trainFormulaExample" rows="3"></textarea>
+          </div>
+
+          <div class="lesson">
+            <b>✅ Expected Result</b>
+            <input class="search" id="trainResult">
+          </div>
+
+          <div class="lesson">
+            <b>⚠️ Common Mistakes</b>
+            <textarea class="search" id="trainMistakes" rows="5"></textarea>
+          </div>
+
+          <div class="lesson">
+            <b>🧠 Practice Question</b>
+            <textarea class="search" id="trainQuestion" rows="3"></textarea>
+          </div>
+
+          <div class="lesson">
+            <b>✔ Practice Answer</b>
+            <textarea class="search" id="trainAnswer" rows="3"></textarea>
+          </div>
+        </div>
+
+        <button class="openBtn" id="submitTraining" style="margin-top:12px">📤 Submit Training</button>
+        <div class="desc" id="submitMsg" style="margin-top:8px"></div>
+      </div>
+
+      <div id="adminPanel" style="display:none">
+        <div class="lesson">
+          <b>🛡️ Admin Review</b>
+          <div class="desc">Sirf Yasin Ron/Admin yahan training ko Approve ya Reject kar sakta hai.</div>
+        </div>
+        <div id="adminList" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
