@@ -21,3 +21,6 @@ V8 CLEAN LOGIN-FREE
 - Practice submissions are saved locally in the browser.
 - Admin credentials/passwords are NOT embedded in public GitHub code.
 - Publish this version to GitHub Pages and hard-refresh/clear site data once after deployment.
+
+
+V9: 302 formulas; direct Agent portal at index.html; separate Owner/Admin portal at admin.html; animations added.
