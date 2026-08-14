@@ -9,13 +9,8 @@ main{max-width:1400px;margin:auto;padding:10px}.hero{background:linear-gradient(
 .layout{display:grid;grid-template-columns:220px 1fr;gap:10px}aside{background:#0b1727;border:1px solid #233751;border-radius:13px;padding:8px;height:max-content;position:sticky;top:65px}aside button{display:block;width:100%;text-align:left;background:none;border:0;color:#a9bad0;padding:8px;border-radius:7px}aside button.active{background:#163050;color:#fff}
 .toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}.search{flex:1;min-width:180px;background:#091526;color:#fff;border:1px solid #2b405d;border-radius:9px;padding:10px}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{background:#0c1828;border:1px solid #263d5b;border-radius:12px;padding:11px;min-width:0}.card h3{margin:0 0 6px}.syntax{background:#06101d;border:1px solid #1d314a;padding:7px;border-radius:7px;overflow:auto;white-space:nowrap;font:12px monospace}.desc{font-size:12px;color:#b8c7d8;min-height:32px}.training{background:#0a1b2e;border:1px solid #294768;border-radius:8px;padding:8px;font-size:11px;margin-top:7px}.card .btn{width:100%;margin-top:7px}
-.valueGuide{margin-top:8px;padding:8px;border-radius:9px;background:#08182a;border:1px solid #244563;font-size:11px;color:#c9d8e8}
-.valueGuide b{color:#eaf4ff}.valueGuide .vgRow{display:grid;grid-template-columns:105px 1fr;gap:6px;padding:4px 0;border-bottom:1px solid #19324a}.valueGuide .vgRow:last-child{border-bottom:0}.valueGuide .vgKey{color:#7fc4ff;font-weight:800}.valueGuide .vgExample{color:#a9bfd4}
-.modalGuide{margin-top:10px;background:linear-gradient(145deg,#091a2c,#07111d);border:1px solid #294768;border-radius:12px;padding:11px}.modalGuide h3{margin:0 0 7px}.modalGuide .guideIntro{font-size:12px;color:#a9bdd2;margin:0 0 8px}.guideTable{width:100%;border-collapse:collapse;font-size:12px}.guideTable th{background:#10243b;color:#cfe2ff}.guideTable td,.guideTable th{padding:7px;border:1px solid #27415d;vertical-align:top}.guideTable td:first-child{color:#7fc4ff;font-weight:800;width:23%}
-@media(max-width:720px){.valueGuide .vgRow{grid-template-columns:92px 1fr}.guideTable{font-size:11px}}
-
 .modal{position:fixed;inset:0;background:#000b;z-index:50;display:none;align-items:center;justify-content:center;padding:10px}.modal.show{display:flex}.dialog{background:#0a1525;border:1px solid #2b4362;border-radius:15px;width:min(900px,100%);max-height:94vh;overflow:auto;padding:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.box{background:#07111e;border:1px solid #203650;border-radius:9px;padding:10px;margin-top:9px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #27405d;padding:6px;text-align:left}textarea{width:100%;min-height:90px;background:#050c16;color:#fff;border:1px solid #29415d;border-radius:8px;padding:8px}
-@media(max-width:720px){.layout{grid-template-columns:1fr}aside{position:static;display:flex;overflow:auto;gap:4px}aside button{width:auto;white-space:nowrap}.cards{grid-template-columns:1fr}.grid{grid-template-columns:1fr}header .btn{font-size:12px;padding:7px}}
+@media(max-width:720px){.valueRow{grid-template-columns:1fr}.layout{grid-template-columns:1fr}aside{position:static;display:flex;overflow:auto;gap:4px}aside button{width:auto;white-space:nowrap}.cards{grid-template-columns:1fr}.grid{grid-template-columns:1fr}header .btn{font-size:12px;padding:7px}}
 
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -47,9 +42,11 @@ header{box-shadow:0 10px 35px rgba(0,0,0,.22)}
 .infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .infoCard{background:linear-gradient(145deg,#0a1b2e,#07111e);border:1px solid #203b58;border-radius:11px;padding:11px}
 .infoCard strong{display:block;color:#8fdcff;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
-.infoCard p{margin:0;color:#c7d6e6;font-size:13px;line-height:1.55}
+.infoCard p{margin:0;color:#c7d6e6;font-size:13px;line-height:1.55}.valueGuide{margin-top:9px;background:linear-gradient(145deg,#0a1f33,#07111e);border:1px solid #2a4b6d;border-radius:11px;padding:11px}.valueGuideTitle{font-weight:800;color:#d8ecff;margin-bottom:8px}.valueRows{display:grid;gap:6px}.valueRow{display:grid;grid-template-columns:minmax(180px,.85fr) 1.6fr;gap:8px;background:#081625;border:1px solid #203b58;border-radius:8px;padding:8px;font-size:12px}.valueRow b{color:#8fdcff}.valueRow span{color:#d0deeb;line-height:1.5}.valueRow code{color:#fff;background:#030a12;padding:2px 5px;border-radius:4px}.valueRow em{color:#8fa8c2;font-style:normal}.guideNote{margin-top:8px;color:#91a7bf;font-size:11px;line-height:1.5}.stepGuide{margin-top:9px;background:linear-gradient(145deg,#0b2035,#07111e);border:1px solid #2b4d6f;border-radius:11px;padding:11px}.stepTitle{font-weight:800;color:#d8ecff;margin-bottom:8px}.stepLine{padding:8px 9px;margin:5px 0;background:#081625;border-left:3px solid #3b82f6;border-radius:7px;color:#d4e2ef;font-size:12px;line-height:1.5}
 .practiceHero{border:1px solid #315a85;background:linear-gradient(135deg,#0d2946,#081626);padding:12px;border-radius:12px;margin-top:10px}
 @media(max-width:720px){.infoGrid{grid-template-columns:1fr}.dialog h2{font-size:23px}}
+
+.valueGuide{margin-top:9px;background:linear-gradient(135deg,#0a2136,#071421);border:1px solid #2d5478;border-radius:11px;padding:11px}.valueGuideTitle{font-weight:800;color:#d7ecff;margin-bottom:8px}.valueRows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.valueRow{background:#07111e;border:1px solid #213b56;border-radius:8px;padding:8px}.valueRow b{color:#8fdcff;font-size:11px;display:block;margin-bottom:3px}.valueRow span{font-size:12px;color:#c9d7e7;line-height:1.45}.guideNote{margin-top:8px;font-size:11px;color:#91a7bf}@media(max-width:720px){.valueRows{grid-template-columns:1fr}}
 </style></head><body>
 <header><div><b>📊 Excel Master</b><small style="display:block">Created for Yasin Ron</small></div>
 <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -127,17 +124,14 @@ header{box-shadow:0 10px 35px rgba(0,0,0,.22)}
   <div class="box"><b>📌 Formula</b><div id="syn" class="syntax" style="margin-top:7px"></div><p id="exp" class="muted"></p></div>
   <div class="box"><b>📊 Sample Data</b><p id="sample" class="muted"></p><b>Expected result:</b> <span id="result"></span></div>
 </div>
+<div class="valueGuide" id="valueGuide"><div class="valueGuideTitle">🧩 Which value goes where?</div><div id="valueGuideBody"></div></div>
 <div class="infoGrid">
   <div class="infoCard"><strong>💼 Where is it used?</strong><p id="whereUsed"></p></div>
   <div class="infoCard"><strong>🎯 When should you use it?</strong><p id="whenUse"></p></div>
   <div class="infoCard"><strong>🛠️ How to use it</strong><p id="howUse"></p></div>
   <div class="infoCard"><strong>⚠️ Common mistakes</strong><p id="mistakes"></p></div>
 </div>
-<div class="modalGuide">
-  <h3>🧩 Which value goes where?</h3>
-  <p id="guideIntro" class="guideIntro"></p>
-  <div id="valueGuideTable"></div>
-</div>
+<div class="stepGuide"><div class="stepTitle">🪜 Step-by-step: which value comes first?</div><div id="stepGuideBody"></div></div>
 <div class="practiceHero"><b>🧠 Hands-on Formula Training</b>
   <p class="muted">First understand the use case, then write the formula yourself using the sample data.</p>
   <p id="pdata" class="muted"></p>
@@ -156,101 +150,121 @@ function lev(n){if(["SUM","AVERAGE","MIN","MAX","COUNT","COUNTA","IF","AND","OR"
 let cats=["All",...new Set(D.map(x=>x.cat))];document.getElementById("cats").innerHTML=cats.map(x=>`<button onclick="cat='${x}';render();logAgentActivity('category_changed','','Category: '+cat)" ">${x}</button>`).join("");
 let searchLogTimer=null;
 document.getElementById("q").oninput=()=>{render();clearTimeout(searchLogTimer);searchLogTimer=setTimeout(()=>{const v=document.getElementById("q").value.trim();if(v)logAgentActivity("search","", "Searched: "+v)},900)};
-const VALUE_GUIDES={
-"SUM":[["Value 1","Range / cells to add","B2:B6"],["Example","10, 20, 30, 40, 50","Result = 150"]],
-"SUMIF":[["Value 1","Range to check","A2:A6"],["Value 2","Condition / criteria","East"],["Value 3","Range to add","B2:B6"]],
-"SUMIFS":[["Value 1","Range to add","C2:C6"],["Value 2","Condition range 1","A2:A6"],["Value 3","Condition 1","East"],["Value 4","Condition range 2","B2:B6"],["Value 5","Condition 2",">20"]],
-"COUNTIF":[["Value 1","Range to check","B2:B10"],["Value 2","Condition","\">50\""]],
-"COUNTIFS":[["Value 1","Condition range 1","A2:A10"],["Value 2","Condition 1","East"],["Value 3","Condition range 2","B2:B10"],["Value 4","Condition 2",">50"]],
-"AVERAGEIF":[["Value 1","Range to check","A2:A10"],["Value 2","Condition","East"],["Value 3","Range to average","B2:B10"]],
-"AVERAGEIFS":[["Value 1","Range to average","C2:C10"],["Value 2","Condition range 1","A2:A10"],["Value 3","Condition 1","East"],["Value 4","Condition range 2","B2:B10"],["Value 5","Condition 2",">50"]],
-"IF":[["Value 1","Logical test","B2>=50"],["Value 2","If TRUE","\"Pass\""],["Value 3","If FALSE","\"Fail\""]],
-"IFERROR":[["Value 1","Formula / calculation","A2/B2"],["Value 2","What to show if error","\"N/A\""]],
-"IFNA":[["Value 1","Lookup / formula","XLOOKUP(...)"],["Value 2","What to show for #N/A","\"Not Found\""]],
-"AND":[["Value 1","Condition 1","B2>=50"],["Value 2","Condition 2","C2=\"Yes\""],["More","Add more conditions if needed","..."]],
-"OR":[["Value 1","Condition 1","B2=\"Yes\""],["Value 2","Condition 2","C2=\"Yes\""],["More","Add more conditions if needed","..."]],
-"NOT":[["Value 1","Condition to reverse","A2=\"Closed\""]],
-"VLOOKUP":[["Value 1","Value to find","E2"],["Value 2","Table / lookup range","A2:D100"],["Value 3","Column number to return","4"],["Value 4","Exact/approximate match","FALSE for exact"]],
-"HLOOKUP":[["Value 1","Value to find","B1"],["Value 2","Table / lookup range","A1:F5"],["Value 3","Row number to return","4"],["Value 4","Exact/approximate match","FALSE for exact"]],
-"XLOOKUP":[["Value 1","Value to find","E2"],["Value 2","Lookup range","A2:A100"],["Value 3","Return range","D2:D100"],["Value 4","If not found","\"Not Found\""],["Value 5","Match mode (optional)","0 = exact"],["Value 6","Search mode (optional)","1 = first to last"]],
-"INDEX":[["Value 1","Range / array","A2:D100"],["Value 2","Row number","5"],["Value 3","Column number","4"]],
-"MATCH":[["Value 1","Value to find","E2"],["Value 2","Lookup range","A2:A100"],["Value 3","Match type","0 = exact"]],
-"FILTER":[["Value 1","Range to return","A2:D100"],["Value 2","Include condition","C2:C100=\"East\""],["Value 3","If nothing matches (optional)","\"Not Found\""]],
-"UNIQUE":[["Value 1","Range to make unique","A2:A100"],["Value 2","By column (optional)","TRUE / FALSE"],["Value 3","Exactly once (optional)","TRUE / FALSE"]],
-"SORT":[["Value 1","Range to sort","A2:D100"],["Value 2","Sort column","2"],["Value 3","Order","1 = ascending, -1 = descending"]],
-"SORTBY":[["Value 1","Range to return","A2:D100"],["Value 2","Range to sort by","D2:D100"],["Value 3","Sort order","1 or -1"]],
-"TEXTJOIN":[["Value 1","Delimiter","\", \""],["Value 2","Ignore empty cells","TRUE"],["Value 3","Text/ranges to join","A2:A10"]],
-"CONCAT":[["Value 1","First text / cell","A2"],["Value 2","Second text / cell","B2"],["More","Add more text or ranges","..."]],
-"CONCATENATE":[["Value 1","First text / cell","A2"],["Value 2","Second text / cell","B2"],["More","Add more text or ranges","..."]],
-"LEFT":[["Value 1","Text / cell","A2"],["Value 2","Characters to take (optional)","5"]],
-"RIGHT":[["Value 1","Text / cell","A2"],["Value 2","Characters to take (optional)","4"]],
-"MID":[["Value 1","Text / cell","A2"],["Value 2","Starting position","3"],["Value 3","Number of characters","5"]],
-"LEN":[["Value 1","Text / cell to count","A2"]],
-"TRIM":[["Value 1","Text / cell to clean","A2"]],
-"FIND":[["Value 1","Text to find","\"-\""],["Value 2","Text to search","A2"],["Value 3","Starting position (optional)","1"]],
-"SEARCH":[["Value 1","Text to find","\"sales\""],["Value 2","Text to search","A2"],["Value 3","Starting position (optional)","1"]],
-"TEXT":[["Value 1","Value / date / cell","A2"],["Value 2","Format code","\"dd-mmm-yyyy\""]],
-"ROUND":[["Value 1","Number / cell","A2"],["Value 2","Decimal places","2"]],
-"ROUNDUP":[["Value 1","Number / cell","A2"],["Value 2","Decimal places","2"]],
-"ROUNDDOWN":[["Value 1","Number / cell","A2"],["Value 2","Decimal places","2"]],
-"RANK.EQ":[["Value 1","Number to rank","B2"],["Value 2","Range of numbers","B2:B20"],["Value 3","Order (optional)","0 = descending"]],
-"SUMPRODUCT":[["Value 1","First numeric range","B2:B10"],["Value 2","Second range / multiplier","C2:C10"],["More","Ranges must have matching sizes","..."]],
-"SUBTOTAL":[["Value 1","Function number","9 = SUM"],["Value 2","Range","B2:B100"]],
-"AGGREGATE":[["Value 1","Function number","9 = SUM"],["Value 2","Options","0–7"],["Value 3","Range / array","B2:B100"]],
-"DATE":[["Value 1","Year","2026"],["Value 2","Month","8"],["Value 3","Day","14"]],
-"YEAR":[["Value 1","Date / cell","A2"]],
-"MONTH":[["Value 1","Date / cell","A2"]],
-"DAY":[["Value 1","Date / cell","A2"]],
-"EDATE":[["Value 1","Start date","A2"],["Value 2","Months to move","1"]],
-"EOMONTH":[["Value 1","Start date","A2"],["Value 2","Months to move","0 = current month end"]],
-"NETWORKDAYS":[["Value 1","Start date","A2"],["Value 2","End date","B2"],["Value 3","Holidays (optional)","H2:H10"]],
-"WORKDAY":[["Value 1","Start date","A2"],["Value 2","Workdays to add","10"],["Value 3","Holidays (optional)","H2:H10"]],
-"PMT":[["Value 1","Rate per period","10%/12"],["Value 2","Number of periods","60"],["Value 3","Present value / loan","500000"]],
-"PV":[["Value 1","Rate per period","10%/12"],["Value 2","Number of periods","60"],["Value 3","Payment","-10000"]],
-"FV":[["Value 1","Rate per period","10%/12"],["Value 2","Number of periods","60"],["Value 3","Payment","-10000"]],
-"COUNT":[["Value 1","Numbers / range to count","B2:B20"]],
-"COUNTA":[["Value 1","Non-empty cells / range","A2:A20"]],
-"COUNTBLANK":[["Value 1","Range to check for blanks","A2:A20"]],
-"MIN":[["Value 1","Numbers / range","B2:B20"]],
-"MAX":[["Value 1","Numbers / range","B2:B20"]],
-"AVERAGE":[["Value 1","Numbers / range","B2:B20"]],
-"MEDIAN":[["Value 1","Numbers / range","B2:B20"]],
-"MODE.SNGL":[["Value 1","Numbers / range","B2:B20"]],
-"PRODUCT":[["Value 1","Numbers / range","B2:B6"]],
-"ABS":[["Value 1","Number / cell","A2"]],
-"MOD":[["Value 1","Number","10"],["Value 2","Divisor","3"]],
-"QUOTIENT":[["Value 1","Dividend","10"],["Value 2","Divisor","3"]],
-"POWER":[["Value 1","Number","5"],["Value 2","Power","2"]],
-"SQRT":[["Value 1","Number / cell","25"]],
-"AND":[["Value 1","Condition 1","B2>=50"],["Value 2","Condition 2","C2=\"Yes\""]],
-"OR":[["Value 1","Condition 1","B2=\"Yes\""],["Value 2","Condition 2","C2=\"Yes\""]]
+const GUIDE_FAMILIES={
+ lookup:{where:"MIS reports, employee/customer master data, attendance sheets and any report where one value must be matched to another table.",when:"Use it when you know a key such as Employee ID, Email, Product Code or Date and need a related value from a table.",how:"Start with the value to find. Next select the lookup/source range. Then select the range or column that contains the answer. Finish with optional match/search settings if the function supports them.",mistakes:"Wrong lookup range, mismatched row/column sizes, approximate matching when exact matching is needed, or forgetting $ when copying the formula."},
+ conditional:{where:"MIS/KPI reports, team summaries, attendance, QA, productivity, sales and dashboards where only matching rows should be calculated.",when:"Use it when the answer depends on one or more conditions such as Region=East, Status=Closed or Score>50.",how:"First decide what you want to calculate. Then select the range that will be checked and enter the condition. For multi-condition formulas, repeat the criteria-range + condition pair in the same order.",mistakes:"Criteria ranges with different sizes, missing quotes around text, incorrect operators, or mixing up the result range and criteria range."},
+ logic:{where:"Status, eligibility, attendance, KPI flags, approval checks and decision-making reports.",when:"Use it when the result should change according to a condition or several TRUE/FALSE tests.",how:"Build the logical test first. Then enter the result for TRUE and FALSE where required. For AND/OR, put each condition as a separate argument.",mistakes:"Text without quotes, wrong comparison operator, missing parentheses, or using AND when OR is required."},
+ text:{where:"Cleaning names and IDs, extracting codes, creating report labels, joining columns, standardising text and preparing lookup keys.",when:"Use it when the data is text and you need to extract, clean, find, replace, format or combine characters.",how:"Select the source text first. Then enter the character position, number of characters, delimiter, search text or replacement value required by the formula.",mistakes:"Wrong character position/count, forgetting quotes around text, unexpected spaces, case differences, or using the wrong delimiter."},
+ date:{where:"Attendance, payroll, SLA/TAT, ageing, daily/weekly/monthly MIS and date-based dashboards.",when:"Use it when you need to create, extract, compare, add, subtract or format dates and times.",how:"Start with the date/time cell or date arguments. Then add the required unit such as days, months, years, hours or a format code.",mistakes:"Dates stored as text, wrong day/month/year order, inconsistent date formats, or mixing months with days."},
+ math:{where:"MIS totals, productivity, percentages, targets, variance, rounding and numeric calculations.",when:"Use it for arithmetic, totals, rounding, remainders, powers, signs, random values and other numeric transformations.",how:"Put the main number/range first, then provide the next numeric argument such as digits, divisor, power, multiple or percentage as shown in the syntax.",mistakes:"Wrong argument order, division by zero, incorrect range, unexpected decimals, or missing absolute references."},
+ stat:{where:"Performance analysis, quality scores, distributions, rankings, averages, variance, correlation, testing and forecasting.",when:"Use it when you need to understand a dataset statistically rather than only adding or counting it.",how:"Select the relevant sample/population ranges first. Then enter statistic-specific arguments such as k, probability, mean, standard deviation, tails or test type.",mistakes:"Wrong sample/population function, incorrect range, wrong probability, mismatched sample sizes, or mixing text with numeric data."},
+ financial:{where:"Salary/EMI planning, loans, investments, budgets, cash-flow models, depreciation and finance MIS.",when:"Use it when a calculation involves rate, number of periods, payment, present value, future value or depreciation.",how:"Keep the time unit consistent. Enter the rate for the same period as the number of periods, then enter payment/value arguments in the order shown.",mistakes:"Monthly rate with yearly periods, reversed cash-flow signs, wrong payment timing, or incorrect present/future value sign."},
+ engineering:{where:"Technical calculations, unit conversions, number-base conversions, binary/hexadecimal work and engineering reports.",when:"Use it when working with technical units, bases, bitwise operations or engineering-specific values.",how:"Enter the source value first, then the source/target unit, base, second number or precision argument required by the function.",mistakes:"Invalid base, invalid unit, wrong argument order, out-of-range value, or passing text where a number is required."},
+ database:{where:"Structured Excel lists where records are stored in rows with column headers and a separate criteria area.",when:"Use it when a database-style table must be calculated using field names and a criteria range.",how:"Select the whole database including headers, choose the field/column to calculate, then select the criteria range whose headers match the database headers.",mistakes:"Criteria headers do not exactly match, database range excludes headers, wrong field, or criteria are placed outside the intended criteria range."},
+ information:{where:"Data validation, error checks, cell-type checks and workbook diagnostics.",when:"Use it when you need to test what kind of value a cell contains or whether it has an error/blank/number/text.",how:"Pass the cell/reference to test. Read the TRUE/FALSE or returned information and use it in the next calculation if needed.",mistakes:"Checking the wrong cell, ignoring errors, or treating TRUE/FALSE as ordinary text."},
+ array:{where:"Dynamic dashboards, filtered lists, unique lists, sorting and formulas that return multiple cells automatically.",when:"Use it when one formula needs to return a dynamic range or list that changes as the source data changes.",how:"Select the source array/range first, then provide the filter, sort, include, rows/columns or transformation arguments. Leave enough empty cells for the result to spill.",mistakes:"Spill area blocked, array sizes do not match, incorrect include condition, or manually typing over a spilled result."}
 };
 
-function genericGuide(x){
-  const m=x.syntax.match(/^[=]?[^\(]+\((.*)\)$/);
-  if(!m)return [["Value","Use the value(s) shown in the formula syntax",x.sample]];
-  const raw=m[1].replace(/\s+/g," ").trim();
-  if(!raw || raw==="value_or_range")return [["Value 1","Enter the required value, cell or range",x.sample]];
-  const args=[];let cur="",quote=false,depth=0;
-  for(const ch of raw){
-    if(ch==='"')quote=!quote;
-    if(!quote&&(ch==="("))depth++;
-    if(!quote&&(ch===")"))depth--;
-    if(ch===","&&!quote&&depth===0){args.push(cur.trim());cur="";}else cur+=ch;
-  }
-  if(cur.trim())args.push(cur.trim());
-  return args.map((a,i)=>[i===0?"Value 1":`Value ${i+1}`,"Enter this argument in the same position as the syntax",a||"Required value"]);
+const FORMULA_NOTES={
+ SUM:{why:"Adds a group of numbers quickly. It is one of the most common formulas for totals in MIS reports.",when:"Use SUM when you simply need the total and there is no condition to apply."},
+ SUMIF:{why:"Adds only the values whose corresponding cells meet one condition. This is useful for totals by team, region, status or campaign.",when:"Use SUMIF when you have one condition; use SUMIFS when you have two or more."},
+ SUMIFS:{why:"Adds values only when multiple conditions are satisfied, making it ideal for multi-filter MIS/KPI totals.",when:"Use SUMIFS when the total depends on two or more conditions."},
+ COUNTIF:{why:"Counts cells that meet one condition, such as how many agents are Active or how many scores are above 80.",when:"Use COUNTIF for one condition; use COUNTIFS for multiple conditions."},
+ COUNTIFS:{why:"Counts rows that satisfy several conditions at the same time, useful for KPI and audit summaries.",when:"Use COUNTIFS when two or more criteria must match."},
+ AVERAGEIF:{why:"Calculates an average only for rows that meet one condition, useful for team-wise or campaign-wise performance.",when:"Use it when you need an average filtered by one condition."},
+ AVERAGEIFS:{why:"Calculates an average after applying multiple conditions, useful for filtered KPI analysis.",when:"Use it when the average depends on multiple conditions."},
+ VLOOKUP:{why:"Searches the first column of a table and returns a value from another column in the same row. It is common in MIS master-data mapping.",when:"Use it when the lookup key is in the left-most column of the table."},
+ XLOOKUP:{why:"Finds a value in one range and returns the corresponding value from another range. It is easier and safer than traditional VLOOKUP for many tasks.",when:"Use it when you want flexible exact-match lookups or when the return range is not to the right of the lookup range."},
+ INDEX:{why:"Returns the value at a specified row and column inside a range. It is useful for flexible lookups and two-dimensional tables.",when:"Use INDEX when you know the row/column position or when combining it with MATCH for a powerful lookup."},
+ MATCH:{why:"Returns the position of a value inside a range. It is commonly paired with INDEX to create flexible lookups.",when:"Use MATCH when you need the position number rather than the actual value."},
+ IF:{why:"Tests a condition and returns one result when TRUE and another when FALSE. It is essential for status, eligibility and KPI logic.",when:"Use IF whenever a cell needs to make a decision based on a condition."},
+ IFERROR:{why:"Replaces an Excel error such as #N/A or #DIV/0! with a clean result, keeping reports readable.",when:"Use IFERROR around a formula when an error is expected or should be handled gracefully."},
+ LEFT:{why:"Extracts characters from the left side of text, useful for employee codes, campaign prefixes and IDs.",when:"Use LEFT when the required part of the text is at the beginning."},
+ RIGHT:{why:"Extracts characters from the right side of text, useful for suffixes, last digits and codes.",when:"Use RIGHT when the required part is at the end."},
+ MID:{why:"Extracts characters from the middle of text when you know the starting position and length.",when:"Use MID when the required text is between the beginning and end."},
+ TEXT:{why:"Formats a number or date as readable text, useful for report labels, month names and combined MIS messages.",when:"Use TEXT when you need a specific display format inside text."},
+ FILTER:{why:"Returns only the rows that meet a condition and updates automatically when the source data changes.",when:"Use FILTER when you need a dynamic filtered list without manually filtering the source."},
+ UNIQUE:{why:"Returns a list of distinct values, useful for extracting unique TL, campaign, agent or category names.",when:"Use UNIQUE when duplicate values should be removed automatically."},
+ SORT:{why:"Sorts a range dynamically by a selected column or row.",when:"Use SORT when the output should remain automatically ordered as the source changes."},
+ PMT:{why:"Calculates a periodic loan/EMI payment from rate, number of periods and present value.",when:"Use PMT for EMI or loan-payment calculations when the payment is regular."},
+ ROUND:{why:"Rounds a number to a chosen number of decimal places, useful for percentages, rates and clean reports.",when:"Use ROUND when you need controlled decimal precision."},
+ COUNT:{why:"Counts cells containing numbers and ignores text and blanks.",when:"Use COUNT when only numeric entries should be counted."},
+ COUNTA:{why:"Counts non-empty cells, including text and numbers.",when:"Use COUNTA when you need to know how many filled cells/records exist."},
+ COUNTBLANK:{why:"Counts blank cells, useful for checking missing information in MIS forms or data sheets.",when:"Use COUNTBLANK when you need to identify missing entries."}
+};
+
+function guideFamily(x){
+ const n=x.name.toUpperCase(), c=x.cat.toLowerCase();
+ if(/XLOOKUP|VLOOKUP|HLOOKUP|LOOKUP|INDEX|MATCH|XMATCH/.test(n)) return 'lookup';
+ if(/SUMIF|SUMIFS|COUNTIF|COUNTIFS|AVERAGEIF|AVERAGEIFS|MAXIFS|MINIFS|IFS$/.test(n)) return 'conditional';
+ if(/^IF$|^IFERROR$|^IFNA$|^AND$|^OR$|^NOT$|XOR|TRUE|FALSE|SWITCH|CHOOSE/.test(n)) return 'logic';
+ if(/LEFT|RIGHT|MID|LEN|TRIM|CLEAN|TEXT|CONCAT|JOIN|FIND|SEARCH|REPLACE|SUBSTITUTE|EXACT|LOWER|UPPER|PROPER|VALUE|NUMBERVALUE|CHAR|CODE|UNICHAR|UNICODE|DOLLAR|FIXED|REPT/.test(n)) return 'text';
+ if(/DATE|DAY|MONTH|YEAR|TIME|HOUR|MINUTE|SECOND|NOW|TODAY|WEEK|WORKDAY|NETWORKDAYS|EOMONTH|EDATE|DATEDIF|DAYS|YEARFRAC|ISOWEEK|WEEKNUM/.test(n)) return 'date';
+ if(/FILTER|SORT|SORTBY|UNIQUE|SEQUENCE|TRANSPOSE|TOCOL|TOROW|TAKE|DROP|CHOOSECOLS|CHOOSEROWS|VSTACK|HSTACK|WRAP/.test(n)) return 'array';
+ if(/^D[A-Z]/.test(n) || c.includes('database')) return 'database';
+ if(/IS[A-Z]|CELL|INFO|ERROR|TYPE|NA\b/.test(n)) return 'information';
+ if(/PMT|PV|FV|NPV|IRR|XIRR|XNPV|RATE|NPER|IPMT|PPMT|CUMIPMT|CUMPRINC|DB|DDB|SLN|SYD|EFFECT|NOMINAL|RRI/.test(n) || c.includes('financial')) return 'financial';
+ if(/BIN|DEC|HEX|OCT|BIT|CONVERT|COMPLEX|DELTA|GESTEP|ERF|MDETERM|MINVERSE|MMULT/.test(n) || c.includes('engineering')) return 'engineering';
+ if(/AVERAGE|MEDIAN|MODE|STDEV|VAR|PERCENT|QUARTILE|RANK|CORREL|COVARIANCE|PEARSON|SLOPE|INTERCEPT|FORECAST|TREND|GROWTH|STANDARDIZE|DIST|TEST|CONFIDENCE|GEOMEAN|HARMEAN/.test(n) || c.includes('statistical')) return 'stat';
+ return 'math';
 }
-function getValueGuide(x){
-  return VALUE_GUIDES[x.name] || genericGuide(x);
+
+function splitArgs(s){
+ const raw=s.replace(/^=/,'').replace(/^[^(]+\(/,'').replace(/\)$/,'');
+ const args=[];let cur='',q=false,depth=0;
+ for(let i=0;i<raw.length;i++){const ch=raw[i];if(ch==='"'){q=!q;cur+=ch;continue}if(!q&&ch==='('){depth++;cur+=ch;continue}if(!q&&ch===')'){depth--;cur+=ch;continue}if(!q&&ch===','&&depth===0){args.push(cur.trim());cur='';}else cur+=ch;}if(cur.trim())args.push(cur.trim());return args;
 }
-function guideHTML(x,compact=false){
-  const rows=getValueGuide(x);
-  if(compact)return rows.slice(0,4).map(r=>`<div class="vgRow"><span class="vgKey">${esc(r[0])}</span><span>${esc(r[1])}<br><span class="vgExample">Example: ${esc(r[2])}</span></span></div>`).join("");
-  return `<table class="guideTable"><thead><tr><th>Input</th><th>What to enter</th><th>Example</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody></table>`;
+
+const ARG_NAMES={
+ SUM:['Numbers/range to add'],PRODUCT:['Numbers/range to multiply'],AVERAGE:['Numbers/range to average'],COUNT:['Cells/range containing numbers'],COUNTA:['Cells/range to count'],COUNTBLANK:['Range to check for blanks'],MEDIAN:['Numbers/range'],MIN:['Numbers/range'],MAX:['Numbers/range'],LARGE:['Range/array','k = which largest value'],SMALL:['Range/array','k = which smallest value'],
+ SUMIF:['Criteria range to check','Condition/criteria','Range to add'],SUMIFS:['Range to add','First criteria range','First condition','Second criteria range','Second condition','Additional criteria range/condition'],COUNTIF:['Range to check','Condition/criteria'],COUNTIFS:['First criteria range','First condition','Second criteria range','Second condition','Additional criteria range/condition'],AVERAGEIF:['Range to check','Condition/criteria','Range to average'],AVERAGEIFS:['Range to average','First criteria range','First condition','Second criteria range','Second condition','Additional criteria range/condition'],MAXIFS:['Range for maximum','First criteria range','First condition','Second criteria range','Second condition'],MINIFS:['Range for minimum','First criteria range','First condition','Second criteria range','Second condition'],
+ SUMPRODUCT:['First array/range','Second array/range','Additional array/range'],SUBTOTAL:['Function number (e.g. 9=SUM)','First range','Additional range'],AGGREGATE:['Function number','Option','Array/range','k or additional argument'],ROUND:['Number/cell','Number of decimal places'],ROUNDUP:['Number/cell','Number of decimal places'],ROUNDDOWN:['Number/cell','Number of decimal places'],MROUND:['Number/cell','Multiple to round to'],MOD:['Number/cell','Divisor'],QUOTIENT:['Numerator','Denominator'],POWER:['Number/base','Power/exponent'],SQRT:['Number'],ABS:['Number'],SIGN:['Number'],INT:['Number'],TRUNC:['Number','Number of decimal places (optional)'],CEILING:['Number','Significance'],FLOOR:['Number','Significance'],ODD:['Number'],EVEN:['Number'],FACT:['Number'],GCD:['First number','Second number','Additional numbers'],LCM:['First number','Second number','Additional numbers'],COMBIN:['Number of items','Number selected'],PERMUT:['Number of items','Number selected'],PERMUTATIONA:['Number of items','Number selected'],
+ 'RANK.EQ':['Number to rank','Reference range','Order (0/omitted=descending, 1=ascending)'],'RANK.AVG':['Number to rank','Reference range','Order'],'PERCENTILE.INC':['Range/array','Percentile k (0 to 1)'],'PERCENTILE.EXC':['Range/array','Percentile k'],'QUARTILE.INC':['Range/array','Quartile number'],'QUARTILE.EXC':['Range/array','Quartile number'],'PERCENTRANK.INC':['Range/array','Value to rank','Significance'],'PERCENTRANK.EXC':['Range/array','Value to rank','Significance'],
+ IF:['Logical test/condition','Value if TRUE','Value if FALSE'],IFERROR:['Formula/value to test','Value if error'],IFNA:['Formula/value to test','Value if #N/A'],AND:['Condition 1','Condition 2','Additional conditions'],OR:['Condition 1','Condition 2','Additional conditions'],NOT:['Condition to reverse'],XOR:['Condition 1','Condition 2','Additional conditions'],CHOOSE:['Index number','Choice 1','Choice 2','Additional choices'],SWITCH:['Expression to test','Value 1','Result 1','Additional value/result pairs'],
+ LEFT:['Source text/cell','Number of characters'],RIGHT:['Source text/cell','Number of characters'],MID:['Source text/cell','Starting position','Number of characters'],LEN:['Text/cell'],TRIM:['Text/cell'],CLEAN:['Text/cell'],FIND:['Text to find','Text to search in','Starting position (optional)'],SEARCH:['Text to find','Text to search in','Starting position (optional)'],REPLACE:['Original text','Starting position','Number of characters','New text'],SUBSTITUTE:['Original text','Text to replace','New text','Instance number (optional)'],EXACT:['First text','Second text'],LOWER:['Text/cell'],UPPER:['Text/cell'],PROPER:['Text/cell'],CONCAT:['Text/cell 1','Text/cell 2','Additional text/cells'],CONCATENATE:['Text 1','Text 2','Additional text'],TEXTJOIN:['Delimiter','Ignore empty cells (TRUE/FALSE)','Text/ranges to join'],TEXT:['Value/cell','Format code'],VALUE:['Text representing a number'],NUMBERVALUE:['Text','Decimal separator','Group separator'],CHAR:['Number/code'],CODE:['Text'],UNICHAR:['Number/code'],UNICODE:['Text'],REPT:['Text','Number of repetitions'],DOLLAR:['Number','Decimal places'],FIXED:['Number','Decimal places','No commas (optional)'],
+ DATE:['Year','Month','Day'],DATEVALUE:['Date text'],TIME:['Hour','Minute','Second'],TIMEVALUE:['Time text'],DAY:['Date'],MONTH:['Date'],YEAR:['Date'],HOUR:['Time'],MINUTE:['Time'],SECOND:['Time'],TODAY:[],NOW:[],EDATE:['Starting date','Months to add/subtract'],EOMONTH:['Starting date','Months to add/subtract'],DATEDIF:['Start date','End date','Unit (Y/M/D/MD/YM/YD)'],DAYS:['End date','Start date'],YEARFRAC:['Start date','End date','Basis (optional)'],WEEKDAY:['Date','Return type (optional)'],WEEKNUM:['Date','Return type (optional)'],ISOWEEKNUM:['Date'],WORKDAY:['Start date','Working days','Holiday range (optional)'],'WORKDAY.INTL':['Start date','Working days','Weekend pattern','Holiday range (optional)'],NETWORKDAYS:['Start date','End date','Holiday range (optional)'],'NETWORKDAYS.INTL':['Start date','End date','Weekend pattern','Holiday range (optional)'],
+ XLOOKUP:['Value to find','Lookup range','Return range','If not found (optional)','Match mode (optional)','Search mode (optional)'],VLOOKUP:['Value to find','Table/range','Column number to return','Exact/approximate match (FALSE/0 exact)'],HLOOKUP:['Value to find','Table/range','Row number to return','Exact/approximate match'],LOOKUP:['Value to find','Lookup vector/range','Result vector/range'],INDEX:['Array/range','Row number','Column number (optional)'],MATCH:['Value to find','Lookup range','Match type'],XMATCH:['Value to find','Lookup range','Match mode','Search mode'],
+ FILTER:['Array/range to return','Include condition array','If empty (optional)'],SORT:['Array/range','Sort index','Sort order','By column (optional)'],SORTBY:['Array/range','Sort-by range','Sort order'],UNIQUE:['Array/range','By column (optional)','Exactly once (optional)'],SEQUENCE:['Rows','Columns','Start','Step'],TRANSPOSE:['Source range/array'],TAKE:['Array/range','Rows to take','Columns to take (optional)'],DROP:['Array/range','Rows to drop','Columns to drop (optional)'],CHOOSECOLS:['Array/range','Column number(s)'],CHOOSEROWS:['Array/range','Row number(s)'],VSTACK:['First array','Additional arrays'],HSTACK:['First array','Additional arrays'],TOCOL:['Array/range','Ignore option','Scan by column'],TOROW:['Array/range','Ignore option','Scan by column'],
+ PMT:['Rate per period','Number of periods','Present value/loan amount','Future value (optional)','Payment timing (0=end, 1=start)'],PV:['Rate per period','Number of periods','Payment','Future value (optional)','Payment timing'],FV:['Rate per period','Number of periods','Payment','Present value','Payment timing'],NPV:['Discount rate','Cash-flow values'],IRR:['Cash-flow range','Guess (optional)'],XIRR:['Cash-flow values','Dates','Guess (optional)'],RATE:['Number of periods','Payment','Present value','Future value','Payment timing','Guess'],NPER:['Rate','Payment','Present value','Future value','Payment timing'],IPMT:['Rate','Period number','Number of periods','Present value','Future value','Payment timing'],PPMT:['Rate','Period number','Number of periods','Present value','Future value','Payment timing'],
+ CONVERT:['Number','From unit','To unit'],DECIMAL:['Text number','Base'],BASE:['Number','Base','Minimum length','Padding'],BIN2DEC:['Binary text'],DEC2BIN:['Decimal number','Places'],HEX2DEC:['Hexadecimal text'],DEC2HEX:['Decimal number','Places'],OCT2DEC:['Octal text'],DEC2OCT:['Decimal number','Places'],BITAND:['Number 1','Number 2'],BITOR:['Number 1','Number 2'],BITXOR:['Number 1','Number 2'],BITLSHIFT:['Number','Bits to shift'],BITRSHIFT:['Number','Bits to shift'],
+ DGET:['Database/table range','Field/column','Criteria range'],DSUM:['Database/table range','Field/column','Criteria range'],DCOUNT:['Database/table range','Field/column','Criteria range'],DCOUNTA:['Database/table range','Field/column','Criteria range'],DMAX:['Database/table range','Field/column','Criteria range'],DMIN:['Database/table range','Field/column','Criteria range'],DPRODUCT:['Database/table range','Field/column','Criteria range'],DSTDEV:['Database/table range','Field/column','Criteria range'],DSTDEVP:['Database/table range','Field/column','Criteria range'],DVAR:['Database/table range','Field/column','Criteria range'],DVARP:['Database/table range','Field/column','Criteria range']
+};
+
+function inferArgLabel(name,arg,i){
+ const n=name.toUpperCase();
+ if(ARG_NAMES[name]&&ARG_NAMES[name][i]) return ARG_NAMES[name][i];
+ if(/range|array/i.test(arg)) return i===0?'Source range/array':'Additional range/array';
+ if(/criteria|condition/i.test(arg)) return 'Condition/criteria';
+ if(/value_or_range/i.test(arg)) return i===0?'Main value/range':'Additional value/argument';
+ if(/rate/i.test(arg)) return 'Rate/percentage per period';
+ if(/date/i.test(arg)) return 'Date/date cell';
+ if(/text/i.test(arg)) return 'Text/value';
+ return 'Argument '+(i+1);
 }
-function render(){let q=document.getElementById("q").value.toLowerCase();let a=D.filter(x=>(cat=="All"||x.cat==cat)&&(level=="All"||lev(x.name)==level)&&(x.name.toLowerCase().includes(q)||x.exp.toLowerCase().includes(q)));document.getElementById("show").textContent=`Showing ${a.length} of ${D.length} formulas`;document.getElementById("cards").innerHTML=a.map(x=>`<article class="card"><h3>${esc(x.name)}</h3><div class="syntax">${esc(x.syntax)}</div><p class="desc">${esc(x.exp)}</p><small>${esc(x.cat)} · Excel 2016</small><div class="training"><b>🧠 Formula Training</b><br>Sample: ${esc(x.sample)}<br>Expected: ${esc(x.result)}</div><div class="valueGuide"><b>🧩 Values: kya kaha lena hai?</b>${guideHTML(x,true)}</div><button class="btn" onclick="openM(${D.indexOf(x)})">🎓 Open Full Training →</button></article>`).join("")}
-let cur=0;function openM(i){cur=i;let x=D[i];document.getElementById("title").textContent=x.name;document.getElementById("catLabel").textContent=x.cat+" · "+lev(x.name);document.getElementById("syn").textContent=x.syntax;document.getElementById("exp").textContent=x.exp;document.getElementById("sample").textContent=x.sample;document.getElementById("result").textContent=x.result;document.getElementById("guideIntro").textContent=`${x.name} me har value/argument ka role niche diya hai. Pehli value se start karo, phir second value ko uske role ke hisaab se fill karo.`;document.getElementById("valueGuideTable").innerHTML=guideHTML(x);document.getElementById("pdata").textContent="Practice with: "+x.sample;document.getElementById("ans").value="";document.getElementById("feedback").textContent="";document.getElementById("modal").classList.add("show");logAgentActivity("formula_opened",x.name,"Opened formula training")}
+function familyPurpose(x){
+ const f=guideFamily(x);const g=GUIDE_FAMILIES[f];const note=FORMULA_NOTES[x.name];
+ return {where:g.where,when:(note&&note.when)||g.when,how:g.how,mistakes:g.mistakes,why:(note&&note.why)||((x.exp&&!/^Use .+ for its Excel function purpose\.$/i.test(x.exp))?x.exp:'This formula is designed for the task indicated by its name and syntax. The guide below shows exactly what each value means.')};
+}
+function valueGuide(x){
+ const args=splitArgs(x.syntax), out=[];
+ if(!args.length){out.push('<div class="valueRow"><b>NO INPUT REQUIRED</b><span>This formula uses no cell argument in this example. Enter it exactly as shown, then press Enter.</span></div>');return out.join('');}
+ args.forEach((a,i)=>{const label=inferArgLabel(x.name,a,i);out.push(`<div class="valueRow"><b>VALUE ${i+1} · ${esc(label)}</b><span><code>${esc(a)}</code><br><em>What to enter:</em> ${esc(label)}. Use the example above as the starting point, then replace it with your own cell, range, condition or number.</span></div>`);});
+ return out.join('');
+}
+function trainingSteps(x){
+ const args=splitArgs(x.syntax), steps=[];
+ steps.push(`Step 1 — Decide the task: ${familyPurpose(x).why}`);
+ if(!args.length){steps.push(`Step 2 — Type ${x.syntax} exactly as shown and press Enter.`);steps.push(`Step 3 — If your worksheet uses a different input, replace only the fixed example values while keeping the function name and required brackets.`);return steps;}
+ steps.push(`Step 2 — Type the function name first: =${x.name}(`);
+ args.forEach((a,i)=>{const label=inferArgLabel(x.name,a,i);const connector=i<args.length-1?', then add a comma (,).':'';steps.push(`Step ${i+3} — VALUE ${i+1}: enter ${label}. In this example use ${a}.${connector}`);});
+ steps.push(`Step ${args.length+3} — Close the formula with ) and press Enter.`);
+ steps.push(`Step ${args.length+4} — Check the result against the expected result shown above. If you copied the formula down, lock fixed ranges with $ where required.`);
+ return steps;
+}
+function guide(x){const p=familyPurpose(x);return {...p,steps:trainingSteps(x)};}
+
+function render(){let q=document.getElementById("q").value.toLowerCase();let a=D.filter(x=>(cat=="All"||x.cat==cat)&&(level=="All"||lev(x.name)==level)&&(x.name.toLowerCase().includes(q)||x.exp.toLowerCase().includes(q)));document.getElementById("show").textContent=`Showing ${a.length} of ${D.length} formulas`;document.getElementById("cards").innerHTML=a.map(x=>`<article class="card"><h3>${esc(x.name)}</h3><div class="syntax">${esc(x.syntax)}</div><p class="desc">${esc(x.exp)}</p><small>${esc(x.cat)} · Excel 2016</small><div class="training"><b>🧠 Formula Training</b><br>Sample: ${esc(x.sample)}<br>Expected: ${esc(x.result)}</div><button class="btn" onclick="openM(${D.indexOf(x)})">🎓 Open Full Training →</button></article>`).join("")}
+let cur=0;function openM(i){cur=i;let x=D[i],g=guide(x);document.getElementById("title").textContent=x.name;document.getElementById("catLabel").textContent=x.cat+" · "+lev(x.name);document.getElementById("syn").textContent=x.syntax;document.getElementById("exp").textContent=x.exp;document.getElementById("sample").textContent=x.sample;document.getElementById("result").textContent=x.result;document.getElementById("whereUsed").textContent=g.where;document.getElementById("whenUse").textContent=g.when;document.getElementById("howUse").textContent=g.how;document.getElementById("mistakes").textContent=g.mistakes;document.getElementById("valueGuideBody").innerHTML='<div class="valueRows">'+valueGuide(x)+'</div><div class="guideNote">💡 VALUE 1 is always the first argument after the opening bracket. VALUE 2 is the second, VALUE 3 the third, and so on. Replace the example with your own Excel cells/ranges/conditions without changing the argument order.</div>';document.getElementById("stepGuideBody").innerHTML=g.steps.map(s=>`<div class="stepLine">${esc(s)}</div>`).join("");document.getElementById("pdata").textContent="Practice with: "+x.sample;document.getElementById("ans").value="";document.getElementById("feedback").textContent="";document.getElementById("modal").classList.add("show");logAgentActivity("formula_opened",x.name,"Opened formula training")}
 
 function closeM(){modal.classList.remove("show")}function check(){let a=ans.value.trim().replace(/\s+/g,"").toLowerCase(),c=D[cur].syntax.replace(/\s+/g,"").toLowerCase();feedback.textContent=a==c?"✅ Correct!":"❌ Not exact. Try again or reveal the correct formula."}function reveal(){feedback.textContent="Correct formula: "+D[cur].syntax}
 function full(){if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen()}
