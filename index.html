@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07101d">
-<link rel="manifest" href="./manifest.json">
+<link rel="manifest" href="./manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Excel Master">
@@ -557,7 +557,7 @@ const countEl=document.getElementById('formulaCount'); if(countEl) countEl.textC
   // Register the service worker from the current GitHub Pages folder.
   if('serviceWorker' in navigator){
     window.addEventListener('load',function(){
-      navigator.serviceWorker.register('/Yasin-Ron-/service-worker.js',{scope:'/Yasin-Ron-/'})
+      navigator.serviceWorker.register('./service-worker.js',{scope:'./'})
         .then(reg=>console.log('Excel Master service worker ready:',reg.scope))
         .catch(err=>console.warn('Excel Master service worker registration failed:',err));
     });
