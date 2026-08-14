@@ -49,3 +49,9 @@ The public Publishable key is the correct key for this browser app.
 - Forgot Password sends a secure Supabase reset email.
 - Password reset links return to the Agent Portal where the agent can set a new password.
 - Admin accounts are blocked from the Agent Portal flow.
+
+
+## 📱 Install Excel Master on Android
+The Agent Portal is PWA-enabled. Publish the `web_source` files to GitHub Pages over HTTPS.
+On Android Chrome, use the **📱 Install App** button when it appears, or Chrome → **⋮ → Install app / Add to Home screen**.
+The installed app opens the same Agent Portal in standalone mode.
