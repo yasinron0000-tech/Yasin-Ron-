@@ -28,6 +28,7 @@ main{max-width:1400px;margin:auto;padding:10px}.hero{background:linear-gradient(
   <input id="authEmail" class="authInput" type="email" placeholder="Email">
   <input id="authPassword" class="authInput" type="password" placeholder="Password (minimum 6 characters)">
   <button class="btn primary" id="authSubmit" style="width:100%">Login</button>
+  <button class="btn" id="forgotPassword" style="width:100%;margin-top:7px">Forgot password?</button>
   <div id="authMsg" class="authMsg">Login with your Agent account.</div>
  </div>
 </div>
@@ -71,107 +72,246 @@ function full(){if(!document.fullscreenElement)document.documentElement.requestF
 function agent(){alert("Agent Training: choose any formula and tap “Open Full Training”. Every formula now has sample data, mistakes and a practice box with answer checking.")}
 render();
 
-// ===== Secure Supabase Auth / Agent / Admin layer =====
-let EM_SUPA=null, EM_USER=null, EM_PROFILE=null, authMode='login';
-function emCfg(){return window.EXCEL_MASTER_SUPABASE||{}}
-function emReady(){let c=emCfg(); return c.url && !c.url.startsWith('YOUR_') && c.key && !c.key.startsWith('YOUR_')}
-function setMsg(t){const e=document.getElementById('authMsg');if(e)e.textContent=t}
-async function loadProfile(){
- if(!EM_SUPA||!EM_USER)return false;
- try{
-  const {data,error}=await EM_SUPA.from('profiles').select('id,full_name,role').eq('id',EM_USER.id).maybeSingle();
-  if(error){setMsg('Login succeeded, but profile setup is missing. Run supabase-schema.sql in Supabase SQL Editor.');console.error('Profile error:',error);return false}
-  if(!data){setMsg('Login succeeded, but no profile was created for this account. Run the Supabase schema/trigger, then sign up again.');return false}
-  EM_PROFILE=data;
-  document.getElementById('userPill').textContent=(data.full_name||EM_USER.email)+(data.role ? ' • '+data.role : '');
-  const admin=data.role==='admin';
-  document.getElementById('adminPanel').style.display=admin?'block':'none';
-  document.getElementById('logoutTop').style.display='inline-block';
-  return true;
- }catch(e){console.error(e);setMsg('Unable to load your profile. Check Supabase setup and internet connection.');return false}
+// ===== Secure Supabase Auth / Agent / Admin layer (v6) =====
+let EM_SUPA = null, EM_USER = null, EM_PROFILE = null, authMode = 'login';
+let authBusy = false;
+
+function emCfg(){ return window.EXCEL_MASTER_SUPABASE || {}; }
+function emReady(){
+  const c = emCfg();
+  return !!(c.url && /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(c.url) &&
+            c.key && c.key.startsWith('sb_publishable_'));
+}
+function setMsg(t, ok=false){
+  const e=document.getElementById('authMsg');
+  if(e){
+    e.textContent=t;
+    e.style.border='1px solid '+(ok?'#245c3a':'#294768');
+  }
+}
+function setLoggedUI(user){
+  const pill=document.getElementById('userPill');
+  const gate=document.getElementById('authGate');
+  const out=document.getElementById('logoutTop');
+  if(user){
+    if(pill) pill.textContent=user.email||'Logged in';
+    if(out) out.style.display='inline-block';
+    if(gate) gate.style.display='none';
+  }else{
+    if(pill) pill.textContent='Not logged in';
+    if(out) out.style.display='none';
+    if(gate) gate.style.display='flex';
+    const ap=document.getElementById('adminPanel');
+    if(ap) ap.style.display='none';
+  }
+}
+function friendlyAuthError(error){
+  const msg=(error?.message||'').trim();
+  const low=msg.toLowerCase();
+  if(low.includes('invalid login credentials'))
+    return 'Invalid email or password. Check both carefully, or use Forgot password.';
+  if(low.includes('email not confirmed'))
+    return 'Email is not confirmed. Confirm the email first, or turn OFF Confirm Email in Supabase Authentication → Sign In / Providers → Email.';
+  if(low.includes('rate limit') || low.includes('too many requests'))
+    return 'Email rate limit reached. Stop repeated signup/reset attempts and try again later, or configure custom SMTP in Supabase.';
+  if(low.includes('user already registered'))
+    return 'This email is already registered. Switch to Login and use the existing password.';
+  if(low.includes('password should be at least'))
+    return 'Password must be at least 6 characters.';
+  return msg || 'Authentication failed. Please try again.';
+}
+async function loadProfile(retries=3){
+  if(!EM_SUPA || !EM_USER) return false;
+  for(let i=0;i<retries;i++){
+    try{
+      const {data,error}=await EM_SUPA.from('profiles')
+        .select('id,full_name,role').eq('id',EM_USER.id).maybeSingle();
+      if(!error && data){
+        EM_PROFILE=data;
+        const name=data.full_name || EM_USER.email || 'User';
+        document.getElementById('userPill').textContent=name+(data.role?' • '+data.role:'');
+        const admin=data.role==='admin';
+        const ap=document.getElementById('adminPanel');
+        if(ap) ap.style.display=admin?'block':'none';
+        setLoggedUI(EM_USER);
+        return true;
+      }
+      if(error) console.error('Profile read error:', error);
+    }catch(e){ console.error('Profile exception:',e); }
+    await new Promise(r=>setTimeout(r,500*(i+1)));
+  }
+  setMsg('Login succeeded, but your profile is not ready. Run supabase-schema.sql once, then try again.');
+  return false;
 }
 async function bootAuth(){
- try{
-  if(!emReady()){setMsg('Supabase is not connected yet. Check supabase-config.js.');return}
-  if(!window.supabase){setMsg('Supabase library did not load. Check internet connection.');return}
-  EM_SUPA=window.supabase.createClient(emCfg().url,emCfg().key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  const {data,error}=await EM_SUPA.auth.getSession();
-  if(error){setMsg('Unable to check login session: '+error.message);return}
-  EM_USER=data.session?.user||null;
-  if(EM_USER){
-   document.getElementById('authGate').style.display='none';
-   document.getElementById('userPill').textContent=EM_USER.email||'Logged in';
-   document.getElementById('logoutTop').style.display='inline-block';
-   await loadProfile();
-  }else document.getElementById('authGate').style.display='flex';
-  EM_SUPA.auth.onAuthStateChange((_event,session)=>{
-   EM_USER=session?.user||null;
-   if(EM_USER){
-    document.getElementById('authGate').style.display='none';
-    document.getElementById('userPill').textContent=EM_USER.email||'Logged in';
-    document.getElementById('logoutTop').style.display='inline-block';
-    setTimeout(()=>loadProfile(),0);
-   }else{
-    EM_PROFILE=null;
-    document.getElementById('authGate').style.display='flex';
-    document.getElementById('userPill').textContent='Not logged in';
-    document.getElementById('logoutTop').style.display='none';
-   }
-  });
- }catch(e){console.error('Auth boot error:',e);setMsg('Login system failed to start. Refresh the page and check Supabase configuration.');}
+  try{
+    if(!emReady()){ setMsg('Supabase is not configured. Check supabase-config.js.'); return; }
+    if(!window.supabase){ setMsg('Supabase library did not load. Check your internet connection.'); return; }
+
+    const c=emCfg();
+    EM_SUPA=window.supabase.createClient(c.url,c.key,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+    });
+
+    const {data,error}=await EM_SUPA.auth.getSession();
+    if(error){ setMsg('Unable to check login session: '+friendlyAuthError(error)); return; }
+
+    EM_USER=data?.session?.user||null;
+    if(EM_USER){
+      setLoggedUI(EM_USER);
+      await loadProfile();
+    }else{
+      setLoggedUI(null);
+    }
+
+    EM_SUPA.auth.onAuthStateChange((_event,session)=>{
+      EM_USER=session?.user||null;
+      if(EM_USER){
+        setLoggedUI(EM_USER);
+        setTimeout(()=>loadProfile(),0);
+      }else{
+        EM_PROFILE=null;
+        setLoggedUI(null);
+      }
+    });
+  }catch(e){
+    console.error('Auth boot error:',e);
+    setMsg('Login system failed to start. Refresh once and try again.');
+  }
 }
 
-document.getElementById('loginTab').onclick=()=>{authMode='login';document.getElementById('signupNameWrap').style.display='none';document.getElementById('authSubmit').textContent='Login';document.getElementById('loginTab').className='btn primary';document.getElementById('signupTab').className='btn'};
-document.getElementById('signupTab').onclick=()=>{authMode='signup';document.getElementById('signupNameWrap').style.display='block';document.getElementById('authSubmit').textContent='Create Agent Account';document.getElementById('signupTab').className='btn primary';document.getElementById('loginTab').className='btn'};
-document.getElementById('authSubmit').onclick=async()=>{
- if(!EM_SUPA){setMsg('Supabase is not configured.');return}
- const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value,name=document.getElementById('authName').value.trim();
- if(!email||password.length<6||(authMode==='signup'&&!name)){setMsg('Enter all required fields. Password must be at least 6 characters.');return}
- const btn=document.getElementById('authSubmit');btn.disabled=true;setMsg(authMode==='login'?'Signing in…':'Creating account…');
- try{
-  const r=authMode==='login'
-   ?await EM_SUPA.auth.signInWithPassword({email,password})
-   :await EM_SUPA.auth.signUp({email,password,options:{data:{full_name:name}}});
-  if(r.error){setMsg(r.error.message);return}
-  if(authMode==='signup'&&!r.data.session){setMsg('Account created. Check your email to confirm signup, then log in.');return}
-  setMsg('Login successful. Loading your profile…');
-  EM_USER=r.data.user||r.data.session?.user||EM_USER;
-  document.getElementById('authGate').style.display='none';
-  document.getElementById('userPill').textContent=EM_USER?.email||'Logged in';
-  document.getElementById('logoutTop').style.display='inline-block';
-  await loadProfile();
- }catch(e){console.error('Auth error:',e);setMsg('Login failed: '+(e?.message||'Unknown error'));}
- finally{btn.disabled=false}
+document.getElementById('loginTab').onclick=()=>{
+  authMode='login';
+  document.getElementById('signupNameWrap').style.display='none';
+  document.getElementById('authSubmit').textContent='Login';
+  document.getElementById('loginTab').className='btn primary';
+  document.getElementById('signupTab').className='btn';
+  setMsg('Login with your Agent account.');
 };
-async function emLogout(){if(EM_SUPA)await EM_SUPA.auth.signOut()}
+document.getElementById('signupTab').onclick=()=>{
+  authMode='signup';
+  document.getElementById('signupNameWrap').style.display='block';
+  document.getElementById('authSubmit').textContent='Create Agent Account';
+  document.getElementById('signupTab').className='btn primary';
+  document.getElementById('loginTab').className='btn';
+  setMsg('Create a new Agent account.');
+};
+
+document.getElementById('authSubmit').onclick=async()=>{
+  if(authBusy) return;
+  if(!EM_SUPA){ setMsg('Supabase is not configured. Check supabase-config.js.'); return; }
+
+  const email=document.getElementById('authEmail').value.trim().toLowerCase();
+  const password=document.getElementById('authPassword').value;
+  const name=document.getElementById('authName').value.trim();
+
+  if(!email || !email.includes('@') || password.length<6 ||
+     (authMode==='signup' && !name)){
+    setMsg(authMode==='signup'
+      ? 'Enter full name, valid email and password (minimum 6 characters).'
+      : 'Enter your email and password (minimum 6 characters).');
+    return;
+  }
+
+  const btn=document.getElementById('authSubmit');
+  authBusy=true; btn.disabled=true;
+  setMsg(authMode==='login'?'Signing in…':'Creating account…');
+
+  try{
+    let r;
+    if(authMode==='login'){
+      r=await EM_SUPA.auth.signInWithPassword({email,password});
+    }else{
+      r=await EM_SUPA.auth.signUp({
+        email,password,
+        options:{data:{full_name:name}}
+      });
+    }
+
+    if(r.error){
+      setMsg(friendlyAuthError(r.error));
+      return;
+    }
+
+    if(authMode==='signup' && !r.data?.session){
+      setMsg('Account created. Check your email to confirm signup, then return here and Login.');
+      return;
+    }
+
+    EM_USER=r.data?.user || r.data?.session?.user || null;
+    if(!EM_USER){
+      setMsg('Login completed but no user session was returned. Please try Login again.');
+      return;
+    }
+
+    setLoggedUI(EM_USER);
+    setMsg('Login successful. Loading your profile…',true);
+    const ok=await loadProfile(4);
+    if(!ok){
+      // Do not leave the app in a misleading half-logged-in state.
+      await EM_SUPA.auth.signOut();
+      setLoggedUI(null);
+    }
+  }catch(e){
+    console.error('Auth error:',e);
+    setLoggedUI(null);
+    setMsg('Login failed: '+friendlyAuthError(e));
+  }finally{
+    authBusy=false;
+    btn.disabled=false;
+  }
+};
+
+async function emLogout(){
+  try{ if(EM_SUPA) await EM_SUPA.auth.signOut(); }
+  finally{
+    EM_USER=null; EM_PROFILE=null; setLoggedUI(null);
+    setMsg('You have been logged out.');
+  }
+}
 document.getElementById('logoutTop').onclick=emLogout;
 document.getElementById('refreshReviews').onclick=loadReviews;
+
 async function loadReviews(){
- if(!EM_SUPA||!EM_PROFILE||EM_PROFILE.role!=='admin')return;
- const {data,error}=await EM_SUPA.from('training_submissions').select('*').order('created_at',{ascending:false});
- const box=document.getElementById('reviewList'); if(error){box.textContent=error.message;return}
- if(!data?.length){box.textContent="No training submissions yet.";return}
- box.innerHTML=data.map(r=>`<div class="reviewRow"><b>${esc(r.formula_name)}</b> — ${esc(r.author_name||'Agent')} <span class="status">${esc(r.status)}</span><div class="muted">${esc(r.title)} · ${new Date(r.created_at).toLocaleString()}</div><div style="margin-top:7px"><button class="btn primary" onclick="review('${r.id}','approved')">✅ Approve</button> <button class="btn" onclick="review('${r.id}','rejected')">❌ Reject</button></div></div>`).join('');
+  if(!EM_SUPA||!EM_PROFILE||EM_PROFILE.role!=='admin')return;
+  const {data,error}=await EM_SUPA.from('training_submissions').select('*').order('created_at',{ascending:false});
+  const box=document.getElementById('reviewList');
+  if(error){box.textContent=error.message;return}
+  if(!data?.length){box.textContent="No training submissions yet.";return}
+  box.innerHTML=data.map(r=>`<div class="reviewRow"><b>${esc(r.formula_name)}</b> — ${esc(r.author_name||'Agent')} <span class="status">${esc(r.status)}</span><div class="muted">${esc(r.title)} · ${new Date(r.created_at).toLocaleString()}</div><div style="margin-top:7px"><button class="btn primary" onclick="review('${r.id}','approved')">✅ Approve</button> <button class="btn" onclick="review('${r.id}','rejected')">❌ Reject</button></div></div>`).join('');
 }
 async function review(id,status){
- if(!EM_SUPA||!EM_PROFILE||EM_PROFILE.role!=='admin'){alert("Admin only.");return}
- const note=status==='rejected'?prompt("Reason for rejection (optional):"):"Approved by Yasin Ron";
- const {error}=await EM_SUPA.from('training_submissions').update({status,review_note:note,reviewed_by:EM_USER.id,reviewed_at:new Date().toISOString()}).eq('id',id);
- if(error)alert(error.message);else loadReviews();
+  if(!EM_SUPA||!EM_PROFILE||EM_PROFILE.role!=='admin'){alert("Admin only.");return}
+  const note=status==='rejected'?prompt("Reason for rejection (optional):"):"Approved by Yasin Ron";
+  const {error}=await EM_SUPA.from('training_submissions').update({status,review_note:note,reviewed_by:EM_USER.id,reviewed_at:new Date().toISOString()}).eq('id',id);
+  if(error)alert(error.message);else loadReviews();
 }
 document.getElementById('submitTraining').onclick=async()=>{
- if(!EM_SUPA||!EM_USER){alert("Please login first.");return}
- const x=D[cur], answer=document.getElementById('ans').value.trim();
- if(!answer){alert("Write your practice formula first.");return}
- const {error}=await EM_SUPA.from('training_submissions').insert({
-  formula_name:x.name,title:"Agent formula practice — "+x.name,explanation:x.exp,sample_data:x.sample,
-  formula_example:x.syntax,expected_result:x.result,
-  common_mistakes:"Check brackets, ranges, quotes, and absolute references.",
-  practice_question:"Write and test the formula using the sample data.",practice_answer:answer,
-  author_id:EM_USER.id,author_name:EM_PROFILE?.full_name||EM_USER.email,status:"pending"
- });
- if(error)alert(error.message);else alert("Training submitted. Status: Pending Admin Review.");
+  if(!EM_SUPA||!EM_USER||!EM_PROFILE){alert("Please login first.");return}
+  const x=D[cur], answer=document.getElementById('ans').value.trim();
+  if(!answer){alert("Write your practice formula first.");return}
+  const {error}=await EM_SUPA.from('training_submissions').insert({
+    formula_name:x.name,title:"Agent formula practice — "+x.name,explanation:x.exp,sample_data:x.sample,
+    formula_example:x.syntax,expected_result:x.result,
+    common_mistakes:"Check brackets, ranges, quotes, and absolute references.",
+    practice_question:"Write and test the formula using the sample data.",practice_answer:answer,
+    author_id:EM_USER.id,author_name:EM_PROFILE.full_name||EM_USER.email,status:"pending"
+  });
+  if(error)alert(error.message);else alert("Training submitted. Status: Pending Admin Review.");
+}
+document.getElementById('forgotPassword').onclick=async()=>{
+  if(!EM_SUPA){setMsg('Supabase is not configured.');return}
+  const email=document.getElementById('authEmail').value.trim().toLowerCase();
+  if(!email || !email.includes('@')){setMsg('Enter your email first, then tap Forgot password.');return}
+  try{
+    const {error}=await EM_SUPA.auth.resetPasswordForEmail(email,{
+      redirectTo:window.location.origin+window.location.pathname
+    });
+    if(error) setMsg(friendlyAuthError(error));
+    else setMsg('Password reset email sent. Check your inbox.',true);
+  }catch(e){setMsg('Password reset failed: '+friendlyAuthError(e));}
 };
+
 bootAuth();
 
 </script></body></html>

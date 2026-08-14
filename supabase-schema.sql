@@ -89,3 +89,20 @@ for delete to authenticated using (public.is_admin());
 -- Agents remain 'agent' and cannot promote themselves because profiles has no
 -- agent INSERT/UPDATE policy. Only the database owner/Supabase SQL editor can
 -- change a role to admin.
+
+
+-- OPTIONAL REPAIR FOR EXISTING ACCOUNTS:
+-- Run this once if an existing Auth user has no profile row.
+insert into public.profiles (id, full_name, role)
+select
+  u.id,
+  coalesce(u.raw_user_meta_data->>'full_name', split_part(coalesce(u.email,''),'@',1)),
+  'agent'
+from auth.users u
+where not exists (select 1 from public.profiles p where p.id=u.id)
+on conflict (id) do nothing;
+
+-- OWNER/ADMIN:
+-- Replace the UUID below with YOUR administrator account's auth.users.id.
+-- Do not put a password in SQL or JavaScript.
+-- update public.profiles set role='admin' where id='YOUR-ADMIN-UUID';
