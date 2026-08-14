@@ -1,12 +1,42 @@
 # Excel Master — Yasin Ron Professional Edition
 
-## Agent Portal
-- `index.html` opens directly with NO login.
-- 300+ Excel formulas.
-- Every formula includes: what it does, where it is used, when to use it, how to use it, sample data, expected result, common mistakes and hands-on practice.
-- Practice is saved locally in the browser.
-- Professional responsive UI with animations and hover effects.
+## What is fixed in this build
 
+### Owner/Admin Dashboard
+- Secure Supabase Owner login on `admin.html`.
+- Live agent monitoring: online/offline status, last seen, current formula and current activity.
+- Recent agent activity feed.
+- Registered agent directory.
+- Training submission dashboard with Pending / Approved / Rejected filters.
+- Approve / Reject / View submission controls.
+- Automatic dashboard refresh every 15 seconds.
+- Fixed the `permission denied for table training_submissions` setup by adding the required authenticated grants and admin RLS policies in `supabase-schema.sql`.
+
+### Agent Portal
+- `index.html` remains the Agent Portal.
+- Agents can sign in with their existing Supabase Auth account.
+- Logged-in agents appear live in the Owner Dashboard.
+- Presence heartbeat updates every 20 seconds.
+- Admin can see formula opened, practice saved, login, search and category activity.
+- Agent passwords are never stored in GitHub.
+- Guest users can still view the formula library, but they are not identified as live agents until they sign in.
 
 ## Deployment
-Replace the repository root files with this build. Keep `supabase-config.js` with the Publishable key only. If an older cached version appears, clear site data or open the GitHub Pages URL in Incognito once.
+
+1. Replace the repository root files with this build.
+2. Keep `supabase-config.js` containing only the Supabase Project URL and Publishable key.
+3. In Supabase, open **SQL Editor** and run the complete `supabase-schema.sql` once.
+4. Confirm the Owner UUID `7487289c-95a8-480d-af95-e2965774f1c4` has `role = 'admin'`.
+5. Make sure each agent has a Supabase Authentication account and a corresponding `profiles` row.
+6. Deploy the files to GitHub Pages.
+7. Hard refresh the site once after deployment.
+
+## Important
+
+Do not put a Supabase `service_role` or Secret key in `supabase-config.js`.
+The public Publishable key is the correct key for this browser app.
+
+## URLs
+
+- Agent Portal: `index.html`
+- Owner Dashboard: `admin.html`

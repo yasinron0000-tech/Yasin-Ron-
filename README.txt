@@ -1,35 +1,30 @@
-EXCEL MASTER — FINAL TRAINING VERSION
+EXCEL MASTER — FINAL LIVE AGENT + OWNER BUILD
 
-Every formula has Formula Training: what it does, how to use it, syntax, real-world use, common mistakes, practice, sample data, expected result and a quick quiz.
+OWNER DASHBOARD
+- admin.html is the secure Owner/Admin dashboard.
+- Shows total agents, agents online now, pending/approved submissions, recent activity and agent directory.
+- Shows each online agent's current formula/activity and last seen.
+- Training submissions can be approved/rejected/viewed.
+- Dashboard auto-refreshes every 15 seconds.
 
-Upload index.html + manifest.json + service-worker.js + icon.svg to the repository root.
-Replace the old index.html. Then open the GitHub Pages URL and refresh the page.
+AGENT PORTAL
+- index.html is the Agent Portal.
+- Existing Supabase Auth agents can sign in.
+- After sign-in, the agent appears live in Owner Dashboard.
+- Presence heartbeat runs every 20 seconds.
+- Formula opens, practice saves, login, search and category activity can appear in Admin.
 
+SUPABASE FIX
+- Run the complete supabase-schema.sql once in Supabase SQL Editor.
+- It creates/repairs profiles, training_submissions permissions, agent_presence and activity_logs.
+- It adds authenticated grants and RLS policies.
+- It sets Owner UUID 7487289c-95a8-480d-af95-e2965774f1c4 to admin.
 
-V6 AUTH FIX
-- Replace the repository root files with this version.
-- Run supabase-schema.sql once.
-- For an existing user without a profile, run the OPTIONAL REPAIR block.
-- Set only the administrator profile role to admin using its auth user UUID.
-- Never put an administrator password in GitHub/JavaScript.
-- If Login says Invalid email or password, use Forgot password or verify the Supabase Auth user's password/confirmation status.
+SECURITY
+- Keep only the Publishable key in supabase-config.js.
+- Never put service_role/Secret key or any password in GitHub.
 
-V8 CLEAN LOGIN-FREE
-- Login and Signup are removed from the Agent portal.
-- No Supabase authentication is loaded by index.html.
-- Agent portal opens directly.
-- Practice submissions are saved locally in the browser.
-- Admin credentials/passwords are NOT embedded in public GitHub code.
-- Publish this version to GitHub Pages and hard-refresh/clear site data once after deployment.
-
-
-V9: 302 formulas; direct Agent portal at index.html; separate Owner/Admin portal at admin.html; animations added.
-
-FINAL BUILD
-- Agent portal is index.html and has NO login/auth dependency.
-- Owner portal is admin.html and is the ONLY page requiring Supabase authentication.
-- Administrator UUID is fixed to 7487289c-95a8-480d-af95-e2965774f1c4 and profiles.role must be admin.
-- Added visible motion/hover/fade animations.
-- Formula count badge is calculated from the formula library.
-
-FIXED: formula rendering JavaScript syntax error removed; service-worker cache disabled.
+DEPLOYMENT
+- Upload/replace all root files.
+- Deploy GitHub Pages.
+- Hard refresh once.

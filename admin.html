@@ -1,65 +1,150 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07101d"><title>Yasin Ron — Owner Admin</title>
+<meta name="theme-color" content="#07101d"><title>Yasin Ron — Owner Admin Center</title>
 <style>
-*{box-sizing:border-box}body{margin:0;color:#eef6ff;font-family:system-ui,-apple-system,Segoe UI,Arial;background:radial-gradient(900px 500px at 10% -10%,#173a63,transparent 58%),radial-gradient(800px 500px at 100% 0,#12345a,transparent 55%),#050b14}
-button,input{font:inherit}.wrap{max-width:1180px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#22d3ee);box-shadow:0 10px 35px #2563eb55;font-size:25px}.muted{color:#91a8c2}.panel{background:linear-gradient(145deg,rgba(13,29,48,.97),rgba(6,15,26,.98));border:1px solid #28435f;border-radius:22px;box-shadow:0 20px 70px #0006}.login{max-width:480px;margin:7vh auto;padding:25px}.login h1{margin:0 0 6px}.field{margin-top:13px}.field label{font-size:12px;color:#a9bdd3}.field input{width:100%;padding:13px 14px;margin-top:6px;border-radius:12px;border:1px solid #2d4968;background:#071321;color:#fff;outline:none}.field input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px #3b82f622}.btn{border:1px solid #2c4969;background:#10223a;color:#fff;border-radius:11px;padding:11px 14px;cursor:pointer;font-weight:800;transition:.18s}.btn:hover{transform:translateY(-2px);box-shadow:0 9px 24px #0005}.primary{background:linear-gradient(135deg,#2563eb,#1d4ed8);border-color:#3b82f6}.danger{background:#7f1d1d;border-color:#a33}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.msg{margin-top:12px;padding:10px 12px;border-radius:11px;background:#091a2d;border:1px solid #23405e;font-size:13px;line-height:1.45}.hint{font-size:12px;margin-top:10px}.dashboard{display:none}.hero{padding:22px;margin-bottom:14px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-130px;background:#2563eb2b;filter:blur(5px);animation:pulse 4s infinite}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px}.stat{padding:18px;border-radius:17px;background:#0c1c2f;border:1px solid #24405d;animation:up .45s both}.stat b{font-size:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{padding:18px}.list{max-height:520px;overflow:auto}.row{padding:12px 2px;border-bottom:1px solid #1d344c}.row:last-child{border-bottom:0}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#102d4b;color:#9ed9ff;font-size:11px;font-weight:800}.error{color:#fecaca;background:#3a1116;border-color:#6f2530}.success{color:#bbf7d0;background:#0c2a1d;border-color:#245c3c}
-.spin{display:inline-block;width:14px;height:14px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px}
+*{box-sizing:border-box}body{margin:0;color:#eef6ff;font-family:system-ui,-apple-system,Segoe UI,Arial;background:radial-gradient(1000px 550px at 5% -10%,#173a63,transparent 58%),radial-gradient(900px 600px at 100% 0,#12345a,transparent 55%),#050b14}
+button,input,textarea{font:inherit}.wrap{max-width:1380px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:15px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#22d3ee);box-shadow:0 10px 35px #2563eb55;font-size:25px}.muted{color:#91a8c2}.panel{background:linear-gradient(145deg,rgba(13,29,48,.97),rgba(6,15,26,.98));border:1px solid #28435f;border-radius:20px;box-shadow:0 20px 70px #0006}.login{max-width:480px;margin:7vh auto;padding:25px}.login h1{margin:0 0 6px}.field{margin-top:13px}.field label{font-size:12px;color:#a9bdd3}.field input,.filter{width:100%;padding:13px 14px;margin-top:6px;border-radius:12px;border:1px solid #2d4968;background:#071321;color:#fff;outline:none}.field input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px #3b82f622}.btn{border:1px solid #2c4969;background:#10223a;color:#fff;border-radius:11px;padding:10px 13px;cursor:pointer;font-weight:800;transition:.18s}.btn:hover{transform:translateY(-2px);box-shadow:0 9px 24px #0005}.primary{background:linear-gradient(135deg,#2563eb,#1d4ed8);border-color:#3b82f6}.danger{background:#7f1d1d;border-color:#a33}.successBtn{background:#14532d;border-color:#287348}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.msg{margin-top:12px;padding:10px 12px;border-radius:11px;background:#091a2d;border:1px solid #23405e;font-size:13px;line-height:1.45}.hint{font-size:12px;margin-top:10px}.dashboard{display:none}.hero{padding:20px;margin-bottom:13px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-110px;top:-160px;background:#2563eb2b;filter:blur(5px);animation:pulse 4s infinite}.heroContent{position:relative;z-index:1}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:13px}.stat{padding:15px;border-radius:16px;background:#0c1c2f;border:1px solid #24405d;animation:up .45s both}.stat b{font-size:27px}.stat .label{font-size:12px;color:#91a8c2}.grid{display:grid;grid-template-columns:1fr 1.45fr;gap:13px}.box{padding:16px}.box h2{margin:0 0 12px}.list{max-height:510px;overflow:auto}.row{padding:12px 3px;border-bottom:1px solid #1d344c}.row:last-child{border-bottom:0}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#102d4b;color:#9ed9ff;font-size:11px;font-weight:800}.online{background:#0b3827;color:#8ff0bd;border:1px solid #1d7650}.offline{background:#242d38;color:#aebdca}.pending{background:#49340b;color:#ffd77c}.approved{background:#0b3827;color:#8ff0bd}.rejected{background:#45171c;color:#ffadb7}.error{color:#fecaca;background:#3a1116;border-color:#6f2530}.success{color:#bbf7d0;background:#0c2a1d;border-color:#245c3c}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.toolbar .filter{width:180px;margin:0;padding:9px 10px}.mini{font-size:12px}.activity{display:flex;gap:10px;align-items:flex-start}.dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px #22c55e18;margin-top:5px;flex:none}.dot.blue{background:#3b82f6;box-shadow:0 0 0 5px #3b82f618}.submissionActions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.submissionActions .btn{font-size:11px;padding:7px 9px}.empty{padding:22px;text-align:center;color:#8298af;border:1px dashed #29415d;border-radius:12px}.section{margin-top:13px}.wide{grid-column:1/-1}.spin{display:inline-block;width:14px;height:14px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px}
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.18);opacity:1}}
-@media(max-width:760px){.wrap{padding:12px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.top{align-items:flex-start}.stat b{font-size:23px}}
+@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:600px){.wrap{padding:10px}.stats{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start}.stat b{font-size:23px}.hero h1{font-size:23px}.toolbar .filter{width:100%}}
 </style></head><body><div class="wrap">
+
 <div id="login" class="panel login">
   <div class="brand"><div class="logo">👑</div><div><h1>Owner Admin</h1><div class="muted">Yasin Ron · Excel Master</div></div></div>
-  <p class="muted">Secure administrator access. Agent Portal does not use this login.</p>
-  <div class="field"><label>ADMINISTRATOR EMAIL</label><input id="email" type="email" autocomplete="username" placeholder="Use the exact email shown in Supabase → Authentication → Users"></div>
-  <div class="field"><label>PASSWORD</label><input id="password" type="password" autocomplete="current-password" placeholder="Your Supabase account password"></div>
+  <p class="muted">Secure owner access. Agents use the Agent Portal login; they cannot open this dashboard.</p>
+  <div class="field"><label>ADMINISTRATOR EMAIL</label><input id="email" type="email" autocomplete="username" placeholder="Exact Supabase Auth email"></div>
+  <div class="field"><label>PASSWORD</label><input id="password" type="password" autocomplete="current-password" placeholder="Supabase account password"></div>
   <div class="actions"><button id="go" class="btn primary">🔐 Sign in</button><button id="reset" class="btn">📩 Reset password</button></div>
-  <div id="msg" class="msg">Admin account ID: <b>7487289c-95a8-480d-af95-e2965774f1c4</b></div>
-  <div class="hint muted">Important: the admin password is never stored in GitHub. If Supabase says “Invalid login credentials”, the email/password is rejected by Supabase; use the exact Auth email or reset the password.</div>
+  <div id="msg" class="msg">Admin access is checked against the <b>admin</b> role in public.profiles.</div>
+  <div class="hint muted">The admin password is never stored in GitHub. Only the Supabase Publishable key is used in the public app.</div>
 </div>
+
 <div id="dash" class="dashboard">
-  <div class="top"><div class="brand"><div class="logo">👑</div><div><b style="font-size:20px">Yasin Ron Admin Center</b><div class="muted">Excel Master · Owner Dashboard</div></div></div><div class="actions"><button class="btn" onclick="location.href='index.html'">👤 Agent Portal</button><button id="out" class="btn danger">Logout</button></div></div>
-  <section class="panel hero"><h1 style="margin:0">Good to see you, Owner 👋</h1><p class="muted">Manage agents and training submissions from one professional dashboard.</p></section>
-  <div class="stats"><div class="stat"><span class="muted">👥 Agents</span><br><b id="a">0</b></div><div class="stat"><span class="muted">⏳ Pending</span><br><b id="p">0</b></div><div class="stat"><span class="muted">✅ Approved</span><br><b id="ok">0</b></div><div class="stat"><span class="muted">❌ Rejected</span><br><b id="no">0</b></div></div>
-  <div class="grid"><section class="panel box"><h2>👥 Agents</h2><div id="agents" class="list">Loading…</div></section><section class="panel box"><h2>📚 Training Submissions</h2><div id="subs" class="list">Loading…</div></section></div>
+  <div class="top">
+    <div class="brand"><div class="logo">👑</div><div><b style="font-size:20px">Yasin Ron Admin Center</b><div class="muted">Excel Master · Owner Dashboard</div></div></div>
+    <div class="actions"><button class="btn" onclick="location.href='index.html'">👤 Agent Portal</button><button id="refresh" class="btn">↻ Refresh</button><button id="out" class="btn danger">Logout</button></div>
+  </div>
+
+  <section class="panel hero"><div class="heroContent">
+    <h1 style="margin:0">Good to see you, Owner 👋</h1>
+    <p class="muted">Monitor agents live, see what they are learning, review submissions and track recent activity.</p>
+    <div id="syncMsg" class="mini muted">Live monitoring starts after the presence/activity SQL migration is applied.</div>
+  </div></section>
+
+  <div class="stats">
+    <div class="stat"><span class="label">👥 Total Agents</span><br><b id="a">0</b></div>
+    <div class="stat"><span class="label">🟢 Online Now</span><br><b id="live">0</b></div>
+    <div class="stat"><span class="label">⏳ Pending</span><br><b id="p">0</b></div>
+    <div class="stat"><span class="label">✅ Approved</span><br><b id="ok">0</b></div>
+    <div class="stat"><span class="label">📚 Total Submissions</span><br><b id="totalSubs">0</b></div>
+  </div>
+
+  <div class="grid">
+    <section class="panel box">
+      <div class="toolbar"><h2 style="flex:1">🟢 Agents Live</h2><span id="lastUpdate" class="muted mini"></span></div>
+      <div id="agents" class="list">Loading…</div>
+    </section>
+    <section class="panel box">
+      <div class="toolbar"><h2 style="flex:1">⚡ Recent Activity</h2><button class="btn mini" onclick="loadActivity()">Refresh</button></div>
+      <div id="activity" class="list">Loading…</div>
+    </section>
+    <section class="panel box wide">
+      <div class="toolbar">
+        <h2 style="flex:1">📚 Training Submissions</h2>
+        <select id="statusFilter" class="filter"><option value="all">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+      </div>
+      <div id="subs" class="list">Loading…</div>
+    </section>
+    <section class="panel box">
+      <h2>👥 Registered Agents</h2><div id="agentDirectory" class="list">Loading…</div>
+    </section>
+    <section class="panel box">
+      <h2>🛡️ Admin Tools</h2>
+      <div class="row"><b>Database status</b><br><span id="dbStatus" class="muted">Checking…</span></div>
+      <div class="row"><b>Auto refresh</b><br><span class="muted">Every 15 seconds while this page is open.</span></div>
+      <div class="row"><b>Agent privacy</b><br><span class="muted">Only logged-in agents are identified. No passwords are stored.</span></div>
+    </section>
+  </div>
 </div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script>
-const ADMIN="7487289c-95a8-480d-af95-e2965774f1c4",cfg=window.EXCEL_MASTER_SUPABASE||{};let sb=null;
-if(cfg.url&&cfg.key&&window.supabase) sb=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const ADMIN="7487289c-95a8-480d-af95-e2965774f1c4",cfg=window.EXCEL_MASTER_SUPABASE||{};let sb=null,refreshTimer=null;
+if(cfg.url&&cfg.key&&window.supabase)sb=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
-function msg(t,kind=""){ $("msg").className="msg "+kind; $("msg").textContent=t; }
+function msg(t,kind=""){$("msg").className="msg "+kind;$("msg").textContent=t}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function fmtTime(v){if(!v)return"—";try{return new Date(v).toLocaleString([], {day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit",second:"2-digit"})}catch(e){return v}}
+function relative(v){if(!v)return"—";let s=Math.max(0,Math.floor((Date.now()-new Date(v).getTime())/1000));if(s<10)return"just now";if(s<60)return s+"s ago";let m=Math.floor(s/60);if(m<60)return m+"m ago";return Math.floor(m/60)+"h ago"}
+function isOnline(v){return v&&((Date.now()-new Date(v).getTime())<45000)}
 async function enter(user){
- if(!user||user.id!==ADMIN){if(sb)await sb.auth.signOut();msg("Access denied. This Supabase account is not the configured Administrator.","error");return false}
- const pr=await sb.from("profiles").select("role,full_name").eq("id",ADMIN).maybeSingle();
- if(pr.error){msg("Admin profile check failed: "+pr.error.message,"error");return false}
- if(pr.data?.role!=="admin"){if(sb)await sb.auth.signOut();msg("Admin role is missing. In Supabase SQL, set this UUID's role to admin.","error");return false}
- $("login").style.display="none";$("dash").style.display="block";await load();return true;
+  if(!user||user.id!==ADMIN){if(sb)await sb.auth.signOut();msg("Access denied. This account is not the configured Owner account.","error");return false}
+  const pr=await sb.from("profiles").select("role,full_name").eq("id",ADMIN).maybeSingle();
+  if(pr.error){msg("Admin profile check failed: "+pr.error.message,"error");return false}
+  if(pr.data?.role!=="admin"){await sb.auth.signOut();msg("Admin role is missing. Run the OWNER command in supabase-schema.sql.","error");return false}
+  $("login").style.display="none";$("dash").style.display="block";await loadAll();
+  clearInterval(refreshTimer);refreshTimer=setInterval(loadAll,15000);return true
 }
 $("go").onclick=async()=>{
- if(!sb){msg("Supabase configuration is missing. Check supabase-config.js.","error");return}
- const email=$("email").value.trim().toLowerCase(),password=$("password").value;
- if(!email||!password){msg("Enter the exact Admin email and password.","error");return}
- $("go").disabled=true;$("go").innerHTML='<span class="spin"></span> Signing in…';
- const {data,error}=await sb.auth.signInWithPassword({email,password});
- $("go").disabled=false;$("go").textContent="🔐 Sign in";
- if(error){let t=error.message;if(/invalid login credentials/i.test(t))t="Invalid email or password. Check the exact email shown in Supabase → Authentication → Users, or use Reset password.";if(/email not confirmed/i.test(t))t="This Auth email is not confirmed. Open Supabase → Authentication → Users and confirm the account.";msg(t,"error");return}
- await enter(data.user);
+  if(!sb){msg("Supabase configuration is missing. Check supabase-config.js.","error");return}
+  const email=$("email").value.trim().toLowerCase(),password=$("password").value;
+  if(!email||!password){msg("Enter the exact Owner email and password.","error");return}
+  $("go").disabled=true;$("go").innerHTML='<span class="spin"></span> Signing in…';
+  const {data,error}=await sb.auth.signInWithPassword({email,password});
+  $("go").disabled=false;$("go").textContent="🔐 Sign in";
+  if(error){msg(/invalid login credentials/i.test(error.message)?"Invalid email or password. Check Supabase Authentication → Users or reset the password.":error.message,"error");return}
+  await enter(data.user)
 };
 $("reset").onclick=async()=>{
- if(!sb){msg("Supabase configuration is missing.","error");return}
- const email=$("email").value.trim().toLowerCase();if(!email){msg("Enter your exact Admin email first.","error");return}
- const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
- if(error)msg(error.message,"error");else msg("Password reset email sent. Open the latest reset email and set a new password.","success");
+  if(!sb){msg("Supabase configuration is missing.","error");return}
+  const email=$("email").value.trim().toLowerCase();if(!email){msg("Enter the Owner email first.","error");return}
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+  if(error)msg(error.message,"error");else msg("Password reset email sent. Open the latest email and set a new password.","success")
 };
-$("out").onclick=async()=>{if(sb)await sb.auth.signOut();location.reload()};
-(async()=>{if(sb){const {data}=await sb.auth.getSession();if(data.session)await enter(data.session.user)}})();
-async function load(){
- const r=await sb.from("profiles").select("id,full_name,role,created_at").order("created_at",{ascending:false});
- if(r.error){$("agents").textContent="Unable to load agents: "+r.error.message}else{const rows=r.data||[];$("a").textContent=rows.filter(x=>x.role==="agent").length;$("agents").innerHTML=rows.filter(x=>x.role==="agent").map(x=>`<div class="row"><b>${esc(x.full_name||"Agent")}</b><br><span class="muted">${esc(x.id)}</span></div>`).join("")||"No agents yet."}
- const q=await sb.from("training_submissions").select("*").order("created_at",{ascending:false});
- if(q.error){$("subs").textContent="Unable to load submissions: "+q.error.message;return}
- const z=q.data||[];$("p").textContent=z.filter(x=>x.status==="pending").length;$("ok").textContent=z.filter(x=>x.status==="approved").length;$("no").textContent=z.filter(x=>x.status==="rejected").length;
- $("subs").innerHTML=z.map(x=>`<div class="row"><b>${esc(x.formula_name||"Training")}</b> <span class="badge">${esc(x.status||"pending")}</span><br><span class="muted">${esc(x.author_name||"Agent")} · ${esc(x.created_at||"")}</span></div>`).join("")||"No submissions yet.";
+$("out").onclick=async()=>{clearInterval(refreshTimer);if(sb)await sb.auth.signOut();location.reload()};
+$("refresh").onclick=()=>loadAll();
+$("statusFilter").onchange=()=>loadSubmissions();
+
+async function loadAll(){await Promise.all([loadAgents(),loadPresence(),loadActivity(),loadSubmissions()]);$("lastUpdate").textContent="Updated "+new Date().toLocaleTimeString()}
+async function loadAgents(){
+  const r=await sb.from("profiles").select("id,full_name,role,created_at").order("created_at",{ascending:false});
+  if(r.error){$("agentDirectory").innerHTML='<div class="msg error">Unable to load agents: '+esc(r.error.message)+"</div>";$("a").textContent="—";return}
+  const rows=r.data||[],agents=rows.filter(x=>x.role==="agent");$("a").textContent=agents.length;
+  $("agentDirectory").innerHTML=agents.map(x=>`<div class="row"><b>${esc(x.full_name||"Agent")}</b><br><span class="muted mini">${esc(x.id)}</span><br><span class="muted mini">Joined ${fmtTime(x.created_at)}</span></div>`).join("")||'<div class="empty">No agent accounts yet.</div>'
 }
+async function loadPresence(){
+  const r=await sb.from("agent_presence").select("*").order("last_seen",{ascending:false});
+  if(r.error){$("agents").innerHTML='<div class="msg error">Live presence is not ready: '+esc(r.error.message)+'<br><span class="mini">Run the latest supabase-schema.sql once in Supabase SQL Editor.</span></div>';$("live").textContent="—";return}
+  const rows=r.data||[],online=rows.filter(x=>isOnline(x.last_seen));$("live").textContent=online.length;
+  $("agents").innerHTML=rows.map(x=>{const on=isOnline(x.last_seen);return `<div class="row"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(x.full_name||"Agent")}</b><span class="badge ${on?"online":"offline"}">${on?"🟢 ONLINE":"⚪ OFFLINE"}</span></div><div class="muted mini">📍 ${esc(x.current_page||"Agent Portal")} · ${esc(x.current_formula||"Formula library")}</div><div class="muted mini">⚡ ${esc(x.last_activity||"Active")} · ${relative(x.last_seen)}</div></div>`}).join("")||'<div class="empty">No agent presence records yet. Agents appear here after they sign in.</div>'
+}
+async function loadActivity(){
+  const r=await sb.from("activity_logs").select("id,agent_id,action,formula_name,details,created_at,profiles(full_name)").order("created_at",{ascending:false}).limit(40);
+  if(r.error){$("activity").innerHTML='<div class="msg error">Activity feed unavailable: '+esc(r.error.message)+'</div>';return}
+  const rows=r.data||[];$("activity").innerHTML=rows.map(x=>`<div class="row activity"><span class="dot ${x.action==="login"?"blue":""}"></span><div><b>${esc(x.profiles?.full_name||"Agent")}</b> <span class="badge">${esc(x.action)}</span><br><span class="muted mini">${esc(x.formula_name||"")} ${esc(x.details||"")}</span><br><span class="muted mini">${fmtTime(x.created_at)}</span></div></div>`).join("")||'<div class="empty">No activity yet.</div>'
+}
+async function loadSubmissions(){
+  const filter=$("statusFilter").value;
+  let q=sb.from("training_submissions").select("*").order("created_at",{ascending:false}).limit(100);
+  if(filter!=="all")q=q.eq("status",filter);
+  const r=await q;
+  if(r.error){$("subs").innerHTML='<div class="msg error">Unable to load submissions: '+esc(r.error.message)+'<br><span class="mini">This is the permission error shown in your screenshot. Run the latest schema SQL to grant authenticated SELECT access and create the admin policy.</span></div>';return}
+  const z=r.data||[];
+  if(filter==="all"){
+    $("totalSubs").textContent=z.length;
+    $("p").textContent=z.filter(x=>x.status==="pending").length;
+    $("ok").textContent=z.filter(x=>x.status==="approved").length;
+  }
+  $("subs").innerHTML=z.map(x=>`<div class="row"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(x.formula_name||"Training")}</b><span class="badge ${esc(x.status)}">${esc(x.status||"pending")}</span></div><div class="muted mini">${esc(x.author_name||"Agent")} · ${fmtTime(x.created_at)}</div><div class="muted mini" style="margin-top:4px">${esc(x.title||"")}</div><div class="submissionActions">${x.status!=="approved"?`<button class="btn successBtn" onclick="review('${esc(x.id)}','approved')">✓ Approve</button>`:""}${x.status!=="rejected"?`<button class="btn danger" onclick="review('${esc(x.id)}','rejected')">✕ Reject</button>`:""}<button class="btn" onclick="showSubmission('${esc(x.id)}')">View</button></div></div>`).join("")||'<div class="empty">No submissions for this filter.</div>'
+}
+async function review(id,status){
+  if(!confirm("Set this submission to "+status+"?"))return;
+  const r=await sb.from("training_submissions").update({status,reviewed_by:ADMIN,reviewed_at:new Date().toISOString()}).eq("id",id);
+  if(r.error)alert("Could not update: "+r.error.message);else await loadSubmissions()
+}
+async function showSubmission(id){
+  const r=await sb.from("training_submissions").select("*").eq("id",id).maybeSingle();
+  if(r.error){alert(r.error.message);return}
+  const x=r.data;if(!x)return;
+  alert("Formula: "+(x.formula_name||"")+"\n\nTitle: "+(x.title||"")+"\n\nExplanation: "+(x.explanation||"")+"\n\nFormula: "+(x.formula_example||"")+"\n\nPractice answer: "+(x.practice_answer||""))
+}
+(async()=>{if(!sb){msg("Supabase configuration is missing. Check supabase-config.js.","error");return}const {data}=await sb.auth.getSession();if(data.session)await enter(data.session.user)})();
 </script></body></html>
