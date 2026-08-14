@@ -2,13 +2,12 @@
   "name": "Excel Master — Yasin Ron",
   "short_name": "Excel Master",
   "description": "Excel Master formula learning, practice and training portal.",
-  "id": "./",
-  "start_url": "./?source=pwa",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "theme_color": "#07101d",
   "background_color": "#07101d",
-  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "./icon-192.png",
@@ -23,9 +22,6 @@
       "purpose": "any maskable"
     }
   ],
-  "prefer_related_applications": false,
-  "categories": [
-    "education",
-    "productivity"
-  ]
+  "id": "./",
+  "prefer_related_applications": false
 }
