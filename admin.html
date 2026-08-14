@@ -1,30 +1,65 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yasin Ron — Admin</title><style>
-body{margin:0;background:#07111f;color:#edf5ff;font-family:system-ui,Arial}.wrap{max-width:1050px;margin:auto;padding:24px}
-.box{background:#0d1a2b;border:1px solid #2a4565;border-radius:18px;padding:20px;margin:14px 0;animation:up .5s ease}
-input{width:100%;padding:12px;margin:7px 0;box-sizing:border-box;background:#081525;border:1px solid #304966;color:#fff;border-radius:10px}
-button{padding:11px 15px;border:0;border-radius:10px;background:#2563eb;color:#fff;font-weight:800;cursor:pointer}.danger{background:#991b1b}
-.muted{color:#91a8c2}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:#10223a;padding:16px;border-radius:14px}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}}
-</style></head><body><div class="wrap"><h1>👑 Yasin Ron Owner Admin</h1>
-<div id="login" class="box"><h2>Administrator Login</h2><p class="muted">This page is separate from the Agent Portal.</p>
-<input id="email" type="email" autocomplete="username" placeholder="Administrator email">
-<input id="password" type="password" autocomplete="current-password" placeholder="Password">
-<button id="go">Login</button><p id="msg" class="muted"></p></div>
-<div id="app" style="display:none"><div class="stats"><div class="stat"><b id="a">0</b><br>Agents</div><div class="stat"><b id="p">0</b><br>Pending</div><div class="stat"><b id="ok">0</b><br>Approved</div><div class="stat"><b id="no">0</b><br>Rejected</div></div>
-<div class="box"><h2>👥 Agents</h2><div id="agents">Loading…</div></div><div class="box"><h2>📚 Submissions</h2><div id="subs">Loading…</div></div><button id="out" class="danger">Logout</button></div></div>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07101d"><title>Yasin Ron — Owner Admin</title>
+<style>
+*{box-sizing:border-box}body{margin:0;color:#eef6ff;font-family:system-ui,-apple-system,Segoe UI,Arial;background:radial-gradient(900px 500px at 10% -10%,#173a63,transparent 58%),radial-gradient(800px 500px at 100% 0,#12345a,transparent 55%),#050b14}
+button,input{font:inherit}.wrap{max-width:1180px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#22d3ee);box-shadow:0 10px 35px #2563eb55;font-size:25px}.muted{color:#91a8c2}.panel{background:linear-gradient(145deg,rgba(13,29,48,.97),rgba(6,15,26,.98));border:1px solid #28435f;border-radius:22px;box-shadow:0 20px 70px #0006}.login{max-width:480px;margin:7vh auto;padding:25px}.login h1{margin:0 0 6px}.field{margin-top:13px}.field label{font-size:12px;color:#a9bdd3}.field input{width:100%;padding:13px 14px;margin-top:6px;border-radius:12px;border:1px solid #2d4968;background:#071321;color:#fff;outline:none}.field input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px #3b82f622}.btn{border:1px solid #2c4969;background:#10223a;color:#fff;border-radius:11px;padding:11px 14px;cursor:pointer;font-weight:800;transition:.18s}.btn:hover{transform:translateY(-2px);box-shadow:0 9px 24px #0005}.primary{background:linear-gradient(135deg,#2563eb,#1d4ed8);border-color:#3b82f6}.danger{background:#7f1d1d;border-color:#a33}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.msg{margin-top:12px;padding:10px 12px;border-radius:11px;background:#091a2d;border:1px solid #23405e;font-size:13px;line-height:1.45}.hint{font-size:12px;margin-top:10px}.dashboard{display:none}.hero{padding:22px;margin-bottom:14px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-130px;background:#2563eb2b;filter:blur(5px);animation:pulse 4s infinite}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px}.stat{padding:18px;border-radius:17px;background:#0c1c2f;border:1px solid #24405d;animation:up .45s both}.stat b{font-size:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{padding:18px}.list{max-height:520px;overflow:auto}.row{padding:12px 2px;border-bottom:1px solid #1d344c}.row:last-child{border-bottom:0}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#102d4b;color:#9ed9ff;font-size:11px;font-weight:800}.error{color:#fecaca;background:#3a1116;border-color:#6f2530}.success{color:#bbf7d0;background:#0c2a1d;border-color:#245c3c}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.18);opacity:1}}
+@media(max-width:760px){.wrap{padding:12px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.top{align-items:flex-start}.stat b{font-size:23px}}
+</style></head><body><div class="wrap">
+<div id="login" class="panel login">
+  <div class="brand"><div class="logo">👑</div><div><h1>Owner Admin</h1><div class="muted">Yasin Ron · Excel Master</div></div></div>
+  <p class="muted">Secure administrator access. Agent Portal does not use this login.</p>
+  <div class="field"><label>ADMINISTRATOR EMAIL</label><input id="email" type="email" autocomplete="username" placeholder="Use the exact email shown in Supabase → Authentication → Users"></div>
+  <div class="field"><label>PASSWORD</label><input id="password" type="password" autocomplete="current-password" placeholder="Your Supabase account password"></div>
+  <div class="actions"><button id="go" class="btn primary">🔐 Sign in</button><button id="reset" class="btn">📩 Reset password</button></div>
+  <div id="msg" class="msg">Admin account ID: <b>7487289c-95a8-480d-af95-e2965774f1c4</b></div>
+  <div class="hint muted">Important: the admin password is never stored in GitHub. If Supabase says “Invalid login credentials”, the email/password is rejected by Supabase; use the exact Auth email or reset the password.</div>
+</div>
+<div id="dash" class="dashboard">
+  <div class="top"><div class="brand"><div class="logo">👑</div><div><b style="font-size:20px">Yasin Ron Admin Center</b><div class="muted">Excel Master · Owner Dashboard</div></div></div><div class="actions"><button class="btn" onclick="location.href='index.html'">👤 Agent Portal</button><button id="out" class="btn danger">Logout</button></div></div>
+  <section class="panel hero"><h1 style="margin:0">Good to see you, Owner 👋</h1><p class="muted">Manage agents and training submissions from one professional dashboard.</p></section>
+  <div class="stats"><div class="stat"><span class="muted">👥 Agents</span><br><b id="a">0</b></div><div class="stat"><span class="muted">⏳ Pending</span><br><b id="p">0</b></div><div class="stat"><span class="muted">✅ Approved</span><br><b id="ok">0</b></div><div class="stat"><span class="muted">❌ Rejected</span><br><b id="no">0</b></div></div>
+  <div class="grid"><section class="panel box"><h2>👥 Agents</h2><div id="agents" class="list">Loading…</div></section><section class="panel box"><h2>📚 Training Submissions</h2><div id="subs" class="list">Loading…</div></section></div>
+</div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script>
-const ADMIN="7487289c-95a8-480d-af95-e2965774f1c4",cfg=window.EXCEL_MASTER_SUPABASE||{};let sb,user;
-if(cfg.url&&cfg.key)sb=supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true}});
-const $=x=>document.getElementById(x);
-$("go").onclick=async()=>{if(!sb){$("msg").textContent="Supabase is not configured on admin.html.";return}
-const {data,error}=await sb.auth.signInWithPassword({email:$("email").value.trim().toLowerCase(),password:$("password").value});
-if(error){$("msg").textContent=error.message;return} user=data.user;
-if(user.id!==ADMIN){await sb.auth.signOut();$("msg").textContent="Access denied.";return}
-const pr=await sb.from("profiles").select("role").eq("id",user.id).maybeSingle();
-if(pr.data?.role!=="admin"){await sb.auth.signOut();$("msg").textContent="Admin role missing.";return}
-$("login").style.display="none";$("app").style.display="block";load()};
-async function load(){const r=await sb.from("profiles").select("id,full_name,role,created_at").order("created_at",{ascending:false});const rows=r.data||[];$("a").textContent=rows.filter(x=>x.role==="agent").length;$("agents").innerHTML=rows.filter(x=>x.role==="agent").map(x=>"<div style='padding:10px;border-bottom:1px solid #243a54'><b>"+esc(x.full_name||"Agent")+"</b><br><span class=muted>"+esc(x.id)+"</span></div>").join("")||"No agents.";
-const s=await sb.from("training_submissions").select("*").order("created_at",{ascending:false});const z=s.data||[];$("p").textContent=z.filter(x=>x.status==="pending").length;$("ok").textContent=z.filter(x=>x.status==="approved").length;$("no").textContent=z.filter(x=>x.status==="rejected").length;$("subs").innerHTML=z.map(x=>"<div style='padding:10px;border-bottom:1px solid #243a54'><b>"+esc(x.formula_name||"Training")+"</b> — "+esc(x.author_name||"Agent")+" ["+esc(x.status||"pending")+"]</div>").join("")||"No submissions."}
-function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}$("out").onclick=()=>sb.auth.signOut().then(()=>location.reload());
+const ADMIN="7487289c-95a8-480d-af95-e2965774f1c4",cfg=window.EXCEL_MASTER_SUPABASE||{};let sb=null;
+if(cfg.url&&cfg.key&&window.supabase) sb=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);
+function msg(t,kind=""){ $("msg").className="msg "+kind; $("msg").textContent=t; }
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+async function enter(user){
+ if(!user||user.id!==ADMIN){if(sb)await sb.auth.signOut();msg("Access denied. This Supabase account is not the configured Administrator.","error");return false}
+ const pr=await sb.from("profiles").select("role,full_name").eq("id",ADMIN).maybeSingle();
+ if(pr.error){msg("Admin profile check failed: "+pr.error.message,"error");return false}
+ if(pr.data?.role!=="admin"){if(sb)await sb.auth.signOut();msg("Admin role is missing. In Supabase SQL, set this UUID's role to admin.","error");return false}
+ $("login").style.display="none";$("dash").style.display="block";await load();return true;
+}
+$("go").onclick=async()=>{
+ if(!sb){msg("Supabase configuration is missing. Check supabase-config.js.","error");return}
+ const email=$("email").value.trim().toLowerCase(),password=$("password").value;
+ if(!email||!password){msg("Enter the exact Admin email and password.","error");return}
+ $("go").disabled=true;$("go").innerHTML='<span class="spin"></span> Signing in…';
+ const {data,error}=await sb.auth.signInWithPassword({email,password});
+ $("go").disabled=false;$("go").textContent="🔐 Sign in";
+ if(error){let t=error.message;if(/invalid login credentials/i.test(t))t="Invalid email or password. Check the exact email shown in Supabase → Authentication → Users, or use Reset password.";if(/email not confirmed/i.test(t))t="This Auth email is not confirmed. Open Supabase → Authentication → Users and confirm the account.";msg(t,"error");return}
+ await enter(data.user);
+};
+$("reset").onclick=async()=>{
+ if(!sb){msg("Supabase configuration is missing.","error");return}
+ const email=$("email").value.trim().toLowerCase();if(!email){msg("Enter your exact Admin email first.","error");return}
+ const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+ if(error)msg(error.message,"error");else msg("Password reset email sent. Open the latest reset email and set a new password.","success");
+};
+$("out").onclick=async()=>{if(sb)await sb.auth.signOut();location.reload()};
+(async()=>{if(sb){const {data}=await sb.auth.getSession();if(data.session)await enter(data.session.user)}})();
+async function load(){
+ const r=await sb.from("profiles").select("id,full_name,role,created_at").order("created_at",{ascending:false});
+ if(r.error){$("agents").textContent="Unable to load agents: "+r.error.message}else{const rows=r.data||[];$("a").textContent=rows.filter(x=>x.role==="agent").length;$("agents").innerHTML=rows.filter(x=>x.role==="agent").map(x=>`<div class="row"><b>${esc(x.full_name||"Agent")}</b><br><span class="muted">${esc(x.id)}</span></div>`).join("")||"No agents yet."}
+ const q=await sb.from("training_submissions").select("*").order("created_at",{ascending:false});
+ if(q.error){$("subs").textContent="Unable to load submissions: "+q.error.message;return}
+ const z=q.data||[];$("p").textContent=z.filter(x=>x.status==="pending").length;$("ok").textContent=z.filter(x=>x.status==="approved").length;$("no").textContent=z.filter(x=>x.status==="rejected").length;
+ $("subs").innerHTML=z.map(x=>`<div class="row"><b>${esc(x.formula_name||"Training")}</b> <span class="badge">${esc(x.status||"pending")}</span><br><span class="muted">${esc(x.author_name||"Agent")} · ${esc(x.created_at||"")}</span></div>`).join("")||"No submissions yet.";
+}
 </script></body></html>
