@@ -58,19 +58,59 @@ header{box-shadow:0 10px 35px rgba(0,0,0,.22)}
 
 <div class="layout"><aside id="cats"></aside><section><div class="toolbar"><input id="q" class="search" placeholder="🔎 Search formula e.g. VLOOKUP">
 <button class="btn" onclick="level='All';render()">All</button><button class="btn" onclick="level='Basic';render()">Basic</button><button class="btn" onclick="level='Intermediate';render()">Intermediate</button><button class="btn" onclick="level='Advanced';render()">Advanced</button></div><div class="muted" id="show"></div><div id="cards" class="cards"></div></section></div></main>
-<div id="agentAuth" class="modal"><div class="dialog" style="max-width:460px">
+<div id="agentAuth" class="modal"><div class="dialog" style="max-width:480px">
 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-  <div><h2 style="margin:0">🔐 Agent Login</h2><p class="muted" style="margin:5px 0 0">Login so your activity appears live in the Owner Dashboard.</p></div>
+  <div><h2 id="agentAuthTitle" style="margin:0">🔐 Agent Login</h2><p id="agentAuthSubtitle" class="muted" style="margin:5px 0 0">Use your Gmail address to sign in and appear live in the Owner Dashboard.</p></div>
   <button class="btn" onclick="closeAgentAuth()">✕</button>
 </div>
 <div class="box">
-  <label class="muted">EMAIL</label>
-  <input id="agentEmail" type="email" autocomplete="username" placeholder="Agent email" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
-  <label class="muted" style="display:block;margin-top:10px">PASSWORD</label>
-  <input id="agentPassword" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
-  <button id="agentSignIn" class="btn primary" style="width:100%;margin-top:12px" onclick="agentLogin()">🔐 Sign in</button>
+  <div id="agentLoginForm">
+    <label class="muted">GMAIL / EMAIL</label>
+    <input id="agentEmail" type="email" autocomplete="username" placeholder="yourname@gmail.com" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <label class="muted" style="display:block;margin-top:10px">PASSWORD</label>
+    <input id="agentPassword" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <button id="agentSignIn" class="btn primary" style="width:100%;margin-top:12px" onclick="agentLogin()">🔐 Sign in</button>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn" style="flex:1" onclick="showAgentSignup()">➕ Create Agent Account</button>
+      <button class="btn" style="flex:1" onclick="showAgentReset()">📩 Forgot Password?</button>
+    </div>
+  </div>
+
+  <div id="agentSignupForm" style="display:none">
+    <h3 style="margin:0 0 5px">➕ Create Agent Account</h3>
+    <p class="hint muted">No Employee/Agent ID is required. Create the account with a Gmail address.</p>
+    <label class="muted">FULL NAME</label>
+    <input id="agentName" type="text" autocomplete="name" placeholder="Agent full name" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <label class="muted" style="display:block;margin-top:10px">GMAIL / EMAIL</label>
+    <input id="signupEmail" type="email" autocomplete="email" placeholder="yourname@gmail.com" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <label class="muted" style="display:block;margin-top:10px">PASSWORD</label>
+    <input id="signupPassword" type="password" autocomplete="new-password" placeholder="Minimum 6 characters" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <label class="muted" style="display:block;margin-top:10px">CONFIRM PASSWORD</label>
+    <input id="signupPassword2" type="password" autocomplete="new-password" placeholder="Repeat password" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <button id="agentSignupBtn" class="btn primary" style="width:100%;margin-top:12px" onclick="agentSignup()">📧 Create Account</button>
+    <button class="btn" style="width:100%;margin-top:8px" onclick="showAgentLogin()">← Back to Login</button>
+  </div>
+
+  <div id="agentResetForm" style="display:none">
+    <h3 style="margin:0 0 5px">📩 Reset Agent Password</h3>
+    <p class="hint muted">Enter the Gmail address used for the account. A password-reset email will be sent.</p>
+    <label class="muted">GMAIL / EMAIL</label>
+    <input id="resetEmail" type="email" autocomplete="email" placeholder="yourname@gmail.com" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <button id="agentResetBtn" class="btn primary" style="width:100%;margin-top:12px" onclick="agentResetPassword()">📩 Send Reset Email</button>
+    <button class="btn" style="width:100%;margin-top:8px" onclick="showAgentLogin()">← Back to Login</button>
+  </div>
+
+  <div id="agentNewPasswordForm" style="display:none">
+    <h3 style="margin:0 0 5px">🔑 Set New Password</h3>
+    <label class="muted">NEW PASSWORD</label>
+    <input id="newAgentPassword" type="password" autocomplete="new-password" placeholder="New password" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <label class="muted" style="display:block;margin-top:10px">CONFIRM NEW PASSWORD</label>
+    <input id="newAgentPassword2" type="password" autocomplete="new-password" placeholder="Repeat new password" style="width:100%;margin-top:6px;padding:11px;border-radius:8px;border:1px solid #29415d;background:#050c16;color:#fff">
+    <button id="agentNewPasswordBtn" class="btn primary" style="width:100%;margin-top:12px" onclick="saveAgentNewPassword()">✅ Update Password</button>
+  </div>
+
   <div id="agentAuthMsg" class="msg" style="display:none"></div>
-  <p class="hint muted">Use an existing Supabase Auth agent account. Your password is never stored in this website.</p>
+  <p class="hint muted">Passwords are handled by Supabase Auth and are never stored in this website or GitHub.</p>
 </div>
 </div></div>
 <div id="modal" class="modal"><div class="dialog">
@@ -121,10 +161,48 @@ const AGENT_SB=(window.supabase&&SUPA_CFG.url&&SUPA_CFG.key)
   ? window.supabase.createClient(SUPA_CFG.url,SUPA_CFG.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})
   : null;
 let agentUser=null, presenceTimer=null;
+window.addEventListener("load",()=>{
+  if(location.hash.includes("type=recovery")){
+    openAgentAuth();
+    setTimeout(showAgentNewPassword,80);
+  }
+});
 
 function authMsg(t,kind=""){const el=document.getElementById("agentAuthMsg");if(!el)return;el.style.display="block";el.className="msg "+kind;el.textContent=t}
-function openAgentAuth(){document.getElementById("agentAuth").classList.add("show");document.getElementById("agentEmail").focus()}
+function clearAuthMsg(){const el=document.getElementById("agentAuthMsg");if(el){el.style.display="none";el.textContent="";el.className="msg"}}
+function showAgentLogin(){
+  ["agentLoginForm","agentSignupForm","agentResetForm","agentNewPasswordForm"].forEach(id=>document.getElementById(id).style.display="none");
+  document.getElementById("agentLoginForm").style.display="block";
+  document.getElementById("agentAuthTitle").textContent="🔐 Agent Login";
+  document.getElementById("agentAuthSubtitle").textContent="Use your Gmail address to sign in and appear live in the Owner Dashboard.";
+  clearAuthMsg();
+}
+function showAgentSignup(){
+  ["agentLoginForm","agentSignupForm","agentResetForm","agentNewPasswordForm"].forEach(id=>document.getElementById(id).style.display="none");
+  document.getElementById("agentSignupForm").style.display="block";
+  document.getElementById("agentAuthTitle").textContent="➕ Create Agent Account";
+  document.getElementById("agentAuthSubtitle").textContent="Create your Agent account using your Gmail address. No Employee/Agent ID is required.";
+  clearAuthMsg();
+}
+function showAgentReset(){
+  ["agentLoginForm","agentSignupForm","agentResetForm","agentNewPasswordForm"].forEach(id=>document.getElementById(id).style.display="none");
+  document.getElementById("agentResetForm").style.display="block";
+  document.getElementById("agentAuthTitle").textContent="📩 Password Reset";
+  document.getElementById("agentAuthSubtitle").textContent="We will send a secure password-reset link to your email.";
+  const loginEmail=document.getElementById("agentEmail")?.value.trim();
+  if(loginEmail)document.getElementById("resetEmail").value=loginEmail;
+  clearAuthMsg();
+}
+function showAgentNewPassword(){
+  ["agentLoginForm","agentSignupForm","agentResetForm","agentNewPasswordForm"].forEach(id=>document.getElementById(id).style.display="none");
+  document.getElementById("agentNewPasswordForm").style.display="block";
+  document.getElementById("agentAuthTitle").textContent="🔑 Set New Password";
+  document.getElementById("agentAuthSubtitle").textContent="Choose a new password for your Agent account.";
+  clearAuthMsg();
+}
+function openAgentAuth(){document.getElementById("agentAuth").classList.add("show");showAgentLogin();setTimeout(()=>document.getElementById("agentEmail")?.focus(),30)}
 function closeAgentAuth(){document.getElementById("agentAuth").classList.remove("show")}
+function isGmail(email){return /^[^\s@]+@gmail\.com$/i.test(email)}
 function setAgentUI(user,profile){
   agentUser=user||null;
   const status=document.getElementById("agentStatus"), login=document.getElementById("agentLoginBtn"), out=document.getElementById("agentLogoutBtn");
@@ -145,16 +223,56 @@ async function getAgentProfile(user){
 async function agentLogin(){
   if(!AGENT_SB){authMsg("Supabase configuration is missing. Check supabase-config.js.","error");return}
   const email=document.getElementById("agentEmail").value.trim().toLowerCase(), password=document.getElementById("agentPassword").value;
-  if(!email||!password){authMsg("Enter email and password.","error");return}
+  if(!isGmail(email)){authMsg("Please use a valid Gmail address ending in @gmail.com.","error");return}
+  if(!password){authMsg("Enter your password.","error");return}
   const btn=document.getElementById("agentSignIn");btn.disabled=true;btn.textContent="Signing in…";
   const {data,error}=await AGENT_SB.auth.signInWithPassword({email,password});
   btn.disabled=false;btn.textContent="🔐 Sign in";
-  if(error){authMsg(/invalid login credentials/i.test(error.message)?"Invalid email or password.":error.message,"error");return}
+  if(error){authMsg(/email not confirmed/i.test(error.message)?"Please verify your email first. Check your Gmail inbox.":/invalid login credentials/i.test(error.message)?"Invalid Gmail or password.":error.message,"error");return}
   if(data.user){
     const profile=await getAgentProfile(data.user);
-    if(profile?.role==="admin"){authMsg("Admin account detected. Use Owner Admin page for administration.","error");await AGENT_SB.auth.signOut();return}
+    if(profile?.role==="admin"){authMsg("Admin account detected. Use the Owner Admin page for administration.","error");await AGENT_SB.auth.signOut();return}
     setAgentUI(data.user,profile);closeAgentAuth();startPresence();await logAgentActivity("login","", "Agent signed in");alert("✅ Agent login successful. Your activity will now appear in the Owner Dashboard.")
   }
+}
+async function agentSignup(){
+  if(!AGENT_SB){authMsg("Supabase configuration is missing. Check supabase-config.js.","error");return}
+  const name=document.getElementById("agentName").value.trim(),email=document.getElementById("signupEmail").value.trim().toLowerCase(),p1=document.getElementById("signupPassword").value,p2=document.getElementById("signupPassword2").value;
+  if(!name){authMsg("Enter your full name.","error");return}
+  if(!isGmail(email)){authMsg("Please use a valid Gmail address ending in @gmail.com.","error");return}
+  if(p1.length<6){authMsg("Password must be at least 6 characters.","error");return}
+  if(p1!==p2){authMsg("Passwords do not match.","error");return}
+  const btn=document.getElementById("agentSignupBtn");btn.disabled=true;btn.textContent="Creating account…";
+  const {data,error}=await AGENT_SB.auth.signUp({email,password:p1,options:{data:{full_name:name},emailRedirectTo:location.origin+location.pathname}});
+  btn.disabled=false;btn.textContent="📧 Create Account";
+  if(error){authMsg(/already registered|already exists/i.test(error.message)?"This Gmail is already registered. Use Login or Forgot Password.":error.message,"error");return}
+  if(data.user && data.session){
+    const profile=await getAgentProfile(data.user);setAgentUI(data.user,profile);closeAgentAuth();startPresence();await logAgentActivity("signup","", "Agent account created");alert("✅ Agent account created and logged in. Your activity will now appear in the Owner Dashboard.");
+  }else{
+    document.getElementById("agentEmail").value=email;showAgentLogin();authMsg("✅ Account created. Check your Gmail and verify the email, then sign in.","success");
+  }
+}
+async function agentResetPassword(){
+  if(!AGENT_SB){authMsg("Supabase configuration is missing.","error");return}
+  const email=document.getElementById("resetEmail").value.trim().toLowerCase();
+  if(!isGmail(email)){authMsg("Please enter the Gmail address used for your Agent account.","error");return}
+  const btn=document.getElementById("agentResetBtn");btn.disabled=true;btn.textContent="Sending…";
+  const {error}=await AGENT_SB.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+  btn.disabled=false;btn.textContent="📩 Send Reset Email";
+  if(error){authMsg(error.message,"error");return}
+  authMsg("✅ Password reset email sent. Open the latest email, follow the link, and set your new password.","success");
+}
+async function saveAgentNewPassword(){
+  if(!AGENT_SB){authMsg("Supabase configuration is missing.","error");return}
+  const p1=document.getElementById("newAgentPassword").value,p2=document.getElementById("newAgentPassword2").value;
+  if(p1.length<6){authMsg("Password must be at least 6 characters.","error");return}
+  if(p1!==p2){authMsg("Passwords do not match.","error");return}
+  const btn=document.getElementById("agentNewPasswordBtn");btn.disabled=true;btn.textContent="Updating…";
+  const {error}=await AGENT_SB.auth.updateUser({password:p1});
+  btn.disabled=false;btn.textContent="✅ Update Password";
+  if(error){authMsg(error.message,"error");return}
+  authMsg("✅ Password updated successfully. You can now sign in with the new password.","success");
+  setTimeout(()=>showAgentLogin(),900);
 }
 async function agentLogout(){
   await stopPresence();

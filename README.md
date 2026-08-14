@@ -40,3 +40,12 @@ The public Publishable key is the correct key for this browser app.
 
 - Agent Portal: `index.html`
 - Owner Dashboard: `admin.html`
+
+## Agent account access
+- Agents create accounts with a Gmail address; no Employee/Agent ID is required.
+- Agent signup collects full name, Gmail, password, and password confirmation.
+- Email verification is supported when Supabase Email Confirmation is enabled.
+- Agents can sign in with Gmail + password.
+- Forgot Password sends a secure Supabase reset email.
+- Password reset links return to the Agent Portal where the agent can set a new password.
+- Admin accounts are blocked from the Agent Portal flow.
