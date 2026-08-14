@@ -73,7 +73,7 @@ header{box-shadow:0 10px 35px rgba(0,0,0,.22)}
 <span id="agentStatus" class="userPill" style="border:0">🟡 Guest</span>
 <button id="agentLoginBtn" class="btn primary" onclick="openAgentAuth()">🔐 Agent Login</button>
 <button id="agentLogoutBtn" class="btn" style="display:none" onclick="agentLogout()">Logout</button>
-<button id="installAppBtn" class="btn primary" style="display:none" type="button">📱 Install App</button>
+<button id="installAppBtn" class="btn primary" type="button">📱 Install App</button>
 <button class="btn" onclick="full()">⛶ Full Screen</button>
 <button class="btn primary" onclick="agent()">👥 Agent Training</button>
 </div></header>
@@ -474,73 +474,91 @@ if(oldSubmit){
 
 const countEl=document.getElementById('formulaCount'); if(countEl) countEl.textContent='📚 '+D.length+'+ Excel formulas';
 
-/* Excel Master PWA install support */
+/* Excel Master PWA install support — GitHub Pages friendly */
 (function(){
   let deferredInstallPrompt=null;
-  const installBtn=()=>document.getElementById('installAppBtn');
-  const toast=()=>document.getElementById('installToast');
-  const nowBtn=()=>document.getElementById('installNowBtn');
-  const laterBtn=()=>document.getElementById('installLaterBtn');
+  const get=(id)=>document.getElementById(id);
+  const isStandalone=()=>(
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+    window.navigator.standalone === true
+  );
 
-  function isStandalone(){
-    return window.matchMedia && window.matchMedia('(display-mode: standalone)').matches ||
-           window.navigator.standalone === true;
-  }
-  function hideInstallUI(){
-    const b=installBtn(), t=toast();
-    if(b)b.style.display='none';
-    if(t)t.classList.remove('show');
-  }
-  function showInstallUI(){
-    if(isStandalone()) return;
-    const b=installBtn(), t=toast();
-    if(b)b.style.display='inline-block';
-    if(t && !sessionStorage.getItem('excelMasterInstallDismissed')) t.classList.add('show');
+  function setInstallVisible(show){
+    const b=get('installAppBtn'), t=get('installToast');
+    if(b) b.style.display=show && !isStandalone() ? 'inline-block' : 'none';
+    if(!show && t) t.classList.remove('show');
   }
 
-  window.addEventListener('beforeinstallprompt', function(e){
+  async function installApp(){
+    if(isStandalone()){
+      setInstallVisible(false);
+      return;
+    }
+
+    // Chrome/Android native installation prompt
+    if(deferredInstallPrompt){
+      try{
+        deferredInstallPrompt.prompt();
+        const choice=await deferredInstallPrompt.userChoice;
+        if(choice && choice.outcome==='accepted'){
+          deferredInstallPrompt=null;
+          setInstallVisible(false);
+        }
+      }catch(err){
+        console.warn('Install prompt failed:',err);
+      }
+      return;
+    }
+
+    // Fallback: Chrome may not expose beforeinstallprompt yet.
+    // The app can still be installed from Chrome's menu.
+    alert(
+      '📱 Install Excel Master\\n\\n' +
+      'Chrome Android me:\\n' +
+      '1. ⋮ (three dots) dabao\\n' +
+      '2. "Install app" ya "Add to Home screen" select karo\\n' +
+      '3. Install/Add par tap karo.\\n\\n' +
+      'Agar "Install app" abhi nahi dikh raha, page ko ek baar refresh karke 10–20 seconds wait karo.'
+    );
+  }
+
+  window.addEventListener('beforeinstallprompt',function(e){
     e.preventDefault();
     deferredInstallPrompt=e;
-    showInstallUI();
+    setInstallVisible(true);
+    const t=get('installToast');
+    if(t && !sessionStorage.getItem('excelMasterInstallDismissed')) t.classList.add('show');
   });
 
-  window.addEventListener('appinstalled', function(){
+  window.addEventListener('appinstalled',function(){
     deferredInstallPrompt=null;
-    hideInstallUI();
+    setInstallVisible(false);
     try{localStorage.setItem('excelMasterInstalled','1')}catch(_){}
   });
 
-  async function installApp(){
-    if(isStandalone()){hideInstallUI();return;}
-    if(!deferredInstallPrompt){
-      alert('📱 Install option is not available yet. In Chrome, open the ⋮ menu and choose "Add to Home screen" or "Install app" when it appears.');
-      return;
-    }
-    deferredInstallPrompt.prompt();
-    const choice=await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt=null;
-    if(choice && choice.outcome==='accepted') hideInstallUI();
-  }
-
   document.addEventListener('DOMContentLoaded',function(){
-    const b=installBtn(), n=nowBtn(), l=laterBtn();
-    if(b)b.addEventListener('click',installApp);
-    if(n)n.addEventListener('click',installApp);
-    if(l)l.addEventListener('click',function(){
-      const t=toast(); if(t)t.classList.remove('show');
+    const b=get('installAppBtn'), n=get('installNowBtn'), l=get('installLaterBtn');
+
+    // Always show a visible install button unless already installed.
+    setInstallVisible(!isStandalone());
+
+    if(b) b.addEventListener('click',installApp);
+    if(n) n.addEventListener('click',installApp);
+    if(l) l.addEventListener('click',function(){
+      const t=get('installToast');
+      if(t) t.classList.remove('show');
       try{sessionStorage.setItem('excelMasterInstallDismissed','1')}catch(_){}
     });
-    if(isStandalone()) hideInstallUI();
+
+    if(isStandalone()) setInstallVisible(false);
   });
 
-  // Register the service worker so GitHub Pages can satisfy PWA requirements.
+  // Register the service worker from the current GitHub Pages folder.
   if('serviceWorker' in navigator){
     window.addEventListener('load',function(){
-      navigator.serviceWorker.register('./service-worker.js').catch(function(err){
-        console.warn('Excel Master service worker registration failed:',err);
-      });
+      navigator.serviceWorker.register('./service-worker.js',{scope:'./'})
+        .then(reg=>console.log('Excel Master service worker ready:',reg.scope))
+        .catch(err=>console.warn('Excel Master service worker registration failed:',err));
     });
   }
-})();
-
-</script></body></html>
+})();</script></body></html>
