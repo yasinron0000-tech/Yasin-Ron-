@@ -1,43 +1,30 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yasin Ron — Owner Admin</title>
-<style>
-body{margin:0;background:#07101d;color:#edf5ff;font-family:system-ui,Arial}*{box-sizing:border-box}.wrap{max-width:1100px;margin:auto;padding:22px}
-.box{background:#0c1828;border:1px solid #29405e;border-radius:16px;padding:18px;margin:12px 0;animation:fadeUp .45s ease-out both}
-input{width:100%;padding:11px;border-radius:9px;border:1px solid #2b405d;background:#091526;color:#fff;margin:7px 0}button{padding:10px 14px;border-radius:9px;border:1px solid #315074;background:#2563eb;color:#fff;font-weight:700;cursor:pointer}.danger{background:#7f1d1d}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{padding:15px;border-radius:13px;background:#102038;border:1px solid #29405e}.muted{color:#91a6c0}.row{padding:11px;border-bottom:1px solid #233751}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
-</style></head><body><div class="wrap">
-<h1>👑 Yasin Ron — Owner Admin</h1>
-<div id="login" class="box"><h2>Administrator Login</h2><p class="muted">Owner access only.</p>
-<input id="email" type="email" placeholder="Administrator email"><input id="password" type="password" placeholder="Password">
-<button id="loginBtn">Login</button><p id="msg" class="muted"></p></div>
-<div id="dash" style="display:none"><div class="stats">
-<div class="stat"><b id="total">0</b><br><span class="muted">Total Agents</span></div><div class="stat"><b id="pending">0</b><br><span class="muted">Pending</span></div><div class="stat"><b id="approved">0</b><br><span class="muted">Approved</span></div><div class="stat"><b id="rejected">0</b><br><span class="muted">Rejected</span></div></div>
-<div class="box"><h2>👥 Agents</h2><div id="agents">Loading…</div></div>
-<div class="box"><h2>📚 Training Submissions</h2><div id="subs">Loading…</div></div>
-<button id="logout" class="danger">Logout</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script>
-<script>
-const ADMIN_ID="7487289c-95a8-480d-af95-e2965774f1c4";let sb,user;const cfg=window.EXCEL_MASTER_SUPABASE||{};
-if(cfg.url&&cfg.key)sb=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true}});
-const $=id=>document.getElementById(id);
-function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-async function load(){
- const p=await sb.from('profiles').select('id,full_name,role,created_at').order('created_at',{ascending:false});
- const agents=(p.data||[]).filter(x=>x.role==='agent');$('total').textContent=agents.length;
- $('agents').innerHTML=agents.map(x=>`<div class="row"><b>${esc(x.full_name||'Agent')}</b><div class="muted">${esc(x.id)}</div></div>`).join('')||'No agents yet.';
- const s=await sb.from('training_submissions').select('*').order('created_at',{ascending:false});const rows=s.data||[];
- $('pending').textContent=rows.filter(x=>x.status==='pending').length;$('approved').textContent=rows.filter(x=>x.status==='approved').length;$('rejected').textContent=rows.filter(x=>x.status==='rejected').length;
- $('subs').innerHTML=rows.map(x=>`<div class="row"><b>${esc(x.formula_name||'Training')}</b> — ${esc(x.author_name||'Agent')} <span class="muted">[${esc(x.status||'pending')}]</span><br><button onclick="review('${x.id}','approved')">Approve</button> <button class="danger" onclick="review('${x.id}','rejected')">Reject</button></div>`).join('')||'No submissions yet.';
-}
-async function review(id,status){const {error}=await sb.from('training_submissions').update({status,reviewed_by:user.id,reviewed_at:new Date().toISOString()}).eq('id',id);if(error)alert(error.message);else load();}
-$('loginBtn').onclick=async()=>{
- const {data,error}=await sb.auth.signInWithPassword({email:$('email').value.trim().toLowerCase(),password:$('password').value});
- if(error){$('msg').textContent=error.message;return}user=data.user;
- if(user.id!==ADMIN_ID){await sb.auth.signOut();$('msg').textContent='Access denied. Administrator account required.';return}
- const prof=await sb.from('profiles').select('role').eq('id',user.id).maybeSingle();
- if(prof.data?.role!=='admin'){await sb.auth.signOut();$('msg').textContent='Access denied. Admin role required.';return}
- $('login').style.display='none';$('dash').style.display='block';load();
-};
-$('logout').onclick=()=>sb.auth.signOut().then(()=>location.reload());
+<title>Yasin Ron — Admin</title><style>
+body{margin:0;background:#07111f;color:#edf5ff;font-family:system-ui,Arial}.wrap{max-width:1050px;margin:auto;padding:24px}
+.box{background:#0d1a2b;border:1px solid #2a4565;border-radius:18px;padding:20px;margin:14px 0;animation:up .5s ease}
+input{width:100%;padding:12px;margin:7px 0;box-sizing:border-box;background:#081525;border:1px solid #304966;color:#fff;border-radius:10px}
+button{padding:11px 15px;border:0;border-radius:10px;background:#2563eb;color:#fff;font-weight:800;cursor:pointer}.danger{background:#991b1b}
+.muted{color:#91a8c2}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:#10223a;padding:16px;border-radius:14px}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><div class="wrap"><h1>👑 Yasin Ron Owner Admin</h1>
+<div id="login" class="box"><h2>Administrator Login</h2><p class="muted">This page is separate from the Agent Portal.</p>
+<input id="email" type="email" autocomplete="username" placeholder="Administrator email">
+<input id="password" type="password" autocomplete="current-password" placeholder="Password">
+<button id="go">Login</button><p id="msg" class="muted"></p></div>
+<div id="app" style="display:none"><div class="stats"><div class="stat"><b id="a">0</b><br>Agents</div><div class="stat"><b id="p">0</b><br>Pending</div><div class="stat"><b id="ok">0</b><br>Approved</div><div class="stat"><b id="no">0</b><br>Rejected</div></div>
+<div class="box"><h2>👥 Agents</h2><div id="agents">Loading…</div></div><div class="box"><h2>📚 Submissions</h2><div id="subs">Loading…</div></div><button id="out" class="danger">Logout</button></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script>
+const ADMIN="7487289c-95a8-480d-af95-e2965774f1c4",cfg=window.EXCEL_MASTER_SUPABASE||{};let sb,user;
+if(cfg.url&&cfg.key)sb=supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true}});
+const $=x=>document.getElementById(x);
+$("go").onclick=async()=>{if(!sb){$("msg").textContent="Supabase is not configured on admin.html.";return}
+const {data,error}=await sb.auth.signInWithPassword({email:$("email").value.trim().toLowerCase(),password:$("password").value});
+if(error){$("msg").textContent=error.message;return} user=data.user;
+if(user.id!==ADMIN){await sb.auth.signOut();$("msg").textContent="Access denied.";return}
+const pr=await sb.from("profiles").select("role").eq("id",user.id).maybeSingle();
+if(pr.data?.role!=="admin"){await sb.auth.signOut();$("msg").textContent="Admin role missing.";return}
+$("login").style.display="none";$("app").style.display="block";load()};
+async function load(){const r=await sb.from("profiles").select("id,full_name,role,created_at").order("created_at",{ascending:false});const rows=r.data||[];$("a").textContent=rows.filter(x=>x.role==="agent").length;$("agents").innerHTML=rows.filter(x=>x.role==="agent").map(x=>"<div style='padding:10px;border-bottom:1px solid #243a54'><b>"+esc(x.full_name||"Agent")+"</b><br><span class=muted>"+esc(x.id)+"</span></div>").join("")||"No agents.";
+const s=await sb.from("training_submissions").select("*").order("created_at",{ascending:false});const z=s.data||[];$("p").textContent=z.filter(x=>x.status==="pending").length;$("ok").textContent=z.filter(x=>x.status==="approved").length;$("no").textContent=z.filter(x=>x.status==="rejected").length;$("subs").innerHTML=z.map(x=>"<div style='padding:10px;border-bottom:1px solid #243a54'><b>"+esc(x.formula_name||"Training")+"</b> — "+esc(x.author_name||"Agent")+" ["+esc(x.status||"pending")+"]</div>").join("")||"No submissions."}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}$("out").onclick=()=>sb.auth.signOut().then(()=>location.reload());
 </script></body></html>

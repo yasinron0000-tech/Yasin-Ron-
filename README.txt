@@ -24,3 +24,10 @@ V8 CLEAN LOGIN-FREE
 
 
 V9: 302 formulas; direct Agent portal at index.html; separate Owner/Admin portal at admin.html; animations added.
+
+FINAL BUILD
+- Agent portal is index.html and has NO login/auth dependency.
+- Owner portal is admin.html and is the ONLY page requiring Supabase authentication.
+- Administrator UUID is fixed to 7487289c-95a8-480d-af95-e2965774f1c4 and profiles.role must be admin.
+- Added visible motion/hover/fade animations.
+- Formula count badge is calculated from the formula library.
