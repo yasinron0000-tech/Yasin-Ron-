@@ -13,3 +13,11 @@ V6 AUTH FIX
 - Set only the administrator profile role to admin using its auth user UUID.
 - Never put an administrator password in GitHub/JavaScript.
 - If Login says Invalid email or password, use Forgot password or verify the Supabase Auth user's password/confirmation status.
+
+V8 CLEAN LOGIN-FREE
+- Login and Signup are removed from the Agent portal.
+- No Supabase authentication is loaded by index.html.
+- Agent portal opens directly.
+- Practice submissions are saved locally in the browser.
+- Admin credentials/passwords are NOT embedded in public GitHub code.
+- Publish this version to GitHub Pages and hard-refresh/clear site data once after deployment.
