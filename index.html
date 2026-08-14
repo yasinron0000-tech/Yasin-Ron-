@@ -9,6 +9,11 @@ main{max-width:1400px;margin:auto;padding:10px}.hero{background:linear-gradient(
 .layout{display:grid;grid-template-columns:220px 1fr;gap:10px}aside{background:#0b1727;border:1px solid #233751;border-radius:13px;padding:8px;height:max-content;position:sticky;top:65px}aside button{display:block;width:100%;text-align:left;background:none;border:0;color:#a9bad0;padding:8px;border-radius:7px}aside button.active{background:#163050;color:#fff}
 .toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}.search{flex:1;min-width:180px;background:#091526;color:#fff;border:1px solid #2b405d;border-radius:9px;padding:10px}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{background:#0c1828;border:1px solid #263d5b;border-radius:12px;padding:11px;min-width:0}.card h3{margin:0 0 6px}.syntax{background:#06101d;border:1px solid #1d314a;padding:7px;border-radius:7px;overflow:auto;white-space:nowrap;font:12px monospace}.desc{font-size:12px;color:#b8c7d8;min-height:32px}.training{background:#0a1b2e;border:1px solid #294768;border-radius:8px;padding:8px;font-size:11px;margin-top:7px}.card .btn{width:100%;margin-top:7px}
+.valueGuide{margin-top:8px;padding:8px;border-radius:9px;background:#08182a;border:1px solid #244563;font-size:11px;color:#c9d8e8}
+.valueGuide b{color:#eaf4ff}.valueGuide .vgRow{display:grid;grid-template-columns:105px 1fr;gap:6px;padding:4px 0;border-bottom:1px solid #19324a}.valueGuide .vgRow:last-child{border-bottom:0}.valueGuide .vgKey{color:#7fc4ff;font-weight:800}.valueGuide .vgExample{color:#a9bfd4}
+.modalGuide{margin-top:10px;background:linear-gradient(145deg,#091a2c,#07111d);border:1px solid #294768;border-radius:12px;padding:11px}.modalGuide h3{margin:0 0 7px}.modalGuide .guideIntro{font-size:12px;color:#a9bdd2;margin:0 0 8px}.guideTable{width:100%;border-collapse:collapse;font-size:12px}.guideTable th{background:#10243b;color:#cfe2ff}.guideTable td,.guideTable th{padding:7px;border:1px solid #27415d;vertical-align:top}.guideTable td:first-child{color:#7fc4ff;font-weight:800;width:23%}
+@media(max-width:720px){.valueGuide .vgRow{grid-template-columns:92px 1fr}.guideTable{font-size:11px}}
+
 .modal{position:fixed;inset:0;background:#000b;z-index:50;display:none;align-items:center;justify-content:center;padding:10px}.modal.show{display:flex}.dialog{background:#0a1525;border:1px solid #2b4362;border-radius:15px;width:min(900px,100%);max-height:94vh;overflow:auto;padding:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.box{background:#07111e;border:1px solid #203650;border-radius:9px;padding:10px;margin-top:9px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #27405d;padding:6px;text-align:left}textarea{width:100%;min-height:90px;background:#050c16;color:#fff;border:1px solid #29415d;border-radius:8px;padding:8px}
 @media(max-width:720px){.layout{grid-template-columns:1fr}aside{position:static;display:flex;overflow:auto;gap:4px}aside button{width:auto;white-space:nowrap}.cards{grid-template-columns:1fr}.grid{grid-template-columns:1fr}header .btn{font-size:12px;padding:7px}}
 
@@ -128,6 +133,11 @@ header{box-shadow:0 10px 35px rgba(0,0,0,.22)}
   <div class="infoCard"><strong>🛠️ How to use it</strong><p id="howUse"></p></div>
   <div class="infoCard"><strong>⚠️ Common mistakes</strong><p id="mistakes"></p></div>
 </div>
+<div class="modalGuide">
+  <h3>🧩 Which value goes where?</h3>
+  <p id="guideIntro" class="guideIntro"></p>
+  <div id="valueGuideTable"></div>
+</div>
 <div class="practiceHero"><b>🧠 Hands-on Formula Training</b>
   <p class="muted">First understand the use case, then write the formula yourself using the sample data.</p>
   <p id="pdata" class="muted"></p>
@@ -146,8 +156,102 @@ function lev(n){if(["SUM","AVERAGE","MIN","MAX","COUNT","COUNTA","IF","AND","OR"
 let cats=["All",...new Set(D.map(x=>x.cat))];document.getElementById("cats").innerHTML=cats.map(x=>`<button onclick="cat='${x}';render();logAgentActivity('category_changed','','Category: '+cat)" ">${x}</button>`).join("");
 let searchLogTimer=null;
 document.getElementById("q").oninput=()=>{render();clearTimeout(searchLogTimer);searchLogTimer=setTimeout(()=>{const v=document.getElementById("q").value.trim();if(v)logAgentActivity("search","", "Searched: "+v)},900)};
-function render(){let q=document.getElementById("q").value.toLowerCase();let a=D.filter(x=>(cat=="All"||x.cat==cat)&&(level=="All"||lev(x.name)==level)&&(x.name.toLowerCase().includes(q)||x.exp.toLowerCase().includes(q)));document.getElementById("show").textContent=`Showing ${a.length} of ${D.length} formulas`;document.getElementById("cards").innerHTML=a.map(x=>`<article class="card"><h3>${esc(x.name)}</h3><div class="syntax">${esc(x.syntax)}</div><p class="desc">${esc(x.exp)}</p><small>${esc(x.cat)} · Excel 2016</small><div class="training"><b>🧠 Formula Training</b><br>Sample: ${esc(x.sample)}<br>Expected: ${esc(x.result)}</div><button class="btn" onclick="openM(${D.indexOf(x)})">🎓 Open Full Training →</button></article>`).join("")}
-let cur=0;function openM(i){cur=i;let x=D[i];document.getElementById("title").textContent=x.name;document.getElementById("catLabel").textContent=x.cat+" · "+lev(x.name);document.getElementById("syn").textContent=x.syntax;document.getElementById("exp").textContent=x.exp;document.getElementById("sample").textContent=x.sample;document.getElementById("result").textContent=x.result;document.getElementById("pdata").textContent="Practice with: "+x.sample;document.getElementById("ans").value="";document.getElementById("feedback").textContent="";document.getElementById("modal").classList.add("show");logAgentActivity("formula_opened",x.name,"Opened formula training")}
+const VALUE_GUIDES={
+"SUM":[["Value 1","Range / cells to add","B2:B6"],["Example","10, 20, 30, 40, 50","Result = 150"]],
+"SUMIF":[["Value 1","Range to check","A2:A6"],["Value 2","Condition / criteria","East"],["Value 3","Range to add","B2:B6"]],
+"SUMIFS":[["Value 1","Range to add","C2:C6"],["Value 2","Condition range 1","A2:A6"],["Value 3","Condition 1","East"],["Value 4","Condition range 2","B2:B6"],["Value 5","Condition 2",">20"]],
+"COUNTIF":[["Value 1","Range to check","B2:B10"],["Value 2","Condition","\">50\""]],
+"COUNTIFS":[["Value 1","Condition range 1","A2:A10"],["Value 2","Condition 1","East"],["Value 3","Condition range 2","B2:B10"],["Value 4","Condition 2",">50"]],
+"AVERAGEIF":[["Value 1","Range to check","A2:A10"],["Value 2","Condition","East"],["Value 3","Range to average","B2:B10"]],
+"AVERAGEIFS":[["Value 1","Range to average","C2:C10"],["Value 2","Condition range 1","A2:A10"],["Value 3","Condition 1","East"],["Value 4","Condition range 2","B2:B10"],["Value 5","Condition 2",">50"]],
+"IF":[["Value 1","Logical test","B2>=50"],["Value 2","If TRUE","\"Pass\""],["Value 3","If FALSE","\"Fail\""]],
+"IFERROR":[["Value 1","Formula / calculation","A2/B2"],["Value 2","What to show if error","\"N/A\""]],
+"IFNA":[["Value 1","Lookup / formula","XLOOKUP(...)"],["Value 2","What to show for #N/A","\"Not Found\""]],
+"AND":[["Value 1","Condition 1","B2>=50"],["Value 2","Condition 2","C2=\"Yes\""],["More","Add more conditions if needed","..."]],
+"OR":[["Value 1","Condition 1","B2=\"Yes\""],["Value 2","Condition 2","C2=\"Yes\""],["More","Add more conditions if needed","..."]],
+"NOT":[["Value 1","Condition to reverse","A2=\"Closed\""]],
+"VLOOKUP":[["Value 1","Value to find","E2"],["Value 2","Table / lookup range","A2:D100"],["Value 3","Column number to return","4"],["Value 4","Exact/approximate match","FALSE for exact"]],
+"HLOOKUP":[["Value 1","Value to find","B1"],["Value 2","Table / lookup range","A1:F5"],["Value 3","Row number to return","4"],["Value 4","Exact/approximate match","FALSE for exact"]],
+"XLOOKUP":[["Value 1","Value to find","E2"],["Value 2","Lookup range","A2:A100"],["Value 3","Return range","D2:D100"],["Value 4","If not found","\"Not Found\""],["Value 5","Match mode (optional)","0 = exact"],["Value 6","Search mode (optional)","1 = first to last"]],
+"INDEX":[["Value 1","Range / array","A2:D100"],["Value 2","Row number","5"],["Value 3","Column number","4"]],
+"MATCH":[["Value 1","Value to find","E2"],["Value 2","Lookup range","A2:A100"],["Value 3","Match type","0 = exact"]],
+"FILTER":[["Value 1","Range to return","A2:D100"],["Value 2","Include condition","C2:C100=\"East\""],["Value 3","If nothing matches (optional)","\"Not Found\""]],
+"UNIQUE":[["Value 1","Range to make unique","A2:A100"],["Value 2","By column (optional)","TRUE / FALSE"],["Value 3","Exactly once (optional)","TRUE / FALSE"]],
+"SORT":[["Value 1","Range to sort","A2:D100"],["Value 2","Sort column","2"],["Value 3","Order","1 = ascending, -1 = descending"]],
+"SORTBY":[["Value 1","Range to return","A2:D100"],["Value 2","Range to sort by","D2:D100"],["Value 3","Sort order","1 or -1"]],
+"TEXTJOIN":[["Value 1","Delimiter","\", \""],["Value 2","Ignore empty cells","TRUE"],["Value 3","Text/ranges to join","A2:A10"]],
+"CONCAT":[["Value 1","First text / cell","A2"],["Value 2","Second text / cell","B2"],["More","Add more text or ranges","..."]],
+"CONCATENATE":[["Value 1","First text / cell","A2"],["Value 2","Second text / cell","B2"],["More","Add more text or ranges","..."]],
+"LEFT":[["Value 1","Text / cell","A2"],["Value 2","Characters to take (optional)","5"]],
+"RIGHT":[["Value 1","Text / cell","A2"],["Value 2","Characters to take (optional)","4"]],
+"MID":[["Value 1","Text / cell","A2"],["Value 2","Starting position","3"],["Value 3","Number of characters","5"]],
+"LEN":[["Value 1","Text / cell to count","A2"]],
+"TRIM":[["Value 1","Text / cell to clean","A2"]],
+"FIND":[["Value 1","Text to find","\"-\""],["Value 2","Text to search","A2"],["Value 3","Starting position (optional)","1"]],
+"SEARCH":[["Value 1","Text to find","\"sales\""],["Value 2","Text to search","A2"],["Value 3","Starting position (optional)","1"]],
+"TEXT":[["Value 1","Value / date / cell","A2"],["Value 2","Format code","\"dd-mmm-yyyy\""]],
+"ROUND":[["Value 1","Number / cell","A2"],["Value 2","Decimal places","2"]],
+"ROUNDUP":[["Value 1","Number / cell","A2"],["Value 2","Decimal places","2"]],
+"ROUNDDOWN":[["Value 1","Number / cell","A2"],["Value 2","Decimal places","2"]],
+"RANK.EQ":[["Value 1","Number to rank","B2"],["Value 2","Range of numbers","B2:B20"],["Value 3","Order (optional)","0 = descending"]],
+"SUMPRODUCT":[["Value 1","First numeric range","B2:B10"],["Value 2","Second range / multiplier","C2:C10"],["More","Ranges must have matching sizes","..."]],
+"SUBTOTAL":[["Value 1","Function number","9 = SUM"],["Value 2","Range","B2:B100"]],
+"AGGREGATE":[["Value 1","Function number","9 = SUM"],["Value 2","Options","0–7"],["Value 3","Range / array","B2:B100"]],
+"DATE":[["Value 1","Year","2026"],["Value 2","Month","8"],["Value 3","Day","14"]],
+"YEAR":[["Value 1","Date / cell","A2"]],
+"MONTH":[["Value 1","Date / cell","A2"]],
+"DAY":[["Value 1","Date / cell","A2"]],
+"EDATE":[["Value 1","Start date","A2"],["Value 2","Months to move","1"]],
+"EOMONTH":[["Value 1","Start date","A2"],["Value 2","Months to move","0 = current month end"]],
+"NETWORKDAYS":[["Value 1","Start date","A2"],["Value 2","End date","B2"],["Value 3","Holidays (optional)","H2:H10"]],
+"WORKDAY":[["Value 1","Start date","A2"],["Value 2","Workdays to add","10"],["Value 3","Holidays (optional)","H2:H10"]],
+"PMT":[["Value 1","Rate per period","10%/12"],["Value 2","Number of periods","60"],["Value 3","Present value / loan","500000"]],
+"PV":[["Value 1","Rate per period","10%/12"],["Value 2","Number of periods","60"],["Value 3","Payment","-10000"]],
+"FV":[["Value 1","Rate per period","10%/12"],["Value 2","Number of periods","60"],["Value 3","Payment","-10000"]],
+"COUNT":[["Value 1","Numbers / range to count","B2:B20"]],
+"COUNTA":[["Value 1","Non-empty cells / range","A2:A20"]],
+"COUNTBLANK":[["Value 1","Range to check for blanks","A2:A20"]],
+"MIN":[["Value 1","Numbers / range","B2:B20"]],
+"MAX":[["Value 1","Numbers / range","B2:B20"]],
+"AVERAGE":[["Value 1","Numbers / range","B2:B20"]],
+"MEDIAN":[["Value 1","Numbers / range","B2:B20"]],
+"MODE.SNGL":[["Value 1","Numbers / range","B2:B20"]],
+"PRODUCT":[["Value 1","Numbers / range","B2:B6"]],
+"ABS":[["Value 1","Number / cell","A2"]],
+"MOD":[["Value 1","Number","10"],["Value 2","Divisor","3"]],
+"QUOTIENT":[["Value 1","Dividend","10"],["Value 2","Divisor","3"]],
+"POWER":[["Value 1","Number","5"],["Value 2","Power","2"]],
+"SQRT":[["Value 1","Number / cell","25"]],
+"AND":[["Value 1","Condition 1","B2>=50"],["Value 2","Condition 2","C2=\"Yes\""]],
+"OR":[["Value 1","Condition 1","B2=\"Yes\""],["Value 2","Condition 2","C2=\"Yes\""]]
+};
+
+function genericGuide(x){
+  const m=x.syntax.match(/^[=]?[^\(]+\((.*)\)$/);
+  if(!m)return [["Value","Use the value(s) shown in the formula syntax",x.sample]];
+  const raw=m[1].replace(/\s+/g," ").trim();
+  if(!raw || raw==="value_or_range")return [["Value 1","Enter the required value, cell or range",x.sample]];
+  const args=[];let cur="",quote=false,depth=0;
+  for(const ch of raw){
+    if(ch==='"')quote=!quote;
+    if(!quote&&(ch==="("))depth++;
+    if(!quote&&(ch===")"))depth--;
+    if(ch===","&&!quote&&depth===0){args.push(cur.trim());cur="";}else cur+=ch;
+  }
+  if(cur.trim())args.push(cur.trim());
+  return args.map((a,i)=>[i===0?"Value 1":`Value ${i+1}`,"Enter this argument in the same position as the syntax",a||"Required value"]);
+}
+function getValueGuide(x){
+  return VALUE_GUIDES[x.name] || genericGuide(x);
+}
+function guideHTML(x,compact=false){
+  const rows=getValueGuide(x);
+  if(compact)return rows.slice(0,4).map(r=>`<div class="vgRow"><span class="vgKey">${esc(r[0])}</span><span>${esc(r[1])}<br><span class="vgExample">Example: ${esc(r[2])}</span></span></div>`).join("");
+  return `<table class="guideTable"><thead><tr><th>Input</th><th>What to enter</th><th>Example</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody></table>`;
+}
+function render(){let q=document.getElementById("q").value.toLowerCase();let a=D.filter(x=>(cat=="All"||x.cat==cat)&&(level=="All"||lev(x.name)==level)&&(x.name.toLowerCase().includes(q)||x.exp.toLowerCase().includes(q)));document.getElementById("show").textContent=`Showing ${a.length} of ${D.length} formulas`;document.getElementById("cards").innerHTML=a.map(x=>`<article class="card"><h3>${esc(x.name)}</h3><div class="syntax">${esc(x.syntax)}</div><p class="desc">${esc(x.exp)}</p><small>${esc(x.cat)} · Excel 2016</small><div class="training"><b>🧠 Formula Training</b><br>Sample: ${esc(x.sample)}<br>Expected: ${esc(x.result)}</div><div class="valueGuide"><b>🧩 Values: kya kaha lena hai?</b>${guideHTML(x,true)}</div><button class="btn" onclick="openM(${D.indexOf(x)})">🎓 Open Full Training →</button></article>`).join("")}
+let cur=0;function openM(i){cur=i;let x=D[i];document.getElementById("title").textContent=x.name;document.getElementById("catLabel").textContent=x.cat+" · "+lev(x.name);document.getElementById("syn").textContent=x.syntax;document.getElementById("exp").textContent=x.exp;document.getElementById("sample").textContent=x.sample;document.getElementById("result").textContent=x.result;document.getElementById("guideIntro").textContent=`${x.name} me har value/argument ka role niche diya hai. Pehli value se start karo, phir second value ko uske role ke hisaab se fill karo.`;document.getElementById("valueGuideTable").innerHTML=guideHTML(x);document.getElementById("pdata").textContent="Practice with: "+x.sample;document.getElementById("ans").value="";document.getElementById("feedback").textContent="";document.getElementById("modal").classList.add("show");logAgentActivity("formula_opened",x.name,"Opened formula training")}
+
 function closeM(){modal.classList.remove("show")}function check(){let a=ans.value.trim().replace(/\s+/g,"").toLowerCase(),c=D[cur].syntax.replace(/\s+/g,"").toLowerCase();feedback.textContent=a==c?"✅ Correct!":"❌ Not exact. Try again or reveal the correct formula."}function reveal(){feedback.textContent="Correct formula: "+D[cur].syntax}
 function full(){if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen()}
 function agent(){alert("Agent Training: choose any formula and tap “Open Full Training”. You will see where it is used, when to use it, how to use it, common mistakes, sample data and hands-on practice.")}

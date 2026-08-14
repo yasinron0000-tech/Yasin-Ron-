@@ -49,3 +49,8 @@ The public Publishable key is the correct key for this browser app.
 - Forgot Password sends a secure Supabase reset email.
 - Password reset links return to the Agent Portal where the agent can set a new password.
 - Admin accounts are blocked from the Agent Portal flow.
+
+
+## Formula Training Value Guide
+
+The formula cards and full training view now explain what each value/argument means, including Value 1, Value 2, and further arguments where applicable, with practical examples. No Supabase configuration or database schema changes are required for this UI update.
