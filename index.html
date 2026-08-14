@@ -73,7 +73,7 @@ header{box-shadow:0 10px 35px rgba(0,0,0,.22)}
 <span id="agentStatus" class="userPill" style="border:0">🟡 Guest</span>
 <button id="agentLoginBtn" class="btn primary" onclick="openAgentAuth()">🔐 Agent Login</button>
 <button id="agentLogoutBtn" class="btn" style="display:none" onclick="agentLogout()">Logout</button>
-<button id="installAppBtn" class="btn primary" style="display:none" type="button">📱 Install App</button>
+<button id="installAppBtn" class="btn primary" style="" type="button">📱 Install App</button>
 <button class="btn" onclick="full()">⛶ Full Screen</button>
 <button class="btn primary" onclick="agent()">👥 Agent Training</button>
 </div></header>
@@ -516,16 +516,10 @@ const countEl=document.getElementById('formulaCount'); if(countEl) countEl.textC
       alert('📱 Install option is not available yet. In Chrome, open the ⋮ menu and choose "Add to Home screen" or "Install app" when it appears.');
       return;
     }
-    try {
-      deferredInstallPrompt.prompt();
-      const choice=await deferredInstallPrompt.userChoice;
-      if(choice && choice.outcome==='accepted') hideInstallUI();
-    } catch(err) {
-      console.warn('Excel Master install prompt failed:', err);
-      alert('📱 Chrome install prompt could not be opened. Please open Chrome ⋮ → Install app / Add to Home screen.');
-    } finally {
-      deferredInstallPrompt=null;
-    }
+    deferredInstallPrompt.prompt();
+    const choice=await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt=null;
+    if(choice && choice.outcome==='accepted') hideInstallUI();
   }
 
   document.addEventListener('DOMContentLoaded',function(){
