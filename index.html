@@ -511,6 +511,7 @@ const countEl=document.getElementById('formulaCount'); if(countEl) countEl.textC
     }
 
     // Fallback: Chrome may not expose beforeinstallprompt yet.
+    // PWA installation cannot be forced by JavaScript; the browser controls it.
     // The app can still be installed from Chrome's menu.
     alert(
       '📱 Install Excel Master\\n\\n' +
@@ -556,7 +557,7 @@ const countEl=document.getElementById('formulaCount'); if(countEl) countEl.textC
   // Register the service worker from the current GitHub Pages folder.
   if('serviceWorker' in navigator){
     window.addEventListener('load',function(){
-      navigator.serviceWorker.register('./service-worker.js',{scope:'./'})
+      navigator.serviceWorker.register('/Yasin-Ron-/service-worker.js',{scope:'/Yasin-Ron-/'})
         .then(reg=>console.log('Excel Master service worker ready:',reg.scope))
         .catch(err=>console.warn('Excel Master service worker registration failed:',err));
     });
