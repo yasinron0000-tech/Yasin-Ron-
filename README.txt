@@ -31,3 +31,5 @@ FINAL BUILD
 - Administrator UUID is fixed to 7487289c-95a8-480d-af95-e2965774f1c4 and profiles.role must be admin.
 - Added visible motion/hover/fade animations.
 - Formula count badge is calculated from the formula library.
+
+FIXED: formula rendering JavaScript syntax error removed; service-worker cache disabled.
